@@ -35,5 +35,5 @@ export default {
   update,
   remove,
   removeAll,
-  findByid
+  findById
 };
