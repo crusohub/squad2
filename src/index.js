@@ -26,13 +26,23 @@ import "assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 
+import { UsuarioLogadoProvider } from "./context/UsuarioLogadoContext";
+
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/admin/index" />
-    </Switch>
-  </BrowserRouter>,
-  document.getElementById("root")
+    <BrowserRouter>
+        <UsuarioLogadoProvider>
+            <Switch>
+                <Route
+                    path="/admin"
+                    render={(props) => <AdminLayout {...props} />}
+                />
+                <Route
+                    path="/auth"
+                    render={(props) => <AuthLayout {...props} />}
+                />
+                <Redirect from="/" to="/admin/index" />
+            </Switch>
+        </UsuarioLogadoProvider>
+    </BrowserRouter>,
+    document.getElementById("root")
 );
