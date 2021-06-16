@@ -33,7 +33,8 @@ import {
 	PaginationLink,
 	Progress,
 	Row,
-	Table
+	Table,
+    Input
 } from 'reactstrap';
 
 const Tables = () => {
@@ -49,6 +50,7 @@ const Tables = () => {
 	];
 
 	const [projects, setProjects] = useState(projectInitial);
+    const [searchProject, setSearchProject] = useState('');
 
 	const retrieveProject = () => {
 		ProjetoDataService.getAll()
@@ -70,6 +72,29 @@ const Tables = () => {
 			.catch((e) => console.log(e));
 	};
 
+    const searchOnChange = (e) => {
+        const searchProject = e.target.value;
+        setSearchProject(searchProject);
+        findByProjectName();
+        findyByStatus();
+    }
+
+    const findByProjectName = () => {
+        ProjetoDataService.findByProjectName(searchProject)
+            .then((response) => {
+                setProjects(response.data)
+            })
+            .catch((e) => console.log(e));
+    }
+
+    const findyByStatus = () => {
+        ProjetoDataService.findyByStatus(searchProject)
+        .then((response) => {
+            setProjects(response.data)
+        })
+        .catch((e) => console.log(e));
+    }
+
 	return (
 		<>
 			<HeaderProject />
@@ -79,6 +104,12 @@ const Tables = () => {
 				<Row>
 					<div className='col'>
 						<Card className='shadow'>
+                         <Input 
+                            placeholder="Search by project name or status"
+                            className="text-left pl-5"
+                            onChange={searchOnChange}
+                            value={searchProject}
+                         />
 							<CardHeader className='border-0'>
 								<h3 className='mb-0'>Projects table</h3>
 							</CardHeader>
