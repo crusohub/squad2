@@ -17,7 +17,8 @@
 */
 // core components
 import HeaderProject from 'components/Headers/HeaderProject';
-import React from 'react';
+import ProjetoDataService from 'services/ProjetoDataService';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // reactstrap components
 import {
@@ -35,7 +36,46 @@ import {
 	Table,
 } from 'reactstrap';
 
+
 const Tables = () => {
+    const projectInitial = [
+        {
+            "id": "1",
+            "image": "Imagem Real 1 ",
+            "projectname": "Projeto Real 1",
+            "status": "on schedule",
+            "budget": "Budget Real 1",
+            "completed": "Completed Real 1"
+          }
+    ]
+
+    const [projects, setProjects] = useState(projectInitial);
+    const [currentProject, setCurrentProject] = useState('');
+
+    const retrieveProject = () => {
+		ProjetoDataService.getAll()
+			.then((response) => {
+				setProjects(response.data);
+			})
+			.catch((e) => console.log(e));
+	};
+
+	useEffect(() => {
+		retrieveProject();
+	}, []);
+
+    const deleteProject = (id) => {
+		ProjetoDataService.remove(id)
+			.then((response) => {
+				retrieveProject();
+			})
+			.catch((e) => console.log(e));
+	};
+
+    const editProject = (project) => {
+		setCurrentProject(project);
+	};
+
 	return (
 		<>
 			<HeaderProject />
@@ -63,6 +103,8 @@ const Tables = () => {
 									</tr>
 								</thead>
 								<tbody>
+
+                                    {projects.map((value, index) => (
 									<tr>
 										<th scope='row'>
 											<Media className='align-items-center'>
@@ -83,25 +125,25 @@ const Tables = () => {
 												</a>
 												<Media>
 													<span className='mb-0 text-sm'>
-														Argon Design System
+														{value.projectname}
 													</span>
 												</Media>
 											</Media>
 										</th>
-										<td>$2,500 USD</td>
+										<td>{value.budget}</td>
 										<td>
 											<Badge
 												color=''
 												className='badge-dot mr-4'
 											>
 												<i className='bg-warning' />
-												pending
+												{value.status}
 											</Badge>
 										</td>
 										<td>
 											<div className='d-flex align-items-center'>
 												<span className='mr-2'>
-													60%
+													{value.completed}
 												</span>
 												<div>
 													<Progress
@@ -114,7 +156,8 @@ const Tables = () => {
 										</td>
 										<td>
 											<Link
-												to={`/projeto/${id}`}
+												to={`/projeto/`}
+                                                onClick={() => editProject(projects)}
 												className='btn btn-warning'
 											>
 												{' '}
@@ -123,7 +166,7 @@ const Tables = () => {
 										</td>
 										<td>
 											<Link
-												to={`/projeto/${id}`}
+												onClick={() => deleteProject(projects.id)}
 												className='btn btn-danger'
 											>
 												{' '}
@@ -131,278 +174,8 @@ const Tables = () => {
 											</Link>
 										</td>
 									</tr>
-									<tr>
-										<th scope='row'>
-											<Media className='align-items-center'>
-												<a
-													className='avatar rounded-circle mr-3'
-													href='#pablo'
-													onClick={(e) =>
-														e.preventDefault()
-													}
-												>
-													<img
-														alt='...'
-														src={
-															require('../../assets/img/theme/angular.jpg')
-																.default
-														}
-													/>
-												</a>
-												<Media>
-													<span className='mb-0 text-sm'>
-														Angular Now UI Kit PRO
-													</span>
-												</Media>
-											</Media>
-										</th>
-										<td>$1,800 USD</td>
-										<td>
-											<Badge
-												color=''
-												className='badge-dot'
-											>
-												<i className='bg-success' />
-												completed
-											</Badge>
-										</td>
-										<td>
-											<div className='d-flex align-items-center'>
-												<span className='mr-2'>
-													100%
-												</span>
-												<div>
-													<Progress
-														max='100'
-														value='100'
-														barClassName='bg-success'
-													/>
-												</div>
-											</div>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-warning'
-											>
-												{' '}
-												Edit
-											</Link>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-warning'
-											>
-												{' '}
-												Delete
-											</Link>
-										</td>
-									</tr>
-									<tr>
-										<th scope='row'>
-											<Media className='align-items-center'>
-												<a
-													className='avatar rounded-circle mr-3'
-													href='#pablo'
-													onClick={(e) =>
-														e.preventDefault()
-													}
-												>
-													<img
-														alt='...'
-														src={
-															require('../../assets/img/theme/sketch.jpg')
-																.default
-														}
-													/>
-												</a>
-												<Media>
-													<span className='mb-0 text-sm'>
-														Black Dashboard
-													</span>
-												</Media>
-											</Media>
-										</th>
-										<td>$3,150 USD</td>
-										<td>
-											<Badge
-												color=''
-												className='badge-dot mr-4'
-											>
-												<i className='bg-danger' />
-												delayed
-											</Badge>
-										</td>
-										<td>
-											<div className='d-flex align-items-center'>
-												<span className='mr-2'>
-													72%
-												</span>
-												<div>
-													<Progress
-														max='100'
-														value='72'
-														barClassName='bg-danger'
-													/>
-												</div>
-											</div>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-warning'
-											>
-												{' '}
-												Edit
-											</Link>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-danger'
-											>
-												{' '}
-												Delete
-											</Link>
-										</td>
-									</tr>
-									<tr>
-										<th scope='row'>
-											<Media className='align-items-center'>
-												<a
-													className='avatar rounded-circle mr-3'
-													href='#pablo'
-													onClick={(e) =>
-														e.preventDefault()
-													}
-												>
-													<img
-														alt='...'
-														src={
-															require('../../assets/img/theme/react.jpg')
-																.default
-														}
-													/>
-												</a>
-												<Media>
-													<span className='mb-0 text-sm'>
-														React Material Dashboard
-													</span>
-												</Media>
-											</Media>
-										</th>
-										<td>$4,400 USD</td>
-										<td>
-											<Badge
-												color=''
-												className='badge-dot'
-											>
-												<i className='bg-info' />
-												on schedule
-											</Badge>
-										</td>
-										<td>
-											<div className='d-flex align-items-center'>
-												<span className='mr-2'>
-													90%
-												</span>
-												<div>
-													<Progress
-														max='100'
-														value='90'
-														barClassName='bg-info'
-													/>
-												</div>
-											</div>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-warning'
-											>
-												{' '}
-												Edit
-											</Link>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-danger'
-											>
-												{' '}
-												Delete
-											</Link>
-										</td>
-									</tr>
-									<tr>
-										<th scope='row'>
-											<Media className='align-items-center'>
-												<a
-													className='avatar rounded-circle mr-3'
-													href='#pablo'
-													onClick={(e) =>
-														e.preventDefault()
-													}
-												>
-													<img
-														alt='...'
-														src={
-															require('../../assets/img/theme/vue.jpg')
-																.default
-														}
-													/>
-												</a>
-												<Media>
-													<span className='mb-0 text-sm'>
-														Vue Paper UI Kit PRO
-													</span>
-												</Media>
-											</Media>
-										</th>
-										<td>$2,200 USD</td>
-										<td>
-											<Badge
-												color=''
-												className='badge-dot mr-4'
-											>
-												<i className='bg-success' />
-												completed
-											</Badge>
-										</td>
-										<td>
-											<div className='d-flex align-items-center'>
-												<span className='mr-2'>
-													100%
-												</span>
-												<div>
-													<Progress
-														max='100'
-														value='100'
-														barClassName='bg-success'
-													/>
-												</div>
-											</div>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-warning'
-											>
-												{' '}
-												Edit
-											</Link>
-										</td>
-										<td>
-											<Link
-												to={`/projeto/${id}`}
-												className='btn btn-danger'
-											>
-												{' '}
-												Delete
-											</Link>
-										</td>
-									</tr>
+                                    ))}
+
 								</tbody>
 							</Table>
 							<CardFooter className='py-4'>
