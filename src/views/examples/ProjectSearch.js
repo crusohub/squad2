@@ -18,7 +18,6 @@
 // core components
 import HeaderProject from 'components/Headers/HeaderProject';
 import ProjetoDataService from 'services/ProjetoDataService';
-import EditProject from './EditProject';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // reactstrap components
@@ -34,26 +33,24 @@ import {
 	PaginationLink,
 	Progress,
 	Row,
-	Table,
+	Table
 } from 'reactstrap';
 
-
 const Tables = () => {
-    const projectInitial = [
-        {
-            "id": "1",
-            "image": "Imagem Real 1 ",
-            "projectname": "Projeto Real 1",
-            "status": "on schedule",
-            "budget": "Budget Real 1",
-            "completed": "Completed Real 1"
-          }
-    ]
+	const projectInitial = [
+		{
+			id: '1',
+			image: 'Imagem Real 1 ',
+			projectname: 'Projeto Real 1',
+			status: 'on schedule',
+			budget: 'Budget Real 1',
+			completed: 'Completed Real 1',
+		},
+	];
 
-    const [projects, setProjects] = useState(projectInitial);
-    const [currentProject, setCurrentProject] = useState('');
+	const [projects, setProjects] = useState(projectInitial);
 
-    const retrieveProject = () => {
+	const retrieveProject = () => {
 		ProjetoDataService.getAll()
 			.then((response) => {
 				setProjects(response.data);
@@ -65,16 +62,12 @@ const Tables = () => {
 		retrieveProject();
 	}, []);
 
-    const deleteProject = (id) => {
+	const deleteProject = (id) => {
 		ProjetoDataService.remove(id)
 			.then(() => {
 				retrieveProject();
 			})
 			.catch((e) => console.log(e));
-	};
-
-    const editProject = (project) => {
-		setCurrentProject(project);
 	};
 
 	return (
@@ -104,79 +97,81 @@ const Tables = () => {
 									</tr>
 								</thead>
 								<tbody>
-
-                                    {projects.map((value, index) => (
-									<tr>
-										<th scope='row'>
-											<Media className='align-items-center'>
-												<a
-													className='avatar rounded-circle mr-3'
-													href='#pablo'
-													onClick={(e) =>
-														e.preventDefault()
-													}
-												>
-													<img
-														alt='...'
-														src={
-															require('../../assets/img/theme/bootstrap.jpg')
-																.default
+									{projects.map((value, index) => (
+										<tr>
+											<th scope='row'>
+												<Media className='align-items-center'>
+													<a
+														className='avatar rounded-circle mr-3'
+														href='#pablo'
+														onClick={(e) =>
+															e.preventDefault()
 														}
-													/>
-												</a>
-												<Media>
-													<span className='mb-0 text-sm'>
-														{value.projectname}
-													</span>
+													>
+														<img
+															alt='...'
+															src={
+																require('../../assets/img/theme/bootstrap.jpg')
+																	.default
+															}
+														/>
+													</a>
+													<Media>
+														<span className='mb-0 text-sm'>
+															{value.projectname}
+														</span>
+													</Media>
 												</Media>
-											</Media>
-										</th>
-										<td>{value.budget}</td>
-										<td>
-											<Badge
-												color=''
-												className='badge-dot mr-4'
-											>
-												<i className='bg-warning' />
-												{value.status}
-											</Badge>
-										</td>
-										<td>
-											<div className='d-flex align-items-center'>
-												<span className='mr-2'>
-													{value.completed}
-												</span>
-												<div>
-													<Progress
-														max='100'
-														value='60'
-														barClassName='bg-danger'
-													/>
+											</th>
+											<td>{value.budget}</td>
+											<td>
+												<Badge
+													color=''
+													className='badge-dot mr-4'
+												>
+													<i className='bg-warning' />
+													{value.status}
+												</Badge>
+											</td>
+											<td>
+												<div className='d-flex align-items-center'>
+													<span className='mr-2'>
+														{value.completed}
+													</span>
+													<div>
+														<Progress
+															max='100'
+															value='60'
+															barClassName='bg-danger'
+														/>
+													</div>
 												</div>
-											</div>
-										</td>
-										<td>
-											<Link
-												to={'/projeto/'}
-                                                onClick={() => editProject(value)}
-												className='btn btn-warning'
-											>
-												{' '}
-												Edit
-											</Link>
-										</td>
-										<td>
-											<Link
-												onClick={() => deleteProject(value.id)}
-												className='btn btn-danger'
-											>
-												{' '}
-												Delete
-											</Link>
-										</td>
-									</tr>
-                                    ))}
-
+											</td>
+											<td>
+												<Link
+													to={
+														'/admin/project/editproject/' +
+														value.id
+													}
+													className='btn btn-warning'
+												>
+													{' '}
+													Edit
+												</Link>
+											</td>
+											<td>
+												<Link
+													onClick={() =>
+														deleteProject(value.id)
+													}
+													className='btn btn-danger'
+												>
+													{' '}
+													Delete
+												</Link>
+											</td>
+										</tr>
+									))}
 								</tbody>
 							</Table>
 							<CardFooter className='py-4'>
