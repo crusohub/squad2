@@ -28,7 +28,8 @@ import {
 } from "reactstrap";
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
-
+import UsuarioDataService from "services/UsuarioDataService";
+import ProjetoDataService from "services/ProjetoDataService";
 
 const ProjectAssociation = () => {
 
@@ -59,22 +60,19 @@ const ProjectAssociation = () => {
   };
 
   const preencherSelectUsers = () => {
-    let url = 'https://60bfbc0397295a0017c43b7a.mockapi.io/usuario';
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setListUsers([...data]);
-      });
+    UsuarioDataService.getAll()
+      .then(response => {
+        setListUsers(response.data);
+      })
+      .catch((e) => console.log(e));
   };
 
   const preencherSelectProjects = () => {
-    let url = 'https://60bfbc0397295a0017c43b7a.mockapi.io/projeto';
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setListProjects([...data]);
-      });
+    ProjetoDataService.getAll()
+      .then(response => {
+        setListProjects(response.data);
+      })
+      .catch((e) => console.log(e));
   };
 
   const efetuarLogin = () => {
@@ -119,11 +117,11 @@ const ProjectAssociation = () => {
                   ))}
                 </select>
 
-                {/* Botão de associar projeto */}   
+                {/* Botão de associar projeto */}
                 <Button className="my-4" color="primary" type="button" onClick={efetuarLogin}>
                   Associate project
                 </Button>
-                  
+
                 {/* Div para mostragem de erros */}
                 {erros &&
                   <div className="col">
