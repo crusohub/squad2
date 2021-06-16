@@ -41,6 +41,9 @@ import UserHeader from "components/Headers/UserHeader.js";
 import routeSettings from "routesSettings";
 
 const Profile = () => {
+  const callSettings = (props) => {
+    props.history.push("/settings/settings");
+  } 
   return (
     <>
       <UserHeader />
@@ -144,16 +147,14 @@ const Profile = () => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    {/* <Button
+                    <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => callSettings("/settings/settings")}
                       size="sm"
-                    > */}
-                    <Link to={'/settings/settings'}>
+                    >
                       Settings
-                    </Link>
-                    {/* </Button> */}
+                    </Button>
                   </Col>
                 </Row>
               </CardHeader>
