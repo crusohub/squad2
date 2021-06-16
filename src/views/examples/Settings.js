@@ -5,7 +5,6 @@ import React from "react";
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
     FormGroup,
     Form,
@@ -18,7 +17,7 @@ import {
 } from "reactstrap";
 
 const Settings = () => {
-
+    
     return(
         <>
             <Col lg="5" md="7">
