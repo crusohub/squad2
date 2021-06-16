@@ -24,6 +24,7 @@ import Tables from "views/examples/Tables.js";
 import TableUser from "views/examples/TablesUser.js";
 import Icons from "views/examples/Icons.js";
 import ProjectAssociation from "views/examples/ProjectAssociation.js";
+import EditProject from "views/examples/EditProject";
 
 var routes = [
   {
@@ -73,6 +74,13 @@ var routes = [
     name: "Project Association",
     icon: "ni ni-bullet-list-67 text-blue",
     component: ProjectAssociation,
+    layout: "/admin",
+  },
+  {
+    path: "/project/editproject/:id",
+    name: "Edit Project",
+    icon: "ni ni-bullet-list-67 text-blue",
+    component: EditProject,
     layout: "/admin",
   },
   {
