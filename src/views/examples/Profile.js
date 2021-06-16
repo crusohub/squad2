@@ -33,12 +33,11 @@ import {
 
 import {
   BrowserRouter as Router,
-  Link
+  Link,
 } from "react-router-dom";
 
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
-import routeSettings from "routesSettings";
 
 const Profile = () => {
   return (
@@ -147,13 +146,14 @@ const Profile = () => {
                     {/* <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => e.defaultPrevented()}
                       size="sm"
-                    > */}
-                    <Link to={'/settings/settings'}>
+                    >
+                      Settings
+                    </Button> */}
+                    <Link to={"/settings/settings"}>
                       Settings
                     </Link>
-                    {/* </Button> */}
                   </Col>
                 </Row>
               </CardHeader>
