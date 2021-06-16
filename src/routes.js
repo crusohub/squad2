@@ -23,6 +23,7 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import TableUser from "views/examples/TablesUser.js";
 import Icons from "views/examples/Icons.js";
+import ProjectAssociation from "views/examples/ProjectAssociation.js";
 
 var routes = [
   {
@@ -65,6 +66,13 @@ var routes = [
     name: "Table User",
     icon: "ni ni-bullet-list-67 text-red",
     component: TableUser,
+    layout: "/admin",
+  },
+  {
+    path: "/projectassociation",
+    name: "Project Association",
+    icon: "ni ni-bullet-list-67 text-blue",
+    component: ProjectAssociation,
     layout: "/admin",
   },
   {
