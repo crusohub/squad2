@@ -18,6 +18,7 @@
 // core components
 import HeaderProject from 'components/Headers/HeaderProject';
 import ProjetoDataService from 'services/ProjetoDataService';
+import EditProject from './EditProject';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // reactstrap components
@@ -66,7 +67,7 @@ const Tables = () => {
 
     const deleteProject = (id) => {
 		ProjetoDataService.remove(id)
-			.then((response) => {
+			.then(() => {
 				retrieveProject();
 			})
 			.catch((e) => console.log(e));
@@ -156,8 +157,8 @@ const Tables = () => {
 										</td>
 										<td>
 											<Link
-												to={`/projeto/`}
-                                                onClick={() => editProject(projects)}
+												to={'/projeto/'}
+                                                onClick={() => editProject(value)}
 												className='btn btn-warning'
 											>
 												{' '}
@@ -166,7 +167,7 @@ const Tables = () => {
 										</td>
 										<td>
 											<Link
-												onClick={() => deleteProject(projects.id)}
+												onClick={() => deleteProject(value.id)}
 												className='btn btn-danger'
 											>
 												{' '}
