@@ -33,17 +33,13 @@ import {
 
 import {
   BrowserRouter as Router,
-  Link
+  Link,
 } from "react-router-dom";
 
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
-import routeSettings from "routesSettings";
 
 const Profile = () => {
-  const callSettings = (props) => {
-    props.history.push("/settings/settings");
-  } 
   return (
     <>
       <UserHeader />
@@ -147,14 +143,17 @@ const Profile = () => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    <Button
+                    {/* <Button
                       color="primary"
                       href="#pablo"
-                      onClick={() => callSettings("/settings/settings")}
+                      onClick={(e) => e.defaultPrevented()}
                       size="sm"
                     >
                       Settings
-                    </Button>
+                    </Button> */}
+                    <Link to={"/settings/settings"}>
+                      Settings
+                    </Link>
                   </Col>
                 </Row>
               </CardHeader>
