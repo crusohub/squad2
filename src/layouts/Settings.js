@@ -21,12 +21,12 @@ import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
+import SettingsNavbar from "components/Navbars/SettingsNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import routes from "routes.js";
+import routesSettings from "routesSettings";
 
-const Auth = (props) => {
+const Settings = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -36,15 +36,16 @@ const Auth = (props) => {
       document.body.classList.remove("bg-default");
     };
   }, []);
+
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/auth") {
+  const getRoutes = (routesSettings) => {
+    return routesSettings.map((prop, key) => {
+      if (prop.layout === "/settings") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -61,16 +62,13 @@ const Auth = (props) => {
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
+        <SettingsNavbar />
         <div className="header bg-gradient-info py-7 py-lg-8">
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Bem-vindo!</h1>
-                  <p className="text-lead text-light">
-                  Estamos felizes por ter você conosco! Cadastre-se para saber mais.
-                  </p>
+                  <h1 className="text-white">Change your password!</h1>
                 </Col>
               </Row>
             </div>
@@ -95,8 +93,8 @@ const Auth = (props) => {
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Switch>
-              {getRoutes(routes)}
-              <Redirect from="*" to="/auth/login" />
+              {getRoutes(routesSettings)}
+              <Redirect from="*" to="/" />
             </Switch>
           </Row>
         </Container>
@@ -105,5 +103,4 @@ const Auth = (props) => {
     </>
   );
 };
-
-export default Auth;
+export default Settings;

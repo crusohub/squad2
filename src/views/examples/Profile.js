@@ -31,6 +31,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
+
+import {
+  BrowserRouter as Router,
+  Link,
+} from "react-router-dom";
+
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
@@ -191,14 +197,17 @@ const   handleInputChange = event => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    <Button
+                    {/* <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => e.defaultPrevented()}
                       size="sm"
                     >
                       Settings
-                    </Button>
+                    </Button> */}
+                    <Link to={"/settings/settings"}>
+                      Settings
+                    </Link>
                   </Col>
                 </Row>
               </CardHeader>
