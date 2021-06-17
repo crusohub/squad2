@@ -15,6 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+// core components
+import UserHeader from "components/Headers/UserHeader.js";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
 import React from "react";
 import {useEffect, useContext, useState} from "react"
 
@@ -32,10 +36,7 @@ import {
   Col,
 } from "reactstrap";
 
-// core components
-import UserHeader from "components/Headers/UserHeader.js";
-import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
-import UsuarioDataService from "services/UsuarioDataService";
+
 
 const Profile = (props) => {
 
