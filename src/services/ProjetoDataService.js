@@ -25,7 +25,7 @@ const removeAll = () => {
 };
 
 const findByName = name => {
-  return http.get(`/projeto?name=${name}`);
+  return http.get(`/projeto?projectname=${name}`); //pesquisa pelo projectname
 };
 
 export default {

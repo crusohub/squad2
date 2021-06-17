@@ -24,6 +24,7 @@ import Tables from "views/examples/Tables.js";
 import TableUser from "views/examples/TablesUser.js";
 import Icons from "views/examples/Icons.js";
 import ProjectAssociation from "views/examples/ProjectAssociation.js";
+import ProjetoAdd from "views/examples/ProjetoAdd";
 
 var routes = [
   {
@@ -88,6 +89,13 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: Register,
     layout: "/auth",
+  },
+  {
+    path: "/projetoadd",
+    name: "NovoProjeto",
+    icon: "ni ni-circle-08 text-pink",
+    component: ProjetoAdd,
+    layout: "/admin",
   },
 ];
 export default routes;
