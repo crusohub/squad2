@@ -107,23 +107,37 @@ const Tables = () => {
                             <CardHeader className="border-0">
                                 <h3 className="mb-0">Projects table</h3>
                             </CardHeader>
-<CardBody>
+                        <CardBody>
                             <Row>
-                        <Col>
-                        <label
-                                    className="form-control-label"
-                                    htmlFor="currentPassword"
-                                    >
-                                    Project Name
-                                </label>
-                            <Input
-                                placeholder="Search by project name or status"
-                                className="form-control-alternative"
-                                onChange={searchOnChange}
-                                value={searchProject}
-                            />
-                            </Col>
-                        </Row>
+                                <Col>
+                                <label
+                                            className="form-control-label"
+                                            htmlFor="currentPassword"
+                                            >
+                                            Project Name
+                                        </label>
+                                    <Input
+                                        placeholder="Search by project name or status"
+                                        className="form-control-alternative"
+                                        onChange={searchOnChange}
+                                        value={searchProject}
+                                    />
+                                    </Col>
+                                    <Col>
+                                <label
+                                            className="form-control-label"
+                                            htmlFor="currentPassword"
+                                            >
+                                            Project Name
+                                        </label>
+                                    <Input
+                                        placeholder="Search by project name or status"
+                                        className="form-control-alternative"
+                                        onChange={searchOnChange}
+                                        value={searchProject}
+                                    />
+                                    </Col>
+                            </Row>
                         <Row>
                             <Col>
                             <Button 

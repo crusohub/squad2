@@ -42,6 +42,7 @@ import {
     InputGroup,
     InputGroupText,
     InputGroupAddon,
+    CardBody, Col, Button
 } from "reactstrap";
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
@@ -72,7 +73,7 @@ const ProjectAssociationSearch = () => {
         try {
             let usuarioCapturado = users.find((value) => value.id == id);
             return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
-        } catch {}
+        } catch { }
     }
 
     const deleteAssociationUser = (id) => {
@@ -102,124 +103,154 @@ const ProjectAssociationSearch = () => {
                 {/* Table */}
                 <Row>
                     <div className="col">
-                        <div className="d-flex">
-                            <InputGroup className="input-group-alternative mr-4 mb-4">
-                                <InputGroupAddon addonType="prepend">
-                                    <InputGroupText>
-                                        <i className="fas fa-search" />
-                                    </InputGroupText>
-                                </InputGroupAddon>
-                                <Input placeholder="User" type="text" />
-                            </InputGroup>
-                            <InputGroup className="input-group-alternative mb-4">
-                                <InputGroupAddon addonType="prepend">
-                                    <InputGroupText>
-                                        <i className="fas fa-search" />
-                                    </InputGroupText>
-                                </InputGroupAddon>
-                                <Input placeholder="Project" type="text" />
-                            </InputGroup>
-                        </div>
+
                         <Card className="shadow">
                             <CardHeader className="border-0">
                                 <h3 className="mb-0">Project Association</h3>
                             </CardHeader>
-                            <Table
-                                className="align-items-center table-flush"
-                                responsive
-                            >
-                                <thead className="thead-light">
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">User</th>
-                                        <th scope="col">Project</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {associations.map((value) => (
-                                        <tr>
-                                            <th scope="row">
-                                                <script>
-                                                    {console.log(value)}
-                                                </script>
-                                                {value.id}
-                                            </th>
-                                            <td className="d-flex align-items-center">
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip742438047"
-                                                        onClick={(e) =>
-                                                            e.preventDefault()
-                                                        }
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src="https://picsum.photos/200"
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip742438047"
-                                                    >
-                                                        Ryan Tompson
+                            <CardBody>
+                                <Row>
+                                    <Col>
+                                        <label
+                                            className="form-control-label"
+                                            htmlFor="currentPassword"
+                                        >
+                                            Project Name
+                                        </label>
+                                        <Input
+                                            placeholder="Search by project name or status"
+                                            className="form-control-alternative"
+                                        //onChange={searchOnChange}
+                                        //value={searchProject}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <label
+                                            className="form-control-label"
+                                            htmlFor="currentPassword"
+                                        >
+                                            Project Name
+                                        </label>
+                                        <Input
+                                            placeholder="Search by project name or status"
+                                            className="form-control-alternative"
+                                        //onChange={searchOnChange}
+                                        //value={searchProject}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Button
+                                            className="my-4"
+                                            color="primary"
+                                            type="submit"
+                                        >
+                                            Pesquisar
+                            </Button>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Table
+                                            className="align-items-center table-flush"
+                                            responsive
+                                        >
+                                            <thead className="thead-light">
+                                                <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Project</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {associations.map((value) => (
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <script>
+                                                                {console.log(value)}
+                                                            </script>
+                                                            {value.id}
+                                                        </th>
+                                                        <td className="d-flex align-items-center">
+                                                            <div className="avatar-group">
+                                                                <a
+                                                                    className="avatar avatar-sm"
+                                                                    href="#pablo"
+                                                                    id="tooltip742438047"
+                                                                    onClick={(e) =>
+                                                                        e.preventDefault()
+                                                                    }
+                                                                >
+                                                                    <img
+                                                                        alt="..."
+                                                                        className="rounded-circle"
+                                                                        src="https://picsum.photos/200"
+                                                                    />
+                                                                </a>
+                                                                <UncontrolledTooltip
+                                                                    delay={0}
+                                                                    target="tooltip742438047"
+                                                                >
+                                                                    Ryan Tompson
                                                     </UncontrolledTooltip>
-                                                </div>
-                                                {searchUser(value.userid)}
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    {value.projectname}
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={(e) =>
-                                                            e.preventDefault()
-                                                        }
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu
-                                                        className="dropdown-menu-arrow"
-                                                        right
-                                                    >
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={(e) =>
-                                                                e.preventDefault()
-                                                            }
-                                                        >
-                                                            Action
+                                                            </div>
+                                                            {searchUser(value.userid)}
+                                                        </td>
+                                                        <td>
+                                                            <div className="d-flex align-items-center">
+                                                                {value.projectname}
+                                                            </div>
+                                                        </td>
+                                                        <td className="text-right">
+                                                            <UncontrolledDropdown>
+                                                                <DropdownToggle
+                                                                    className="btn-icon-only text-light"
+                                                                    href="#pablo"
+                                                                    role="button"
+                                                                    size="sm"
+                                                                    color=""
+                                                                    onClick={(e) =>
+                                                                        e.preventDefault()
+                                                                    }
+                                                                >
+                                                                    <i className="fas fa-ellipsis-v" />
+                                                                </DropdownToggle>
+                                                                <DropdownMenu
+                                                                    className="dropdown-menu-arrow"
+                                                                    right
+                                                                >
+                                                                    <DropdownItem
+                                                                        href="#pablo"
+                                                                        onClick={(e) =>
+                                                                            e.preventDefault()
+                                                                        }
+                                                                    >
+                                                                        Action
                                                         </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                deleteAssociationUser(
-                                                                    value.id
-                                                                );
-                                                            }}
-                                                        >
-                                                            <i className="ni ni-basket text-danger" />
-                                                            Delete
+                                                                    <DropdownItem
+                                                                        href="#pablo"
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            deleteAssociationUser(
+                                                                                value.id
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        <i className="ni ni-basket text-danger" />
+                                                                        Delete
                                                         </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                                                                </DropdownMenu>
+                                                            </UncontrolledDropdown>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </Table>
+                                    </Col>
+                                </Row>
+                            </CardBody>
                             <CardFooter className="py-4">
                                 <nav aria-label="...">
                                     <Pagination

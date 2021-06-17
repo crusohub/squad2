@@ -25,6 +25,9 @@ import {
   Row,
   Button,
   UncontrolledTooltip,
+  CardBody,
+  CardFooter,
+  Col, Input
 } from "reactstrap";
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
@@ -92,43 +95,71 @@ const ProjectAssociation = () => {
       <HeaderProject />
       <Container className="mt--7" fluid>
         <Row>
-          <div className="col text-center">
+          <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <h3 className="mb-0">User Project Association</h3>
               </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col>
+                    {/* Select de projetos */}
+                    <label
+                      className="form-control-label"
+                      htmlFor="currentPassword"
+                    >
+                      Select a project
+                </label>
+                    <Input
+                      type="select"
+                      placeholder="Search by project name or status"
+                      className="form-control-alternative"
+                      onChange={(e) => setProjectValue(e.target.value)}
+                    //value={searchProject}
+                    >
+                      <option>Select a project</option>
+                      {listProjects.map((data) => (
+                        <option value={data.id}>{data.projectname}</option>
+                      ))}
+                    </Input>
 
-              {/* Select de projetos */}
-              <div className="col">
-                <span className="display-5 text-center">Select a project:</span>
-                <select onChange={(e) => setProjectValue(e.target.value)} className="form-control mx-auto mb-3" tabindex="2" style={{ maxWidth: 300, cursor: "pointer,m" }}>
-                  <option>Select a project</option>
-                  {listProjects.map((data) => (
-                    <option value={data.id}>{data.projectname}</option>
-                  ))}
-                </select>
-
-                {/* Select de usuários */}
-                <span className="display-5 text-center">Select a user:</span>
-                <select onChange={(e) => setUserValue(e.target.value)} className="form-control mx-auto" tabindex="2" style={{ maxWidth: 300 }}>
-                  <option>Select a user</option>
-                  {listUsers.map((data) => (
-                    <option value={data.id}>{data.username}</option>
-                  ))}
-                </select>
-
-                {/* Botão de associar projeto */}
-                <Button className="my-4" color="primary" type="button" onClick={efetuarLogin}>
-                  Associate project
+                  </Col>
+                  <Col>
+                    {/* Select de usuários */}
+                    {/* Select de projetos */}
+                    <label
+                      className="form-control-label"
+                      htmlFor="currentPassword"
+                    >
+                      Select a user
+                </label>
+                    <select onChange={(e) => setUserValue(e.target.value)} className="form-control mx-auto" tabindex="2" style={{ maxWidth: 300 }}>
+                      <option>Select a user</option>
+                      {listUsers.map((data) => (
+                        <option value={data.id}>{data.username}</option>
+                      ))}
+                    </select>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    {/* Botão de associar projeto */}
+                    <Button className="my-4" color="primary" type="button" onClick={efetuarLogin}>
+                      Associate project
                 </Button>
 
-                {/* Div para mostragem de erros */}
-                {erros &&
-                  <div className="col">
-                    <span style={{ color: "#ff0000", fontWeight: "bold" }}>{errorMessage}</span>
-                  </div>
-                }
-              </div>
+                    {/* Div para mostragem de erros */}
+                    {erros &&
+                      <div className="col">
+                        <span style={{ color: "#ff0000", fontWeight: "bold" }}>{errorMessage}</span>
+                      </div>
+                    }
+                  </Col>
+                </Row>
+              </CardBody>
+              <CardFooter>
+
+              </CardFooter>
             </Card>
           </div>
         </Row>
