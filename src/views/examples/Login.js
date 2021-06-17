@@ -15,7 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import React, { useContext } from "react";
 
 // reactstrap components
 import {
@@ -33,7 +34,18 @@ import {
   Col,
 } from "reactstrap";
 
-const Login = () => {
+const Login = (props) => {
+
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+
+  function autenticaUsuario(usuario){
+    setUsuarioLogado(usuario)
+    if(!usuario.firstname){
+        props.history.push('/admin/user-profile')
+        return
+    }
+    props.history.push('/admin/index')
+  }
   return (
     <>
       <Col lg="5" md="7">

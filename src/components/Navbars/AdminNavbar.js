@@ -41,25 +41,7 @@ import {
 
 const AdminNavbar = (props) => {
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
-
-  const getData = () => {
-    console.log(UsuarioDataService.get(1))
-
-   UsuarioDataService.get(1)
-   
-    .then(response=>{
-      setUsuarioLogado(response.data);
-    })
-    .catch(e=>{
-      console.log(e)
-    })
-  }
-  useEffect(()=>{
-    getData()
-  },[])
-
   
-
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
