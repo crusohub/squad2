@@ -19,7 +19,7 @@ import ProfileSettings from "views/examples/ProfileSettings"
 
 var routeSettings = [
   {
-    path: "/settings",
+    path: "/changePassword",
     name: "Settings",
     icon: "ni ni-settings text-green",
     component: ProfileSettings,

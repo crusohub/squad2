@@ -31,15 +31,13 @@ import {
   Col,
 } from "reactstrap";
 
-import {
-  BrowserRouter as Router,
-  Link,
-} from "react-router-dom";
-
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 
-const Profile = () => {
+const Profile = (props) => {
+  const callSettings = () =>{
+    props.history.push("/settings/changePassword")
+  }
   return (
     <>
       <UserHeader />
@@ -143,17 +141,14 @@ const Profile = () => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    {/* <Button
+                    <Button
                       color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.defaultPrevented()}
+                      onClick={() => callSettings()}
                       size="sm"
                     >
                       Settings
-                    </Button> */}
-                    <Link to={"/settings/settings"}>
-                      Settings
-                    </Link>
+                    </Button>
+                    
                   </Col>
                 </Row>
               </CardHeader>

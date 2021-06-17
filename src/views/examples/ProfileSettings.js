@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useContext } from "react";
 
 // reactstrap components
 import {
@@ -16,7 +16,9 @@ import {
     Col,
 } from "reactstrap";
 
-const Settings = () => {
+import { Link } from "react-router-dom";
+
+const Settings = (props) => {
     
     return(
         <Col lg="5" md="7">
@@ -66,7 +68,10 @@ const Settings = () => {
                         </FormGroup>
                         <div className="text-center">
                             <Button className="my-4" color="danger" type="button">
-                                Cancel
+                                <Link to={"/admin/user-profile"}
+                                color = "white">
+                                    Cancel
+                                </Link>
                             </Button>
                             <Button className="my-4" color="primary" type="button">
                                 Reset Password
