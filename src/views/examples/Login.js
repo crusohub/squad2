@@ -17,6 +17,8 @@
 */
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
 import React, { useContext } from "react";
+import { Link } from 'react-router-dom';
+
 
 // reactstrap components
 import {
@@ -112,15 +114,19 @@ const Login = (props) => {
           </CardBody>
         </Card>
         <Row className="mt-3">
+          
           <Col xs="6">
             <a
               className="text-light"
               href="#pablo"
               onClick={(e) => e.preventDefault()}
             >
-              <small>Forgot password?</small>
+              <small>
+              <Link to="/ForgotPassword">Forgot password?</Link>
+                </small>
             </a>
           </Col>
+         
           <Col className="text-right" xs="6">
             <a
               className="text-light"
