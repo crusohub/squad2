@@ -16,7 +16,11 @@
 
 */
 import React from "react";
+import {useContext, useEffect} from "react"
 import { Link } from "react-router-dom";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -36,6 +40,8 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
+  const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
+  
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -73,7 +79,7 @@ const AdminNavbar = (props) => {
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {usuarioLogado.firstname} {usuarioLogado.lastname}
                     </span>
                   </Media>
                 </Media>
