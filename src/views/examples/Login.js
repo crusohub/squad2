@@ -22,145 +22,143 @@ import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
 
 // reactstrap components
 import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Row,
-    Col,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Row,
+  Col,
 } from "reactstrap";
 
 const Login = (props) => {
 
-    const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
-    const [username, setUsername] = useState()
-    const [password, setPassword] = useState()
-    const login = () => {
-        console.log(username)
-        UsuarioDataService.login(username, password).then(
-            response => response.json() ).then(
-data => {
-                console.log(data[0])
-                if(data[0].id != ""){
-                   setUsuarioLogado(data[0])
-                   if(!data[0].firstname){
-                      props.history.push('/admin/user-profile')
-                      return
-                   }
-                   props.history.push('/admin/index')
-                }
-            })
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
+  const login = () => {
+    console.log(username)
+    UsuarioDataService.login(username, password).then(
+      response => response.data).then(
+        data => {
+              console.log(data[0])
+              if(data[0].password === password){
+                autenticaUsuario(data[0])
+              }else{
+                alert("Falha na autenticação!")
+              }
+        })
+  }
+  const handleusername = (e) => {
+    setUsername(e.target.value)
+  }
+  const handlepassword = (e) => {
+    setPassword(e.target.value)
+  }
+  function autenticaUsuario(usuario) {
+    console.log(usuario)
+    if (usuario != null) {
+      setUsuarioLogado(usuario)
+      if (!usuario.firstname) {
+        props.history.push('/admin/user-profile')
+        return
+      }
+      props.history.push('/admin/index')
+    }else{
+      alert("Falha na autenticação!")
     }
-    const handleusername = (e) => {
-        setUsername(e.target.value)
-    }
-    const handlepassword = (e) => {
-        setPassword(e.target.value)
-    }
-    function autenticaUsuario(usuario) {
-        console.log(usuario)
-        if (usuario != null) {
+  }
+  return (
+    <>
+      <Col lg="5" md="7">
+        <Card className="bg-secondary shadow border-0">
+          <CardHeader className="bg-transparent pb-5">
 
-            setUsuarioLogado(usuario)
-            if (!usuario.firstname) {
-                props.history.push('/admin/user-profile')
-                return
-            }
-            props.history.push('/admin/index')
-        }
-    }
-    return (
-        <>
-            <Col lg="5" md="7">
-                <Card className="bg-secondary shadow border-0">
-                    <CardHeader className="bg-transparent pb-5">
-
-                    </CardHeader>
-                    <CardBody className="px-lg-5 py-lg-5">
-                        <div className="text-center text-muted mb-4">
-                            <small>Sign in with credentials</small>
-                        </div>
-                        <Form role="form">
-                            <FormGroup className="mb-3">
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-email-83" />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        placeholder="Email"
-                                        type="email"
-                                        autoComplete="new-email"
-                                        onChange={handleusername}
-                                    />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-lock-circle-open" />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        placeholder="Password"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        onChange={handlepassword}
-                                    />
-                                </InputGroup>
-                            </FormGroup>
-                            <div className="custom-control custom-control-alternative custom-checkbox">
-                                <input
-                                    className="custom-control-input"
-                                    id=" customCheckLogin"
-                                    type="checkbox"
-                                />
-                                <label
-                                    className="custom-control-label"
-                                    htmlFor=" customCheckLogin"
-                                >
-                                    <span className="text-muted">Remember me</span>
-                                </label>
-                            </div>
-                            <div className="text-center">
-                                <Button onClick={login} className="my-4" color="primary" type="button">
-                                    Sign in
+          </CardHeader>
+          <CardBody className="px-lg-5 py-lg-5">
+            <div className="text-center text-muted mb-4">
+              <small>Sign in with credentials</small>
+            </div>
+            <Form role="form">
+              <FormGroup className="mb-3">
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-email-83" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="new-email"
+                    onChange={handleusername}
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    autoComplete="new-password"
+                    onChange={handlepassword}
+                  />
+                </InputGroup>
+              </FormGroup>
+              <div className="custom-control custom-control-alternative custom-checkbox">
+                <input
+                  className="custom-control-input"
+                  id=" customCheckLogin"
+                  type="checkbox"
+                />
+                <label
+                  className="custom-control-label"
+                  htmlFor=" customCheckLogin"
+                >
+                  <span className="text-muted">Remember me</span>
+                </label>
+              </div>
+              <div className="text-center">
+                <Button onClick={login} className="my-4" color="primary" type="button">
+                  Sign in
                                 </Button>
-                            </div>
-                        </Form>
-                    </CardBody>
-                </Card>
-                <Row className="mt-3">
-                    <Col xs="6">
-                        <a
-                            className="text-light"
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                        >
-                            <small>Forgot password?</small>
-                        </a>
-                    </Col>
-                    <Col className="text-right" xs="6">
-                        <a
-                            className="text-light"
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                        >
-                            <small>Create new account</small>
-                        </a>
-                    </Col>
-                </Row>
-            </Col>
-        </>
-    );
+              </div>
+            </Form>
+          </CardBody>
+        </Card>
+        <Row className="mt-3">
+          <Col xs="6">
+            <a
+              className="text-light"
+              href="#pablo"
+              onClick={(e) => e.preventDefault()}
+            >
+              <small>Forgot password?</small>
+            </a>
+          </Col>
+          <Col className="text-right" xs="6">
+            <a
+              className="text-light"
+              href="#pablo"
+              onClick={(e) => e.preventDefault()}
+            >
+              <small>Create new account</small>
+            </a>
+          </Col>
+        </Row>
+      </Col>
+    </>
+  );
 };
 
 export default Login;
