@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 
 // reactstrap components
 import {
@@ -16,7 +16,25 @@ import {
     Col,
 } from "reactstrap";
 
+import { Link } from "react-router-dom";
+
 const ProfileDelete = () => {
+
+    const initialState = {
+        username: "",
+        password: ""
+    }
+
+    const [dadosLogado, setDadosLogado] = useState(initialState)
+
+    const handleInputChange = event => {
+        const {name, value} = event.target;
+        setDadosLogado({...dadosLogado, [name]: value})
+    }
+
+    const deleteAccount = () => {
+        console.log(dadosLogado)
+    }
     
     return(
         <Col lg="5" md="7">
@@ -33,6 +51,9 @@ const ProfileDelete = () => {
                                 <Input
                                     placeholder="Username"
                                     type="text"
+                                    name="username"
+                                    value={dadosLogado.username}
+                                    onChange={handleInputChange}
                                 />
                             </InputGroup>
                         </FormGroup>
@@ -46,14 +67,23 @@ const ProfileDelete = () => {
                                 <Input
                                     placeholder="Password"
                                     type="password"
+                                    name="password"
+                                    value={dadosLogado.password}
+                                    onChange={handleInputChange}
                                 />
                             </InputGroup>
                         </FormGroup>
                         <div className="text-center">
-                            <Button className="my-4" color="danger" type="button">
-                                Cancel
-                            </Button>
-                            <Button className="my-4" color="primary" type="button">
+                            <Link to={"/admin/user-profile"} className="mr-3">
+                                <Button className="my-4" color="danger" type="button">
+                                    Cancel
+                                </Button>
+                            </Link>
+                            <Button 
+                            className="my-4" 
+                            color="primary" 
+                            type="button"
+                            onClick={deleteAccount}>
                                 Delete user
                             </Button>
                         </div>

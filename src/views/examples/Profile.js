@@ -196,7 +196,6 @@ const   handleInputChange = event => {
                     <Link to={"/settings/delete"}>
                       <Button
                         color="danger"
-                        onClick={() => callSettings()}
                         size="sm"
                       >
                         Delete
