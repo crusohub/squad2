@@ -25,6 +25,7 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import SettingsLayout from "layouts/Settings";
 
 import { UsuarioLogadoProvider } from "./context/UsuarioLogadoContext";
 
@@ -39,6 +40,10 @@ ReactDOM.render(
                 <Route
                     path="/auth"
                     render={(props) => <AuthLayout {...props} />}
+                />
+                <Route
+                    path="/settings"
+                    render={(props) => <SettingsLayout {...props} />}
                 />
                 <Redirect from="/" to="/admin/index" />
             </Switch>

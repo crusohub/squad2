@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import {useEffect, useContext, useState} from "react"
 
 // reactstrap components
 import {
@@ -30,13 +31,72 @@ import {
   Row,
   Col,
 } from "reactstrap";
+
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
 
-const Profile = () => {
+const Profile = (props) => {
+
+  const Api ={
+    
+      id: "1",
+      username: "Username ",
+      firstname: "Firstname ",
+      lastname: "Lastname ",
+      email: "Email ",
+      address: "Address ",
+      city: "City ",
+      country: "Country ",
+      postalcode: "Postalcode ",
+      about: "About ",
+      password: "1",
+  
+  }
+
+  const [usuarioApi, setUsuarioApi] = useState(Api)
+  const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
+
+
+  useEffect(()=>{
+      setUsuarioApi(usuarioLogado)
+  },[])
+  
+
+const   handleInputChange = event => {
+  const { name, value } = event.target;
+  setUsuarioApi({ ...usuarioApi, [name]: value });
+  //console.log(usuarioLogado)
+  
+};
+
+
+
+
+
+  const getData = () => {
+    console.log(UsuarioDataService.get(1))
+
+   UsuarioDataService.get(1)
+   
+    .then(response=>{
+      setUsuarioLogado(response.data);
+    })
+    .catch(e=>{
+      console.log(e)
+    })
+  }
+  useEffect(()=>{
+    getData()
+  },[]);
+
+  const callSettings = () =>{
+    props.history.push("/settings/changePassword")
+  }
   return (
     <>
-      <UserHeader />
+      <UserHeader user={usuarioApi}/>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -101,12 +161,12 @@ const Profile = () => {
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
+                    {usuarioLogado.username}
                     <span className="font-weight-light">, 27</span>
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
-                    Bucharest, Romania
+                   {usuarioLogado.city}, {usuarioLogado.country}
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
@@ -118,9 +178,7 @@ const Profile = () => {
                   </div>
                   <hr className="my-4" />
                   <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
+                   description
                   </p>
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
@@ -139,12 +197,12 @@ const Profile = () => {
                   <Col className="text-right" xs="4">
                     <Button
                       color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => callSettings()}
                       size="sm"
                     >
                       Settings
                     </Button>
+                    
                   </Col>
                 </Row>
               </CardHeader>
@@ -165,8 +223,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
+                            defaultValue={usuarioApi.username}
                             id="input-username"
+                            name="username"
+                            onBlur={handleInputChange}
                             placeholder="Username"
                             type="text"
                           />
@@ -183,7 +243,9 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            name="email"
+                            placeholder={usuarioApi.email}
+                            onChange={handleInputChange}
                             type="email"
                           />
                         </FormGroup>
@@ -200,8 +262,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
+                            defaultValue={usuarioApi.firstname}
+                            onChange={handleInputChange}
                             id="input-first-name"
+                            name="firstname"
                             placeholder="First name"
                             type="text"
                           />
@@ -217,8 +281,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
+                            defaultValue={usuarioApi.lastname}
+                            onChange={handleInputChange}
                             id="input-last-name"
+                            name="lastname"
                             placeholder="Last name"
                             type="text"
                           />
@@ -243,8 +309,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            defaultValue={usuarioApi.address}
+                            onChange={handleInputChange}
                             id="input-address"
+                            name="address"
                             placeholder="Home Address"
                             type="text"
                           />
@@ -262,8 +330,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="New York"
+                            defaultValue={usuarioApi.city}
+                            onChange={handleInputChange}
                             id="input-city"
+                            name="city"
                             placeholder="City"
                             type="text"
                           />
@@ -279,8 +349,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="United States"
+                            defaultValue={usuarioApi.country}
+                            onChange={handleInputChange}
                             id="input-country"
+                            name="country"
                             placeholder="Country"
                             type="text"
                           />
@@ -297,7 +369,9 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-postal-code"
-                            placeholder="Postal code"
+                            name="postalcode"
+                            placeholder={usuarioApi.postalcode}
+                            onChange={handleInputChange}
                             type="number"
                           />
                         </FormGroup>
@@ -314,8 +388,9 @@ const Profile = () => {
                         className="form-control-alternative"
                         placeholder="A few words about you ..."
                         rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
+                        name="about"
+                        defaultValue={usuarioApi.about}
+                        onChange={handleInputChange}
                         type="textarea"
                       />
                     </FormGroup>
@@ -327,7 +402,8 @@ const Profile = () => {
         </Row>
       </Container>
     </>
-  );
+  )
 };
+
 
 export default Profile;
