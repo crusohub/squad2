@@ -24,87 +24,94 @@ import Tables from "views/examples/Tables.js";
 import TableUser from "views/examples/TablesUser.js";
 import Icons from "views/examples/Icons.js";
 import ProjectAssociation from "views/examples/ProjectAssociation.js";
+import ProjectAssociationSearch from "views/examples/ProjectAssociationSearch";
 import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
 
-
 var routes = [
-  {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
-    layout: "/admin",
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
-  },
-  {
-    path: "/tableuser",
-    name: "Table User",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: TableUser,
-    layout: "/admin",
-  },
-  {
-    path: "/projeto",
-    name: "Projects Search",
-    icon: "fas fa-search text-blue",
-    component: SearchProject,
-    layout: "/admin",
-  },
-  {
-    path: "/projectassociation",
-    name: "Project Association",
-    icon: "ni ni-bullet-list-67 text-blue",
-    component: ProjectAssociation,
-    layout: "/admin",
-  },
-  {
-    path: "/project/editproject/:id",
-    name: "Edit Project",
-    icon: "ni ni-bullet-list-67 text-blue",
-    component: EditProject,
-    layout: "/admin",
-  },
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: Login,
-    layout: "/auth",
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth",
-  },
+    {
+        path: "/index",
+        name: "Dashboard",
+        icon: "ni ni-tv-2 text-primary",
+        component: Index,
+        layout: "/admin",
+    },
+    {
+        path: "/icons",
+        name: "Icons",
+        icon: "ni ni-planet text-blue",
+        component: Icons,
+        layout: "/admin",
+    },
+    {
+        path: "/maps",
+        name: "Maps",
+        icon: "ni ni-pin-3 text-orange",
+        component: Maps,
+        layout: "/admin",
+    },
+    {
+        path: "/user-profile",
+        name: "User Profile",
+        icon: "ni ni-single-02 text-yellow",
+        component: Profile,
+        layout: "/admin",
+    },
+    {
+        path: "/tables",
+        name: "Tables",
+        icon: "ni ni-bullet-list-67 text-red",
+        component: Tables,
+        layout: "/admin",
+    },
+    {
+        path: "/tableuser",
+        name: "Table User",
+        icon: "ni ni-bullet-list-67 text-red",
+        component: TableUser,
+        layout: "/admin",
+    },
+    {
+        path: "/projeto",
+        name: "Projects Search",
+        icon: "fas fa-search text-blue",
+        component: SearchProject,
+        layout: "/admin",
+    },
+    {
+        path: "/projectassociation",
+        name: "Project Association",
+        icon: "ni ni-bullet-list-67 text-blue",
+        component: ProjectAssociation,
+        layout: "/admin",
+    },
+    {
+        path: "/projectassociationsearch",
+        name: "Project Association Search",
+        icon: "fas fa-search text-blue",
+        component: ProjectAssociationSearch,
+        layout: "/admin",
+    },
+    {
+        path: "/project/editproject/:id",
+        name: "Edit Project",
+        icon: "ni ni-bullet-list-67 text-blue",
+        component: EditProject,
+        layout: "/admin",
+    },
+    {
+        path: "/login",
+        name: "Login",
+        icon: "ni ni-key-25 text-info",
+        component: Login,
+        layout: "/auth",
+    },
+    {
+        path: "/register",
+        name: "Register",
+        icon: "ni ni-circle-08 text-pink",
+        component: Register,
+        layout: "/auth",
+    },
 ];
 export default routes;

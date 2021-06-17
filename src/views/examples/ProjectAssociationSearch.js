@@ -15,85 +15,84 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-// core components
-import HeaderProject from "components/Headers/HeaderProject";
-import ProjetoDataService from "services/ProjetoDataService";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import AssociacaoDataService from "services/AssociacaoDataService";
+import UsuarioDataService from "services/UsuarioDataService";
+
 // reactstrap components
 import {
     Badge,
     Card,
-    CardFooter,
     CardHeader,
-    Container,
+    CardFooter,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown,
+    DropdownToggle,
     Media,
     Pagination,
     PaginationItem,
     PaginationLink,
     Progress,
-    Row,
     Table,
+    Container,
+    Row,
+    UncontrolledTooltip,
     Input,
+    InputGroup,
+    InputGroupText,
+    InputGroupAddon,
 } from "reactstrap";
+// core components
+import HeaderProject from "components/Headers/HeaderProject";
 
-const Tables = () => {
-    const projectInitial = [
-        {
-            id: "1",
-            image: "Imagem Real 1 ",
-            projectname: "Projeto Real 1",
-            status: "on schedule",
-            budget: "Budget Real 1",
-            completed: "Completed Real 1",
-        },
-    ];
+const ProjectAssociationSearch = () => {
+    const [associations, setAssociations] = useState([]);
+    const [searchProjectAssociation, setSearchProjectAssociation] =
+        useState("");
+    const [users, setUsers] = useState([]);
 
-    const [projects, setProjects] = useState(projectInitial);
-    const [searchProject, setSearchProject] = useState("");
-
-    const retrieveProject = () => {
-        ProjetoDataService.getAll()
+    const retrieveAssociation = () => {
+        AssociacaoDataService.getAll()
             .then((response) => {
-                setProjects(response.data);
+                setAssociations(response.data);
             })
             .catch((e) => console.log(e));
     };
+
+    const retrieveUser = () => {
+        UsuarioDataService.getAll()
+            .then((response) => {
+                setUsers(response.data);
+            })
+            .catch((e) => console.log(e));
+    };
+
+    function searchUser(id) {
+        try {
+            let usuarioCapturado = users.find((value) => value.id == id);
+            return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
+        } catch {}
+    }
+
+    const deleteAssociationUser = (id) => {
+        AssociacaoDataService.remove(id).then(retrieveAssociation);
+    };
+
+    /* async function zapName(id) {
+        var name = "";
+        await UsuarioDataService.findById(id).then((response) => {
+            const userZap = response.data[0];
+            name = `${userZap.firstname} ${userZap.lastname}`;
+        });
+        console.log(name);
+        return name;
+    } */
 
     useEffect(() => {
-        retrieveProject();
+        retrieveAssociation();
+        retrieveUser();
     }, []);
-
-    const deleteProject = (id) => {
-        ProjetoDataService.remove(id)
-            .then(() => {
-                retrieveProject();
-            })
-            .catch((e) => console.log(e));
-    };
-
-    const searchOnChange = (e) => {
-        const searchProject = e.target.value;
-        setSearchProject(searchProject);
-        findByProjectName();
-        findyByStatus();
-    };
-
-    const findByProjectName = () => {
-        ProjetoDataService.findByProjectName(searchProject)
-            .then((response) => {
-                setProjects(response.data);
-            })
-            .catch((e) => console.log(e));
-    };
-
-    const findyByStatus = () => {
-        ProjetoDataService.findyByStatus(searchProject)
-            .then((response) => {
-                setProjects(response.data);
-            })
-            .catch((e) => console.log(e));
-    };
 
     return (
         <>
@@ -103,15 +102,27 @@ const Tables = () => {
                 {/* Table */}
                 <Row>
                     <div className="col">
+                        <div className="d-flex">
+                            <InputGroup className="input-group-alternative mr-4 mb-4">
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText>
+                                        <i className="fas fa-search" />
+                                    </InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="User" type="text" />
+                            </InputGroup>
+                            <InputGroup className="input-group-alternative mb-4">
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText>
+                                        <i className="fas fa-search" />
+                                    </InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Project" type="text" />
+                            </InputGroup>
+                        </div>
                         <Card className="shadow">
-                            <Input
-                                placeholder="Search by project name or status"
-                                className="text-left pl-5"
-                                onChange={searchOnChange}
-                                value={searchProject}
-                            />
                             <CardHeader className="border-0">
-                                <h3 className="mb-0">Projects table</h3>
+                                <h3 className="mb-0">Project Association</h3>
                             </CardHeader>
                             <Table
                                 className="align-items-center table-flush"
@@ -119,87 +130,91 @@ const Tables = () => {
                             >
                                 <thead className="thead-light">
                                     <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">User</th>
                                         <th scope="col">Project</th>
-                                        <th scope="col">Budget</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Completion</th>
-                                        <th scope="col" />
-                                        <th scope="col" />
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {projects.map((value, index) => (
+                                    {associations.map((value) => (
                                         <tr>
                                             <th scope="row">
-                                                <Media className="align-items-center">
+                                                <script>
+                                                    {console.log(value)}
+                                                </script>
+                                                {value.id}
+                                            </th>
+                                            <td className="d-flex align-items-center">
+                                                <div className="avatar-group">
                                                     <a
-                                                        className="avatar rounded-circle mr-3"
+                                                        className="avatar avatar-sm"
                                                         href="#pablo"
+                                                        id="tooltip742438047"
                                                         onClick={(e) =>
                                                             e.preventDefault()
                                                         }
                                                     >
                                                         <img
                                                             alt="..."
-                                                            src={
-                                                                require("../../assets/img/theme/bootstrap.jpg")
-                                                                    .default
-                                                            }
+                                                            className="rounded-circle"
+                                                            src="https://picsum.photos/200"
                                                         />
                                                     </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            {value.projectname}
-                                                        </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>{value.budget}</td>
-                                            <td>
-                                                <Badge
-                                                    color=""
-                                                    className="badge-dot mr-4"
-                                                >
-                                                    <i className="bg-warning" />
-                                                    {value.status}
-                                                </Badge>
+                                                    <UncontrolledTooltip
+                                                        delay={0}
+                                                        target="tooltip742438047"
+                                                    >
+                                                        Ryan Tompson
+                                                    </UncontrolledTooltip>
+                                                </div>
+                                                {searchUser(value.userid)}
                                             </td>
                                             <td>
                                                 <div className="d-flex align-items-center">
-                                                    <span className="mr-2">
-                                                        {value.completed}
-                                                    </span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="60"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
+                                                    {value.projectname}
                                                 </div>
                                             </td>
-                                            <td>
-                                                <Link
-                                                    to={
-                                                        "/admin/project/editproject/" +
-                                                        value.id
-                                                    }
-                                                    className="btn btn-warning"
-                                                >
-                                                    {" "}
-                                                    Edit
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <Link
-                                                    onClick={() =>
-                                                        deleteProject(value.id)
-                                                    }
-                                                    className="btn btn-danger"
-                                                >
-                                                    {" "}
-                                                    Delete
-                                                </Link>
+                                            <td className="text-right">
+                                                <UncontrolledDropdown>
+                                                    <DropdownToggle
+                                                        className="btn-icon-only text-light"
+                                                        href="#pablo"
+                                                        role="button"
+                                                        size="sm"
+                                                        color=""
+                                                        onClick={(e) =>
+                                                            e.preventDefault()
+                                                        }
+                                                    >
+                                                        <i className="fas fa-ellipsis-v" />
+                                                    </DropdownToggle>
+                                                    <DropdownMenu
+                                                        className="dropdown-menu-arrow"
+                                                        right
+                                                    >
+                                                        <DropdownItem
+                                                            href="#pablo"
+                                                            onClick={(e) =>
+                                                                e.preventDefault()
+                                                            }
+                                                        >
+                                                            Action
+                                                        </DropdownItem>
+                                                        <DropdownItem
+                                                            href="#pablo"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                deleteAssociationUser(
+                                                                    value.id
+                                                                );
+                                                            }}
+                                                        >
+                                                            <i className="ni ni-basket text-danger" />
+                                                            Delete
+                                                        </DropdownItem>
+                                                    </DropdownMenu>
+                                                </UncontrolledDropdown>
                                             </td>
                                         </tr>
                                     ))}
@@ -282,4 +297,4 @@ const Tables = () => {
     );
 };
 
-export default Tables;
+export default ProjectAssociationSearch;
