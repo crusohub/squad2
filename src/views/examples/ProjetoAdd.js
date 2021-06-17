@@ -44,7 +44,11 @@ const ProjetoAdd = () => {
     completed:""
   }
   const [novoProjeto,setNovoProjeto] = useState(baseProjeto)
-
+  var inputImg = document.getElementById("input-imagem")
+  var inputName = document.getElementById("input-projectname")
+  var inputStatus = document.getElementById("input-status")
+  var inputDespesas = document.getElementById("input-despesas")
+  var inputPercentual = document.getElementById("input-percentual")
   const handleInputChange = (event) => {
     const { name, value } = event.target; // bota a propriedade em name e o valor em value
     setNovoProjeto({ ...novoProjeto, [name]: value }); //nesse caso ele vai acessar remedio e name vai virar uma propriedade do objeto e value é o oq o usario quer adicionar
@@ -58,11 +62,6 @@ const ProjetoAdd = () => {
   }
   const reinicia=()=>{
     setNovoProjeto(baseProjeto)
-    let inputImg = document.getElementById("input-imagem")
-    let inputName = document.getElementById("input-projectname")
-    let inputStatus = document.getElementById("input-status")
-    let inputDespesas = document.getElementById("input-despesas")
-    let inputPercentual = document.getElementById("input-percentual")
     inputImg.value=""
     inputName.value=""
     inputStatus.value=""
@@ -72,7 +71,6 @@ const ProjetoAdd = () => {
   const aleatorio=()=>{
     let aleatorio = Math.floor((Math.random() * 100) + 0);
     setNovoProjeto({ ...novoProjeto, ["image"]:`https://picsum.photos/id/${aleatorio}/200` });
-    let inputImg = document.getElementById("input-imagem")
     inputImg.value=`https://picsum.photos/id/${aleatorio}/200`
   }
   return (

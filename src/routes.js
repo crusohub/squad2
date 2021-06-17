@@ -73,6 +73,13 @@ var routes = [
         layout: "/admin",
     },
     {
+      path: "/projetoadd",
+      name: "NovoProjeto",
+      icon: "ni ni-bullet-list-67 text-blue",
+      component: ProjetoAdd,
+      layout: "/admin",
+    },
+    {
         path: "/projeto",
         name: "Projects Search",
         icon: "fas fa-search text-blue",
@@ -114,12 +121,6 @@ var routes = [
         component: Register,
         layout: "/auth",
     },
-    {
-      path: "/projetoadd",
-      name: "NovoProjeto",
-      icon: "ni ni-circle-08 text-pink",
-      component: ProjetoAdd,
-      layout: "/admin",
-    },
+
 ];
 export default routes;
