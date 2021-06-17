@@ -23,19 +23,19 @@ const Settings = (props) => {
     const [user, setUser] = useContext(UsuarioLogadoContext)
 
     const updatePassword = (id, psw) => {
-        UsuarioDataService.update(id, psw)
-            .then(response => {
-                setUser(response.data)
-            })
-            .catch(e => {
-                console.log(e);
-            })
+        // UsuarioDataService.update(id, psw)
+        //     .then(response => {
+        //         setUser(response.data)
+        //     })
+        //     .catch(e => {
+        //         console.log(e);
+        //     })
         alert("Password Updated!!!")
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, []);
+    // }, []);
 
     const resetPassword = () => {
         const inputCurrentPassword = (document.querySelector("#currentPassword").value)
@@ -79,7 +79,7 @@ const Settings = (props) => {
                                     id="currentPassword"
                                     placeholder="Current Password"
                                     type="password"
-                                // value={user.password}
+                                    // value={user.password}
                                 />
                             </InputGroup>
                         </FormGroup>
