@@ -36,6 +36,7 @@ var routes = [
         icon: "ni ni-tv-2 text-primary",
         component: Index,
         layout: "/admin",
+        sidebar: true
     },
     {
         path: "/icons",
@@ -43,6 +44,7 @@ var routes = [
         icon: "ni ni-planet text-blue",
         component: Icons,
         layout: "/admin",
+        sidebar: true
     },
     {
         path: "/maps",
@@ -50,6 +52,7 @@ var routes = [
         icon: "ni ni-pin-3 text-orange",
         component: Maps,
         layout: "/admin",
+        sidebar:false
     },
     {
         path: "/user-profile",
@@ -57,6 +60,7 @@ var routes = [
         icon: "ni ni-single-02 text-yellow",
         component: Profile,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/tables",
@@ -64,6 +68,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-red",
         component: Tables,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/tableuser",
@@ -71,6 +76,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-red",
         component: TableUser,
         layout: "/admin",
+        sidebar:true
     },
     {
       path: "/projetoadd",
@@ -78,6 +84,7 @@ var routes = [
       icon: "ni ni-bullet-list-67 text-blue",
       component: ProjetoAdd,
       layout: "/admin",
+      sidebar: true
     },
     {
         path: "/projeto",
@@ -85,6 +92,7 @@ var routes = [
         icon: "fas fa-search text-blue",
         component: SearchProject,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/projectassociation",
@@ -92,6 +100,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-blue",
         component: ProjectAssociation,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/projectassociationsearch",
@@ -99,6 +108,7 @@ var routes = [
         icon: "fas fa-search text-blue",
         component: ProjectAssociationSearch,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/project/editproject/:id",
@@ -106,6 +116,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-blue",
         component: EditProject,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/login",
@@ -113,6 +124,7 @@ var routes = [
         icon: "ni ni-key-25 text-info",
         component: Login,
         layout: "/auth",
+        sidebar:true
     },
     {
         path: "/register",
@@ -120,6 +132,7 @@ var routes = [
         icon: "ni ni-circle-08 text-pink",
         component: Register,
         layout: "/auth",
+        sidebar:true
     },
 
 ];
