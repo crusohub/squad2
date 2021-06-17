@@ -38,6 +38,7 @@ const Settings = (props) => {
             .then(response => {
                 setUser(response.data)
                 alert("Password Updated!")
+                props.history.push("/admin/user-profile")
             })
             .catch(e => {
                 console.log(e);
