@@ -21,9 +21,9 @@ import {
 
 const Settings = (props) => {
     const [user, setUser] = useContext(UsuarioLogadoContext)
-    const [inputCurrentPassword, setInputCurrentPassword] = useState()
-    const [newPassword, setNewPassword] = useState()
-    const [reNewPasswod, setReNewPasswod] = useState()
+    const [inputCurrentPassword, setInputCurrentPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [reNewPasswod, setReNewPasswod] = useState("")
 
 
     const cancel = () => {
@@ -31,16 +31,19 @@ const Settings = (props) => {
     }
 
     const updatePassword = () => {
-        console.log(user)   
-        UsuarioDataService.update(user.id, user)
+        console.log(user)
+        const data = user
+        data.password = newPassword
+        UsuarioDataService.update(user.id, data)
             .then(response => {
                 setUser(response.data)
-                alert("Password Updated!\n New password: "+user.password)
+                alert("Password Updated!")
             })
             .catch(e => {
                 console.log(e);
             })
     }
+
     const handleInputCurrentPassword = (e) => {
         setInputCurrentPassword(e.target.value)
     }
@@ -51,7 +54,6 @@ const Settings = (props) => {
         setReNewPasswod(e.target.value)
     }
     const resetPassword = () => {
-        alert(user.password)
         console.log(user)
         if (inputCurrentPassword === "") {
             alert("Insira o password atual!")
@@ -60,17 +62,14 @@ const Settings = (props) => {
             alert("O password inserido não é o password atual.\nPor favor insira o password atual!")
             return false
         }
-
         if (newPassword === "") {
             alert("Insira o seu novo password!")
             return false
         }
-
         if (newPassword !== reNewPasswod) {
             alert("Os password tem que ser iguais em:\nNew Password e Re-Entre New Password")
             return false
         }
-
         if (user.password === newPassword){
             alert("O novo password não pode ser igual ao password atual!")
             return false
@@ -78,6 +77,7 @@ const Settings = (props) => {
         updatePassword()
     }
 
+    // alert("user.password: "+user.password)
     return (
         <Col lg="5" md="7">
             <Card className="bg-secondary shadow border-0">
