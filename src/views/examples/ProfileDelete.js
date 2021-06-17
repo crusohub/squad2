@@ -49,7 +49,6 @@ const ProfileDelete = (props) => {
                         alert("Dados não confirmam")})
             }
     }
-    
     return(
         <Col lg="5" md="7">
             <Card className="bg-secondary shadow border-0">
@@ -93,11 +92,7 @@ const ProfileDelete = (props) => {
                                     Cancel
                                 </Button>
                             </Link>
-                            <Button 
-                            className="my-4" 
-                            color="primary" 
-                            type="button"
-                            onClick={() => {console.log(usuarioLogado)}}>
+                            <Button className="my-4" color="primary" type="button" onClick={() => {console.log(usuarioLogado)}}>
                                 Delete user
                             </Button>
                         </div>

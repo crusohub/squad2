@@ -73,6 +73,10 @@ const   handleInputChange = event => {
   
 };
 
+
+
+
+
   const getData = () => {
     console.log(UsuarioDataService.get(1))
 
@@ -189,7 +193,7 @@ const   handleInputChange = event => {
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col xs="6">
+                  <Col xs="8">
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
@@ -201,7 +205,6 @@ const   handleInputChange = event => {
                         Delete
                       </Button>
                     </Link>
-                    
                   </Col>
                   <Col className="text-right" xs="2">
                     <Button
