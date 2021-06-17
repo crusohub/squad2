@@ -15,9 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import React, { useState, useContext } from "react";
+import UsuarioDataService from "services/UsuarioDataService";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
-import React, { useContext } from "react";
-import { Link } from 'react-router-dom';
+
 
 
 // reactstrap components
@@ -39,25 +40,46 @@ import {
 const Login = (props) => {
 
   const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
-
-  function autenticaUsuario(usuario){
-    setUsuarioLogado(usuario)
-    if(!usuario.firstname){
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
+  const login = () => {
+    console.log(username)
+    UsuarioDataService.login(username, password).then(
+      response => response.data).then(
+        data => {
+              console.log(data[0])
+              if(data[0].password === password){
+                autenticaUsuario(data[0])
+              }else{
+                alert("Falha na autenticação!")
+              }
+        })
+  }
+  const handleusername = (e) => {
+    setUsername(e.target.value)
+  }
+  const handlepassword = (e) => {
+    setPassword(e.target.value)
+  }
+  function autenticaUsuario(usuario) {
+    console.log(usuario)
+    if (usuario != null) {
+      setUsuarioLogado(usuario)
+      if (!usuario.firstname) {
         props.history.push('/admin/user-profile')
         return
+      }
+      props.history.push('/admin/index')
+    }else{
+      alert("Falha na autenticação!")
     }
-    props.history.push('/admin/index')
   }
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-            </div>
+
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
@@ -75,6 +97,7 @@ const Login = (props) => {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    onChange={handleusername}
                   />
                 </InputGroup>
               </FormGroup>
@@ -89,6 +112,7 @@ const Login = (props) => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    onChange={handlepassword}
                   />
                 </InputGroup>
               </FormGroup>
@@ -106,9 +130,9 @@ const Login = (props) => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button onClick={login} className="my-4" color="primary" type="button">
                   Sign in
-                </Button>
+                                </Button>
               </div>
             </Form>
           </CardBody>
@@ -121,9 +145,7 @@ const Login = (props) => {
               href="#pablo"
               onClick={(e) => e.preventDefault()}
             >
-              <small>
-              <Link to="/ForgotPassword">Forgot password?</Link>
-                </small>
+              <small>Forgot password?</small>
             </a>
           </Col>
          

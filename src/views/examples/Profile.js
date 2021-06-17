@@ -15,8 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+// core components
+import UserHeader from "components/Headers/UserHeader.js";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
 import React from "react";
 import {useEffect, useContext, useState} from "react"
+
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -32,10 +38,7 @@ import {
   Col,
 } from "reactstrap";
 
-// core components
-import UserHeader from "components/Headers/UserHeader.js";
-import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
-import UsuarioDataService from "services/UsuarioDataService";
+
 
 const Profile = (props) => {
 
@@ -182,10 +185,20 @@ const Profile = (props) => {
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col xs="8">
+                  <Col xs="6">
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
+                    <Link to={"/settings/delete"}>
+                      <Button
+                        color="danger"
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    </Link>
+                  </Col>
+                  <Col className="text-right" xs="2">
                     <Button
                       color="primary"
                       onClick={() => callSettings()}

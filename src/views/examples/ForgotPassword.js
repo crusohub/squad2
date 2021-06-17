@@ -15,13 +15,12 @@ import {
   InputGroupText,
   InputGroup,
   Col,
-  Link,
 } from "reactstrap";
 
 
 const ForgotPassword = () => {
   return (
-   <Link>
+   <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
@@ -75,7 +74,7 @@ const ForgotPassword = () => {
         </CardHeader>
         </Card>
          </Col>
-         </Link>
+         </>
   );
 };
 

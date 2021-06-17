@@ -21,27 +21,40 @@ import {
 
 const Settings = (props) => {
     const [user, setUser] = useContext(UsuarioLogadoContext)
+    const [inputCurrentPassword, setInputCurrentPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [reNewPasswod, setReNewPasswod] = useState("")
 
-    const updatePassword = (id, psw) => {
-        // UsuarioDataService.update(id, psw)
-        //     .then(response => {
-        //         setUser(response.data)
-        //     })
-        //     .catch(e => {
-        //         console.log(e);
-        //     })
-        alert("Password Updated!!!")
+
+    const cancel = () => {
+        props.history.push("/admin/user-profile")
     }
 
-    // useEffect(() => {
+    const updatePassword = () => {
+        console.log(user)
+        const data = user
+        data.password = newPassword
+        UsuarioDataService.update(user.id, data)
+            .then(response => {
+                setUser(response.data)
+                alert("Password Updated!")
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
 
-    // }, []);
-
+    const handleInputCurrentPassword = (e) => {
+        setInputCurrentPassword(e.target.value)
+    }
+    const handleNewPassword = (e) => {
+        setNewPassword(e.target.value)
+    }
+    const handleReNewPasswod = (e) => {
+        setReNewPasswod(e.target.value)
+    }
     const resetPassword = () => {
-        const inputCurrentPassword = (document.querySelector("#currentPassword").value)
-        const newPassword = (document.querySelector("#newPasswod").value)
-        const reNewPasswod = (document.querySelector("#reNewPasswod").value)
-
+        console.log(user)
         if (inputCurrentPassword === "") {
             alert("Insira o password atual!")
             return false
@@ -49,20 +62,22 @@ const Settings = (props) => {
             alert("O password inserido não é o password atual.\nPor favor insira o password atual!")
             return false
         }
-
         if (newPassword === "") {
             alert("Insira o seu novo password!")
             return false
         }
-
         if (newPassword !== reNewPasswod) {
             alert("Os password tem que ser iguais em:\nNew Password e Re-Entre New Password")
             return false
         }
-
-        updatePassword(user.id, user)
+        if (user.password === newPassword){
+            alert("O novo password não pode ser igual ao password atual!")
+            return false
+        }
+        updatePassword()
     }
 
+    // alert("user.password: "+user.password)
     return (
         <Col lg="5" md="7">
             <Card className="bg-secondary shadow border-0">
@@ -79,7 +94,7 @@ const Settings = (props) => {
                                     id="currentPassword"
                                     placeholder="Current Password"
                                     type="password"
-                                    // value={user.password}
+                                    onChange={(e) => handleInputCurrentPassword(e)}
                                 />
                             </InputGroup>
                         </FormGroup>
@@ -92,9 +107,11 @@ const Settings = (props) => {
                                 </InputGroupAddon>
                                 <Input
                                     id="newPasswod"
+                                    name="password"
                                     placeholder="New Password"
                                     type="password"
                                     autoComplete="new-password"
+                                    onChange={(e) => handleNewPassword(e)}
                                 />
                             </InputGroup>
                         </FormGroup>
@@ -110,15 +127,13 @@ const Settings = (props) => {
                                     placeholder="Re-enter the New Password"
                                     type="password"
                                     autoComplete="new-password"
+                                    onChange={(e) => handleReNewPasswod(e)}
                                 />
                             </InputGroup>
                         </FormGroup>
                         <div className="text-center">
-                            <Button className="my-4" color="danger" type="button">
-                                <Link to={"/admin/user-profile"}
-                                    color="white">
-                                    Cancel
-                                </Link>
+                            <Button className="my-4" color="danger" type="button" onClick={() => cancel()}>
+                                Cancel
                             </Button>
                             <Button className="my-4" color="primary" type="button" onClick={() => resetPassword()} >
                                 Reset Password
