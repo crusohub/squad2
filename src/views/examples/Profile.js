@@ -18,6 +18,8 @@
 import React from "react";
 import {useEffect, useContext, useState} from "react"
 
+import { Link } from "react-router-dom";
+
 // reactstrap components
 import {
   Button,
@@ -70,10 +72,6 @@ const   handleInputChange = event => {
   //console.log(usuarioLogado)
   
 };
-
-
-
-
 
   const getData = () => {
     console.log(UsuarioDataService.get(1))
@@ -191,10 +189,22 @@ const   handleInputChange = event => {
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col xs="8">
+                  <Col xs="6">
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
+                    <Link to={"/settings/delete"}>
+                      <Button
+                        color="danger"
+                        onClick={() => callSettings()}
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    </Link>
+                    
+                  </Col>
+                  <Col className="text-right" xs="2">
                     <Button
                       color="primary"
                       onClick={() => callSettings()}
