@@ -22,6 +22,8 @@ import UsuarioDataService from "services/UsuarioDataService";
 import React from "react";
 import {useEffect, useContext, useState} from "react"
 
+import { Link } from "react-router-dom";
+
 // reactstrap components
 import {
   Button,
@@ -187,6 +189,16 @@ const Profile = (props) => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
+                    <Link to={"/settings/delete"}>
+                      <Button
+                        color="danger"
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    </Link>
+                  </Col>
+                  <Col className="text-right" xs="2">
                     <Button
                       color="primary"
                       onClick={() => callSettings()}
