@@ -34,7 +34,7 @@ import {
     Progress,
     Row,
     Table,
-    Input,
+    Input, Col, CardBody, Button
 } from "reactstrap";
 
 const Tables = () => {
@@ -104,15 +104,40 @@ const Tables = () => {
                 <Row>
                     <div className="col">
                         <Card className="shadow">
-                            <Input
-                                placeholder="Search by project name or status"
-                                className="text-left pl-5"
-                                onChange={searchOnChange}
-                                value={searchProject}
-                            />
                             <CardHeader className="border-0">
                                 <h3 className="mb-0">Projects table</h3>
                             </CardHeader>
+<CardBody>
+                            <Row>
+                        <Col>
+                        <label
+                                    className="form-control-label"
+                                    htmlFor="currentPassword"
+                                    >
+                                    Project Name
+                                </label>
+                            <Input
+                                placeholder="Search by project name or status"
+                                className="form-control-alternative"
+                                onChange={searchOnChange}
+                                value={searchProject}
+                            />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            <Button 
+                                className="my-4" 
+                                color="primary" 
+                                type="submit"
+                                >
+                                Pesquisar
+                            </Button>
+                            </Col>
+                        </Row>
+                        <Row>
+<Col>
+
                             <Table
                                 className="align-items-center table-flush"
                                 responsive
@@ -205,6 +230,9 @@ const Tables = () => {
                                     ))}
                                 </tbody>
                             </Table>
+                            </Col>
+                        </Row>
+</CardBody>
                             <CardFooter className="py-4">
                                 <nav aria-label="...">
                                     <Pagination
