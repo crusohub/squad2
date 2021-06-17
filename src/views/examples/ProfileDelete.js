@@ -1,5 +1,8 @@
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import UsuarioDataService from "services/UsuarioDataService";
+
+import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
 
 // reactstrap components
 import {
@@ -18,12 +21,14 @@ import {
 
 import { Link } from "react-router-dom";
 
-const ProfileDelete = () => {
+const ProfileDelete = (props) => {
 
     const initialState = {
         username: "",
         password: ""
     }
+
+    const { usuarioLogado, setUsuarioLogado } = useContext(UsuarioLogadoContext)
 
     const [dadosLogado, setDadosLogado] = useState(initialState)
 
@@ -33,7 +38,16 @@ const ProfileDelete = () => {
     }
 
     const deleteAccount = () => {
-        console.log(dadosLogado)
+        if(usuarioLogado.username == dadosLogado.username && usuarioLogado.password == dadosLogado.password){
+                UsuarioDataService.remove(usuarioLogado.id)
+                    .then(response => {
+                        alert("Usuario deletado com sucesso");
+                        props.history.push("/auth/login")
+                    })
+                    .catch(e => {
+                        console.log(e)
+                        alert("Dados não confirmam")})
+            }
     }
     
     return(
@@ -83,7 +97,7 @@ const ProfileDelete = () => {
                             className="my-4" 
                             color="primary" 
                             type="button"
-                            onClick={deleteAccount}>
+                            onClick={() => {console.log(usuarioLogado)}}>
                                 Delete user
                             </Button>
                         </div>
