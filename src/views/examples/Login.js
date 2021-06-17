@@ -20,6 +20,7 @@ import UsuarioDataService from "services/UsuarioDataService";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
 
 
+
 // reactstrap components
 import {
   Button,
@@ -137,6 +138,7 @@ const Login = (props) => {
           </CardBody>
         </Card>
         <Row className="mt-3">
+          
           <Col xs="6">
             <a
               className="text-light"
@@ -146,6 +148,7 @@ const Login = (props) => {
               <small>Forgot password?</small>
             </a>
           </Col>
+         
           <Col className="text-right" xs="6">
             <a
               className="text-light"
