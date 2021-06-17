@@ -39,8 +39,7 @@ import UsuarioDataService from "services/UsuarioDataService";
 
 const Profile = (props) => {
 
-  const Api ={
-    
+  const Api ={ 
       id: "1",
       username: "Username ",
       firstname: "Firstname ",
@@ -52,34 +51,25 @@ const Profile = (props) => {
       postalcode: "Postalcode ",
       about: "About ",
       password: "1",
-  
   }
 
   const [usuarioApi, setUsuarioApi] = useState(Api)
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
 
-
   useEffect(()=>{
       setUsuarioApi(usuarioLogado)
   },[])
-  
 
-const   handleInputChange = event => {
-  const { name, value } = event.target;
-  setUsuarioApi({ ...usuarioApi, [name]: value });
-  //console.log(usuarioLogado)
-  
-};
-
-
-
-
-
+    const   handleInputChange = event => {
+    const { name, value } = event.target;
+    setUsuarioApi({ ...usuarioApi, [name]: value });
+    //console.log(usuarioLogado)
+    
+  };
   const getData = () => {
     console.log(UsuarioDataService.get(1))
 
-   UsuarioDataService.get(1)
-   
+    UsuarioDataService.get(1)
     .then(response=>{
       setUsuarioLogado(response.data);
     })
@@ -94,6 +84,7 @@ const   handleInputChange = event => {
   const callSettings = () =>{
     props.history.push("/settings/changePassword")
   }
+  
   return (
     <>
       <UserHeader user={usuarioApi}/>
@@ -404,6 +395,4 @@ const   handleInputChange = event => {
     </>
   )
 };
-
-
 export default Profile;
