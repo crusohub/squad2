@@ -15,8 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useState,Image } from "react";
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -58,6 +58,16 @@ const ProjetoAdd = () => {
   }
   const reinicia=()=>{
     setNovoProjeto(baseProjeto)
+    let inputImg = document.getElementById("input-imagem")
+    let inputName = document.getElementById("input-projectname")
+    let inputStatus = document.getElementById("input-status")
+    let inputDespesas = document.getElementById("input-despesas")
+    let inputPercentual = document.getElementById("input-percentual")
+    inputImg.value=""
+    inputName.value=""
+    inputStatus.value=""
+    inputDespesas.value=""
+    inputPercentual.value=""
   }
   const aleatorio=()=>{
     let aleatorio = Math.floor((Math.random() * 100) + 0);
@@ -96,14 +106,16 @@ const ProjetoAdd = () => {
                     <h3 className="mb-0">Projeto</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    <Button
+                    <Link to={"/admin/projeto"} style={{marginRight:20}}> 
+                      <Button
                       color="primary"
                       href="#pablo"
                       onClick={(e) => NewProject()}
-                      size="xm"
-                    >
+                      size="xm">
                       Pesquisar
-                    </Button>
+                      </Button>
+                    </Link>
+                    
                     <Button
                       color="primary"
                       href="#pablo"
@@ -132,7 +144,7 @@ const ProjetoAdd = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
+                            defaultValue={novoProjeto.projectname}
                             id="input-projectname"
                             name="projectname"
                             placeholder="Nome"
@@ -153,14 +165,15 @@ const ProjetoAdd = () => {
                             className="form-control-alternative"
                             id="input-status"
                             placeholder=""
+                            defaultValue={novoProjeto.status}
                             name="status"
                             type="select"
                             onBlur={handleInputChange}
                           >          
-                          <option>pending</option>
-                          <option>completed</option>
-                          <option>delayed</option>
-                          <option>on schedule</option>
+                          <option>Pending</option>
+                          <option>Completed</option>
+                          <option>Delayed</option>
+                          <option>On schedule</option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -176,7 +189,7 @@ const ProjetoAdd = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
+                            defaultValue={novoProjeto.image}
                             name="image"
                             id="input-imagem"
                             placeholder="IRL"
@@ -206,7 +219,7 @@ const ProjetoAdd = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
+                            defaultValue={novoProjeto.budget}
                             name="budget"
                             id="input-despesas"
                             placeholder="Despesas"
@@ -227,6 +240,7 @@ const ProjetoAdd = () => {
                               className="form-control-alternative"
                               name="completed"
                               id="input-percentual"
+                              defaultValue={novoProjeto.percentual}
                               placeholder="Percentual"
                               type="text"
                               onBlur={handleInputChange}
