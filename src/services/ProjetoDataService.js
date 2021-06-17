@@ -25,14 +25,9 @@ const removeAll = () => {
 };
 
 
-const findByProjectName = projectname => {
-  return http.get(`/projeto?projectname=${projectname}`);
+const findByProjectName = name => {
+  return http.get(`/projeto?projectname=${name}`);
 };
-
-const findyByStatus = status => {
-  return http.get(`/projeto?status=${status}`);
-};
-
 
 
 export default {
@@ -42,6 +37,5 @@ export default {
   update,
   remove,
   removeAll,
-  findByProjectName,
-  findyByStatus
+  findByProjectName
 };
