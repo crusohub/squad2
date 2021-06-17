@@ -6,6 +6,10 @@ import {
     Container,
     Row,
     Col,
+    CardBody,
+    Form,
+    FormGroup,
+    Input
 } from "reactstrap";
 import ProjetoDataService from "services/ProjetoDataService";
 
@@ -29,7 +33,7 @@ const EditProject = (props) => {
         ProjetoDataService.update(currentProject.id, currentProject)
             .then((response) => {
                 setCurrentProject(response.data);
-                alert("success");
+                props.history.push("/admin/projeto")
             })
             .catch(e => console.error(e));
     }
@@ -45,39 +49,46 @@ const EditProject = (props) => {
         <>
             <HeaderProject />
             <Container className="mt--7" fluid>
-                <Row>
-                    <div className="col text-center">
-                        <Card className="shadow">
-                            <CardHeader className="border-0">
-                                <h3 className="mb-0">Projeto</h3>
-                                <h6 className="heading-small text-muted mb-4">{currentProject.projectname}</h6>
-                            </CardHeader>
-                            <form>
-                                <div className='form-group'>
-                                    <div className="pl-lg-4">
-                                        <Row>
-                                            <Col lg="6">
-                                                <label htmlFor="projectname" className="form-control-label">Project Name: </label>
-                                                <input type="text" id="projectname" name="projectname" className="form-control-alternative" value={currentProject.projectname} onChange={(e) => { handleChange(e) }} />
-                                            </Col>
-                                            <Col lg="6">
-                                                <label htmlFor="image" className="form-control-label">Image: </label>
-                                                <input type="text" id="image" name="image" value={currentProject.image} className="form-control-alternative" onChange={(e) => { handleChange(e) }} />
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col lg="6">
-                                                <label htmlFor="budget" className="form-control-label">Budget: </label>
-                                                <input type="text" id="budget" name="budget" value={currentProject.budget} className="form-control-alternative" onChange={(e) => { handleChange(e) }} />
-                                            </Col>
-                                            <Col lg="6">
-                                                <label htmlFor="completed" className="form-control-label" >Completed: </label>
-                                                <input type="text" id="completed" name="completed" className="form-control-alternative" value={currentProject.completed} onChange={(e) => { handleChange(e) }} />
-                                            </Col>
-                                        </Row>
-                                        <div className="col text-center">
+                <Card className="bg-secondary shadow">
+                    <CardBody>
+                        <Form>
+                            <h6 className="heading-small text-muted mb-4">
+                                Project : {currentProject.projectname}
+                            </h6>
+                            <div className="pl-lg-4">
+                                <Row>
+                                    <Col lg="6">
+                                        <FormGroup>
+                                            <label htmlFor="projectname" className="form-control-label">Project Name: </label>
+                                            <Input type="text" id="projectname" name="projectname" className="form-control-alternative" value={currentProject.projectname} onChange={(e) => { handleChange(e) }} />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col lg="6">
+                                        <FormGroup>
+                                            <label htmlFor="image" className="form-control-label">Image: </label>
+                                            <Input type="text" id="image" name="image" value={currentProject.image} className="form-control-alternative" onChange={(e) => { handleChange(e) }} />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg="6">
+                                        <FormGroup>
+                                            <label htmlFor="budget" className="form-control-label">Budget: </label>
+                                            <Input type="text" id="budget" name="budget" value={currentProject.budget} className="form-control-alternative" onChange={(e) => { handleChange(e) }} />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col lg="6">
+                                        <FormGroup>
+                                            <label htmlFor="completed" className="form-control-label" >Completed: </label>
+                                            <Input type="text" id="completed" name="completed" className="form-control-alternative" value={currentProject.completed} onChange={(e) => { handleChange(e) }} />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg="6">
+                                        <FormGroup>
                                             <label htmlFor="status" className="form-control-label" >status: </label>
-                                            <select id="status" name="status" className="form-control-alternative" onChange={(e) => { handleChange(e) }}>
+                                            <select id="status" name="status" className="form-control" tabindex="2" style={{ maxWidth: 300 }} onChange={(e) => { handleChange(e) }}>
                                                 {
                                                     currentProject.status.includes("pending") ?
                                                         <option value="pending" selected >pending</option>
@@ -104,15 +115,16 @@ const EditProject = (props) => {
                                                 }
 
                                             </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <button type="button" className="btn btn-success" onClick={updateProject}>Update</button>
-                        </Card>
-                    </div>
-                </Row>
-
+                                        </FormGroup>
+                                    </Col>
+                                    <Col lg="6 d-flex align-items-center">
+                                        <button type="button" className="btn btn-success " onClick={updateProject}>Update</button>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Form>
+                    </CardBody>
+                </Card>
             </Container>
         </>
     )
