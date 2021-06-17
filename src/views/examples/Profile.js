@@ -91,13 +91,9 @@ const   handleInputChange = event => {
     getData()
   },[]);
 
-<<<<<<< HEAD
-const Profile = (props) => {
   const callSettings = () =>{
     props.history.push("/settings/changePassword")
   }
-=======
->>>>>>> 8ebdec0ca121db16b3a584061f3022600d6cdaf0
   return (
     <>
       <UserHeader user={usuarioApi}/>
