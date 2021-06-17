@@ -16,11 +16,31 @@
 
 */
 import React from "react";
+import {useEffect, useContext, useState} from "react"
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
+import Profile from "views/examples/Profile";
 
-const UserHeader = () => {
+
+const UserHeader = (props) => {
+
+  const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
+
+  const updateProfile = () => {
+    UsuarioDataService.update(props.user.id, props.user)
+    .then(response => {
+      setUsuarioLogado(props.user)
+      console.log(response);
+      alert("Atualizado com sucesso!")
+      
+    })
+    .catch(e => {
+      console.log(e);
+    });
+}
   return (
     <>
       <div
@@ -41,7 +61,7 @@ const UserHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+              <h1 className="display-2 text-white">Hello {usuarioLogado.username}</h1>
               <p className="text-white mt-0 mb-5">
                 This is your profile page. You can see the progress you've made
                 with your work and manage your projects or assigned tasks
@@ -49,7 +69,7 @@ const UserHeader = () => {
               <Button
                 color="info"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => { e.preventDefault();updateProfile()}}
               >
                 Edit profile
               </Button>
