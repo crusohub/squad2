@@ -1,5 +1,6 @@
 import HeaderProject from "components/Headers/HeaderProject";
-import react, { useEffect, useState } from 'react'
+import { CurrentProjectContext } from "context/CurrentProjectContext";
+import react, { useContext, useEffect, useState } from 'react'
 import {
     Card,
     CardHeader,
@@ -9,22 +10,14 @@ import {
     CardBody,
     Form,
     FormGroup,
-    Input
+    Input,
+    Button,
 } from "reactstrap";
 import ProjetoDataService from "services/ProjetoDataService";
-
 const EditProject = (props) => {
 
     const [key, setKey] = useState(props.match.params.id);
-    const initialProject = {
-        id: "",
-        image: "",
-        projectname: "",
-        status: "",
-        budget: "",
-        completed: ""
-    }
-    const [currentProject, setCurrentProject] = useState(initialProject);
+    const {currentProject, setCurrentProject} = useContext(CurrentProjectContext);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCurrentProject({ ...currentProject, [name]: value })
@@ -50,11 +43,33 @@ const EditProject = (props) => {
             <HeaderProject />
             <Container className="mt--7" fluid>
                 <Card className="bg-secondary shadow">
-                    <CardBody>
-                        <Form>
-                            <h6 className="heading-small text-muted mb-4">
+                <CardHeader className="bg-white border-0">
+                <Row className="justify-content-center">
+                  <Col className="order-lg-2" lg="3">
+                    <div className="card-profile-image">
+                        {currentProject.image!==""?                    
+                          <img
+                            alt={currentProject.image}
+                            className="rounded-circle mw-50"
+                            src={currentProject.image}
+                            />
+                        :
+                          <img className="rounded-circle" src="https://picsum.photos/id/1/200"/>
+                        }
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="align-items-center">
+                  <Col xs="8">
+                  <h6 className="heading-small text-muted mb-4">
                                 Project : {currentProject.projectname}
-                            </h6>
+                    </h6>
+                  </Col>
+                </Row>
+              </CardHeader>
+                    <CardBody className="m-5">
+                        <Form>
+                            
                             <div className="pl-lg-4">
                                 <Row>
                                     <Col lg="6">

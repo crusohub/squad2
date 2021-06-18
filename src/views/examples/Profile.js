@@ -20,7 +20,7 @@ import HeaderGenerico from "../../components/Headers/HeaderGenerico";
 import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
 import UsuarioDataService from "../../services/UsuarioDataService";
 import React from "react";
-import {useEffect, useContext, useState} from "react"
+import { useEffect, useContext, useState } from "react"
 
 import { Link } from "react-router-dom";
 
@@ -44,65 +44,59 @@ import {
 
 const Profile = (props) => {
 
-  const Api ={
-    
-      
-      username: "",
-      firstname: "",
-      lastname: "",
-      email: "",
-      address: "",
-      city: "",
-      country: "",
-      postalcode: "",
-      about: "",
-      
-  
+  const Api = {
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    address: "",
+    city: "",
+    country: "",
+    postalcode: "",
+    about: "",
   }
 
-  const [aleatorio, setAleatorio]= useState(1) // set 1 em aleatorio
+  const [aleatorio, setAleatorio] = useState(1) // set 1 em aleatorio
 
   const [usuarioApi, setUsuarioApi] = useState(Api)
-  const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
-  
-  
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
 
+  const handleInputChange = event => {
+    event.preventDefault()
+    const { name, value } = event.target;
+    setUsuarioApi({ ...usuarioApi, [name]: value });
+    //console.log(usuarioLogado)
 
-const   handleInputChange = event => {
-  event.preventDefault()
-  const { name, value } = event.target;
-  setUsuarioApi({ ...usuarioApi, [name]: value });
-  //console.log(usuarioLogado)
-  
-};
-const updateProfile = () => {
-  UsuarioDataService.update(usuarioLogado.id, usuarioApi)
-  .then(response => {
-    setUsuarioApi(response.data)
-    setUsuarioLogado(response.data)
-    
-    console.log(response);
-    alert("Atualizado com sucesso!")
-    
-  })
-  .catch(e => {
-    console.log(e);
-  });
-}
+  };
+  const updateProfile = () => {
+    UsuarioDataService.update(usuarioLogado.id, usuarioApi)
+      .then(response => {
+        setUsuarioApi(response.data)
+        setUsuarioLogado(response.data)
 
+        console.log(response);
+        alert("Atualizado com sucesso!")
 
-      useEffect(()=>{
-        setUsuarioApi(usuarioLogado)
-        setAleatorio(Math.floor((Math.random() * 5) + 1))
-    },[])
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
 
+  const callSettings = () => {
+    props.history.push("/settings/changePassword")
+  }
 
+  useEffect(() => {
+    setUsuarioApi(usuarioLogado)
+    setAleatorio(Math.floor((Math.random() * 5) + 1))
+  }, [])
 
   return (
     <>
-      <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg` ).default}
-                  titulo= {`Hello ${usuarioLogado.username}`}
-                  description={"  This is your profile page. Below you can edit your account details and save the changes "}
+      <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg`).default}
+        titulo={`Hello ${usuarioLogado.username}`}
+        description={"  This is your profile page. Below you can edit your account details and save the changes "}
       />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -112,13 +106,13 @@ const updateProfile = () => {
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <a id="profilePciture" href="#pablo" onClick={(e) => e.preventDefault()}>
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={
-                          require("../../assets/img/theme/team-4-800x800.jpg")
-                            .default
+                        src=
+                        {
+                          require("../../assets/img/theme/team-4-800x800.jpg").default
                         }
                       />
                     </a>
@@ -126,7 +120,6 @@ const updateProfile = () => {
                 </Col>
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-               
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
                 <Row>
@@ -154,7 +147,7 @@ const updateProfile = () => {
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
-                   {usuarioLogado.city}, {usuarioLogado.country}
+                    {usuarioLogado.city}, {usuarioLogado.country}
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
@@ -164,8 +157,6 @@ const updateProfile = () => {
                     <i className="ni education_hat mr-2" />
                     University of Computer Science
                   </div>
-                  
-                  
                 </div>
               </CardBody>
             </Card>
@@ -190,12 +181,12 @@ const updateProfile = () => {
                   <Col className="text-right" xs="2">
                     <Button
                       color="primary"
-                     // onClick={() => callSettings()}
+                      onClick={() => callSettings()}
                       size="sm"
                     >
                       Settings
                     </Button>
-                    
+
                   </Col>
                 </Row>
               </CardHeader>
@@ -237,9 +228,9 @@ const updateProfile = () => {
                             className="form-control-alternative"
                             id="input-email"
                             name="email"
-                            
-                           defaultValue={usuarioApi.email}
-                           onBlur={handleInputChange}
+
+                            defaultValue={usuarioApi.email}
+                            onBlur={handleInputChange}
                             type="email"
                           />
                         </FormGroup>
@@ -260,7 +251,7 @@ const updateProfile = () => {
                             onBlur={handleInputChange}
                             id="input-first-name"
                             name="firstname"
-                            
+
                             type="text"
                           />
                         </FormGroup>
@@ -279,7 +270,7 @@ const updateProfile = () => {
                             onBlur={handleInputChange}
                             id="input-last-name"
                             name="lastname"
-                            
+
                             type="text"
                           />
                         </FormGroup>
@@ -307,7 +298,7 @@ const updateProfile = () => {
                             onBlur={handleInputChange}
                             id="input-address"
                             name="address"
-                           
+
                             type="text"
                           />
                         </FormGroup>
@@ -328,7 +319,7 @@ const updateProfile = () => {
                             onBlur={handleInputChange}
                             id="input-city"
                             name="city"
-                           
+
                             type="text"
                           />
                         </FormGroup>
@@ -347,7 +338,7 @@ const updateProfile = () => {
                             id="input-country"
                             name="country"
                             defaultValue={usuarioApi.country}
-                            
+
                             type="text"
                           />
                         </FormGroup>
@@ -391,12 +382,12 @@ const updateProfile = () => {
                   </div>
                 </Form>
                 <Button
-                color="info"
-                href="#pablo"
-                onClick={(e) => { updateProfile()}}
-              >
-                Edit profile
-              </Button>
+                  color="info"
+                  href="#pablo"
+                  onClick={(e) => { updateProfile() }}
+                >
+                  Edit profile
+                </Button>
               </CardBody>
             </Card>
           </Col>
