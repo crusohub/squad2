@@ -24,14 +24,10 @@ const removeAll = () => {
   return http.delete(`/projeto`);
 };
 
-const findByProjectName = projectname => {
-  return http.get(`/projeto?projectname=${projectname}`);
-};
 
-const findyByStatus = status => {
-  return http.get(`/projeto?status=${status}`);
+const findByProjectName = name => {
+  return http.get(`/projeto?projectname=${name}`);
 };
-
 
 
 export default {
@@ -41,6 +37,5 @@ export default {
   update,
   remove,
   removeAll,
-  findByProjectName,
-  findyByStatus
+  findByProjectName
 };

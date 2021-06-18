@@ -15,8 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+// core components
+import UserHeader from "components/Headers/UserHeader.js";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
 import React from "react";
 import {useEffect, useContext, useState} from "react"
+
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -32,20 +38,11 @@ import {
   Col,
 } from "reactstrap";
 
-import {
-  BrowserRouter as Router,
-  Link,
-} from "react-router-dom";
 
-// core components
-import UserHeader from "components/Headers/UserHeader.js";
-import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
-import UsuarioDataService from "services/UsuarioDataService";
 
 const Profile = (props) => {
 
-  const Api ={
-    
+  const Api ={ 
       id: "1",
       username: "Username ",
       firstname: "Firstname ",
@@ -57,34 +54,25 @@ const Profile = (props) => {
       postalcode: "Postalcode ",
       about: "About ",
       password: "1",
-  
   }
 
   const [usuarioApi, setUsuarioApi] = useState(Api)
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
 
-
   useEffect(()=>{
       setUsuarioApi(usuarioLogado)
   },[])
-  
 
-const   handleInputChange = event => {
-  const { name, value } = event.target;
-  setUsuarioApi({ ...usuarioApi, [name]: value });
-  //console.log(usuarioLogado)
-  
-};
-
-
-
-
-
+    const   handleInputChange = event => {
+    const { name, value } = event.target;
+    setUsuarioApi({ ...usuarioApi, [name]: value });
+    //console.log(usuarioLogado)
+    
+  };
   const getData = () => {
     console.log(UsuarioDataService.get(1))
 
-   UsuarioDataService.get(1)
-   
+    UsuarioDataService.get(1)
     .then(response=>{
       setUsuarioLogado(response.data);
     })
@@ -96,6 +84,10 @@ const   handleInputChange = event => {
     getData()
   },[]);
 
+  const callSettings = () =>{
+    props.history.push("/settings/changePassword")
+  }
+  
   return (
     <>
       <UserHeader user={usuarioApi}/>
@@ -193,21 +185,28 @@ const   handleInputChange = event => {
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col xs="8">
+                  <Col xs="6">
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    {/* <Button
+                    <Link to={"/settings/delete"}>
+                      <Button
+                        color="danger"
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    </Link>
+                  </Col>
+                  <Col className="text-right" xs="2">
+                    <Button
                       color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.defaultPrevented()}
+                      onClick={() => callSettings()}
                       size="sm"
                     >
                       Settings
-                    </Button> */}
-                    <Link to={"/settings/settings"}>
-                      Settings
-                    </Link>
+                    </Button>
+                    
                   </Col>
                 </Row>
               </CardHeader>
@@ -233,6 +232,7 @@ const   handleInputChange = event => {
                             name="username"
                             onBlur={handleInputChange}
                             placeholder="Username"
+                            value={usuarioApi.username}
                             type="text"
                           />
                         </FormGroup>
@@ -249,7 +249,8 @@ const   handleInputChange = event => {
                             className="form-control-alternative"
                             id="input-email"
                             name="email"
-                            placeholder={usuarioApi.email}
+                            placeholder="email@email.com"
+                            value={usuarioApi.email}
                             onChange={handleInputChange}
                             type="email"
                           />
@@ -272,6 +273,7 @@ const   handleInputChange = event => {
                             id="input-first-name"
                             name="firstname"
                             placeholder="First name"
+                            value={usuarioApi.firstname}
                             type="text"
                           />
                         </FormGroup>
@@ -291,6 +293,7 @@ const   handleInputChange = event => {
                             id="input-last-name"
                             name="lastname"
                             placeholder="Last name"
+                            value={usuarioApi.lastname}
                             type="text"
                           />
                         </FormGroup>
@@ -319,6 +322,7 @@ const   handleInputChange = event => {
                             id="input-address"
                             name="address"
                             placeholder="Home Address"
+                            value={usuarioApi.address}
                             type="text"
                           />
                         </FormGroup>
@@ -340,6 +344,7 @@ const   handleInputChange = event => {
                             id="input-city"
                             name="city"
                             placeholder="City"
+                            value={usuarioApi.city}
                             type="text"
                           />
                         </FormGroup>
@@ -359,6 +364,7 @@ const   handleInputChange = event => {
                             id="input-country"
                             name="country"
                             placeholder="Country"
+                            value={usuarioApi.country}
                             type="text"
                           />
                         </FormGroup>
@@ -376,6 +382,7 @@ const   handleInputChange = event => {
                             id="input-postal-code"
                             name="postalcode"
                             placeholder={usuarioApi.postalcode}
+                            value={usuarioApi.postalcode}
                             onChange={handleInputChange}
                             type="number"
                           />
@@ -409,6 +416,4 @@ const   handleInputChange = event => {
     </>
   )
 };
-
-
 export default Profile;

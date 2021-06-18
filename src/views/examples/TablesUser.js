@@ -15,7 +15,11 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {useState} from "react";
+// core components
+import HeaderProject from "components/Headers/HeaderProject";
+import React, { useContext, useEffect, useState } from "react";
+import { UsuarioLogadoContext } from "context/UsuarioLogadoContext"
+import UsuarioDataService from "services/UsuarioDataService"
 
 // reactstrap components
 import {
@@ -37,51 +41,24 @@ import {
   Row,
   UncontrolledTooltip,
 } from "reactstrap";
-// core components
-import HeaderProject from "components/Headers/HeaderProject";
 
-const Tables = () => {
-  const usersInitial = [
-    {
-     "id": "1",
-     "username": "username 1",
-     "firstname": "firstname 123",
-     "lastname": "lastname 123",
-     "email": "usuario@gmail.com",
-     "address": "address 1",
-     "city": "city 1",
-     "country": "country 1",
-     "postalcode": "postalcode 1",
-     "about": "about 1",
-     "": "username 1as",
-     "password": "1"
-    },
-    {
-     "id": "2",
-     "username": "username 2",
-     "firstname": "firstname 2",
-     "lastname": "lastname 2",
-     "email": "email 2",
-     "address": "address 2",
-     "city": "city 2",
-     "country": "country 2",
-     "postalcode": "postalcode 2",
-     "about": "about 2"
-    },
-    {
-     "id": "3",
-     "username": "username 3",
-     "firstname": "firstname 3",
-     "lastname": "lastname 3",
-     "email": "email 3",
-     "address": "address 3",
-     "city": "city 3",
-     "country": "country 3",
-     "postalcode": "postalcode 3",
-     "about": "about 3"
-    }]
 
-  const [users, setUsers] = useState(usersInitial)
+const TablesUser = () => {
+  const [users, setUsers] = useContext(UsuarioLogadoContext)
+
+  const getUsers = () => {
+    UsuarioDataService.getAll()
+    .then(response => {
+      setUsers(response.data)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+  }
+
+  useEffect(() => {
+    getUsers()
+  })
 
   return (
     <>
@@ -97,90 +74,91 @@ const Tables = () => {
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
+                  {/* 
+                    "id": "2",
+                    "username": "username 2",
+                    "firstname": "firstname 2",
+                    "lastname": "lastname 2",
+                    "email": "email 2",
+                    "address": "address 2",
+                    "city": "city 2",
+                    "country": "country 2",
+                    "postalcode": "postalcode 2",
+                    "about": "about 2",
+                    "date": "2020-10-09T19:26:54.812Z",
+                    "password": "1"
+                  */}
                   <tr>
-                    <th scope="col">User</th>
-                    <th scope="col">Budget</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Completion</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Postal Code</th>
                     <th scope="col" />
                   </tr>
                 </thead>
                 <tbody>
-
                   {users.map((value, index) => (
                     <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={
-                              require("../../assets/img/theme/bootstrap.jpg")
-                                .default
-                            }
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            {value.firstname + " " + value.lastname}
-                          </span>
+                      <th scope="row">
+                        <Media className="align-items-center">
+                          <a
+                            className="avatar rounded-circle mr-3"
+                            href="#pablo"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            <img
+                              alt="..."
+                              src={
+                                require("../../assets/img/theme/bootstrap.jpg")
+                                  .default
+                              }
+                            />
+                          </a>
+                          <Media>
+                            <span className="mb-0 text-sm">
+                              {value.firstname + " " + value.lastname}
+                            </span>
+                          </Media>
                         </Media>
-                      </Media>
-                    </th>
-                    <td>$2,500 USD</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        pending
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="btn-icon-only text-light"
-                          href="#pablo"
-                          role="button"
-                          size="sm"
-                          color=""
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
+                      </th>
+                      <td>{value.email}</td>
+                      <td>{value.address}</td>
+                      <td>{value.city}</td>
+                      <td>{value.country}</td>
+                      <td>{value.postalcode}</td>
+                      <td className="text-right">
+                        <UncontrolledDropdown>
+                          <DropdownToggle
+                            className="btn-icon-only text-light"
                             href="#pablo"
+                            role="button"
+                            size="sm"
+                            color=""
                             onClick={(e) => e.preventDefault()}
                           >
-                            Edit
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Remove
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
+                            <i className="fas fa-ellipsis-v" />
+                          </DropdownToggle>
+                          <DropdownMenu className="dropdown-menu-arrow" right>
+                            <DropdownItem
+                              href="#pablo"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              Edit
+                            </DropdownItem>
+                            <DropdownItem
+                              href="#pablo"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              Remove
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </td>
+                    </tr>
                   ))}
-                  
+
                 </tbody>
               </Table>
               <CardFooter className="py-4">
@@ -238,10 +216,10 @@ const Tables = () => {
             </Card>
           </div>
         </Row>
-        
+
       </Container>
     </>
   );
 };
 
-export default Tables;
+export default TablesUser;

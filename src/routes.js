@@ -24,9 +24,11 @@ import Tables from "views/examples/Tables.js";
 import TableUser from "views/examples/TablesUser.js";
 import Icons from "views/examples/Icons.js";
 import ProjectAssociation from "views/examples/ProjectAssociation.js";
+import ProjetoAdd from "views/examples/ProjetoAdd";
 import ProjectAssociationSearch from "views/examples/ProjectAssociationSearch";
 import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
+import ForgotPassword from "views/examples/ForgotPassword";
 
 var routes = [
     {
@@ -35,6 +37,7 @@ var routes = [
         icon: "ni ni-tv-2 text-primary",
         component: Index,
         layout: "/admin",
+        sidebar: true
     },
     {
         path: "/icons",
@@ -42,6 +45,7 @@ var routes = [
         icon: "ni ni-planet text-blue",
         component: Icons,
         layout: "/admin",
+        sidebar: true
     },
     {
         path: "/maps",
@@ -49,6 +53,7 @@ var routes = [
         icon: "ni ni-pin-3 text-orange",
         component: Maps,
         layout: "/admin",
+        sidebar:false
     },
     {
         path: "/user-profile",
@@ -56,6 +61,7 @@ var routes = [
         icon: "ni ni-single-02 text-yellow",
         component: Profile,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/tables",
@@ -63,6 +69,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-red",
         component: Tables,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/tableuser",
@@ -70,6 +77,15 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-red",
         component: TableUser,
         layout: "/admin",
+        sidebar:true
+    },
+    {
+      path: "/projetoadd",
+      name: "NovoProjeto",
+      icon: "ni ni-bullet-list-67 text-blue",
+      component: ProjetoAdd,
+      layout: "/admin",
+      sidebar: true
     },
     {
         path: "/projeto",
@@ -77,6 +93,7 @@ var routes = [
         icon: "fas fa-search text-blue",
         component: SearchProject,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/projectassociation",
@@ -84,6 +101,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-blue",
         component: ProjectAssociation,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/projectassociationsearch",
@@ -91,6 +109,7 @@ var routes = [
         icon: "fas fa-search text-blue",
         component: ProjectAssociationSearch,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/project/editproject/:id",
@@ -98,6 +117,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-blue",
         component: EditProject,
         layout: "/admin",
+        sidebar:true
     },
     {
         path: "/login",
@@ -105,6 +125,7 @@ var routes = [
         icon: "ni ni-key-25 text-info",
         component: Login,
         layout: "/auth",
+        sidebar:true
     },
     {
         path: "/register",
@@ -112,6 +133,16 @@ var routes = [
         icon: "ni ni-circle-08 text-pink",
         component: Register,
         layout: "/auth",
+        sidebar:true
     },
+    {
+        path: "/forgotpassword",
+        name: "ForgotPassword",
+        icon: "ni ni-bullet-list-67 text-blue",
+        component: ForgotPassword,
+        layout: "/auth",
+        sidebar:true
+    }
+
 ];
 export default routes;
