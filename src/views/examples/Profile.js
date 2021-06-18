@@ -38,7 +38,7 @@ import {
 } from "react-router-dom";
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import UserHeader from "components/Headers/HeaderGenerico";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
 import UsuarioDataService from "services/UsuarioDataService";
 
@@ -46,59 +46,64 @@ const Profile = (props) => {
 
   const Api ={
     
-      id: "1",
-      username: "Username ",
-      firstname: "Firstname ",
-      lastname: "Lastname ",
-      email: "Email ",
-      address: "Address ",
-      city: "City ",
-      country: "Country ",
-      postalcode: "Postalcode ",
-      about: "About ",
-      password: "1",
+      
+      username: "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      address: "",
+      city: "",
+      country: "",
+      postalcode: "",
+      about: "",
+      
   
   }
 
+  const [aleatorio, setAleatorio]= useState(1)
+
   const [usuarioApi, setUsuarioApi] = useState(Api)
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
-
-
-  useEffect(()=>{
-      setUsuarioApi(usuarioLogado)
-  },[])
+  
   
 
+
 const   handleInputChange = event => {
+  event.preventDefault()
   const { name, value } = event.target;
   setUsuarioApi({ ...usuarioApi, [name]: value });
   //console.log(usuarioLogado)
   
 };
+const updateProfile = () => {
+  UsuarioDataService.update(usuarioLogado.id, usuarioApi)
+  .then(response => {
+    setUsuarioApi(response.data)
+    setUsuarioLogado(response.data)
+    
+    console.log(response);
+    alert("Atualizado com sucesso!")
+    
+  })
+  .catch(e => {
+    console.log(e);
+  });
+}
 
 
+      useEffect(()=>{
+        setUsuarioApi(usuarioLogado)
+        setAleatorio(Math.floor((Math.random() * 5) + 1))
+    },[])
 
 
-
-  const getData = () => {
-    console.log(UsuarioDataService.get(1))
-
-   UsuarioDataService.get(1)
-   
-    .then(response=>{
-      setUsuarioLogado(response.data);
-    })
-    .catch(e=>{
-      console.log(e)
-    })
-  }
-  useEffect(()=>{
-    getData()
-  },[]);
 
   return (
     <>
-      <UserHeader user={usuarioApi}/>
+      <UserHeader imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg` ).default}
+                  titulo= {`Hello ${usuarioLogado.username}`}
+                  description={"  This is your profile page. Below you can edit your account details and save the changes "}
+      />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -121,26 +126,7 @@ const   handleInputChange = event => {
                 </Col>
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <div className="d-flex justify-content-between">
-                  <Button
-                    className="mr-4"
-                    color="info"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                    size="sm"
-                  >
-                    Connect
-                  </Button>
-                  <Button
-                    className="float-right"
-                    color="default"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                    size="sm"
-                  >
-                    Message
-                  </Button>
-                </div>
+               
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
                 <Row>
@@ -178,13 +164,8 @@ const   handleInputChange = event => {
                     <i className="ni education_hat mr-2" />
                     University of Computer Science
                   </div>
-                  <hr className="my-4" />
-                  <p>
-                   description
-                  </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    Show more
-                  </a>
+                  
+                  
                 </div>
               </CardBody>
             </Card>
@@ -232,7 +213,7 @@ const   handleInputChange = event => {
                             id="input-username"
                             name="username"
                             onBlur={handleInputChange}
-                            placeholder="Username"
+                            placeholder="Username "
                             type="text"
                           />
                         </FormGroup>
@@ -249,8 +230,9 @@ const   handleInputChange = event => {
                             className="form-control-alternative"
                             id="input-email"
                             name="email"
-                            placeholder={usuarioApi.email}
-                            onChange={handleInputChange}
+                            
+                           defaultValue={usuarioApi.email}
+                           onBlur={handleInputChange}
                             type="email"
                           />
                         </FormGroup>
@@ -268,10 +250,10 @@ const   handleInputChange = event => {
                           <Input
                             className="form-control-alternative"
                             defaultValue={usuarioApi.firstname}
-                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                             id="input-first-name"
                             name="firstname"
-                            placeholder="First name"
+                            
                             type="text"
                           />
                         </FormGroup>
@@ -287,10 +269,10 @@ const   handleInputChange = event => {
                           <Input
                             className="form-control-alternative"
                             defaultValue={usuarioApi.lastname}
-                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                             id="input-last-name"
                             name="lastname"
-                            placeholder="Last name"
+                            
                             type="text"
                           />
                         </FormGroup>
@@ -315,10 +297,10 @@ const   handleInputChange = event => {
                           <Input
                             className="form-control-alternative"
                             defaultValue={usuarioApi.address}
-                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                             id="input-address"
                             name="address"
-                            placeholder="Home Address"
+                           
                             type="text"
                           />
                         </FormGroup>
@@ -336,10 +318,10 @@ const   handleInputChange = event => {
                           <Input
                             className="form-control-alternative"
                             defaultValue={usuarioApi.city}
-                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                             id="input-city"
                             name="city"
-                            placeholder="City"
+                           
                             type="text"
                           />
                         </FormGroup>
@@ -354,11 +336,11 @@ const   handleInputChange = event => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={usuarioApi.country}
-                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                             id="input-country"
                             name="country"
-                            placeholder="Country"
+                            defaultValue={usuarioApi.country}
+                            
                             type="text"
                           />
                         </FormGroup>
@@ -376,7 +358,7 @@ const   handleInputChange = event => {
                             id="input-postal-code"
                             name="postalcode"
                             placeholder={usuarioApi.postalcode}
-                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                             type="number"
                           />
                         </FormGroup>
@@ -395,12 +377,19 @@ const   handleInputChange = event => {
                         rows="4"
                         name="about"
                         defaultValue={usuarioApi.about}
-                        onChange={handleInputChange}
+                        onBlur={handleInputChange}
                         type="textarea"
                       />
                     </FormGroup>
                   </div>
                 </Form>
+                <Button
+                color="info"
+                href="#pablo"
+                onClick={(e) => { updateProfile()}}
+              >
+                Edit profile
+              </Button>
               </CardBody>
             </Card>
           </Col>

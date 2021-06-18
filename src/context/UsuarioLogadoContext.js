@@ -4,16 +4,16 @@ const UsuarioLogadoContext = React.createContext([{}, () => {}]);
 
 const UsuarioLogadoProvider = (props) => {
     const initialState = {
-        id: "1",
-        username: "username 1",
-        firstname: "firstname 1",
-        lastname: "lastname 1",
-        email: "email 1",
-        address: "address 1",
-        city: "city 1",
-        country: "country 1",
-        postalcode: "postalcode 1",
-        about: "about 1",
+        id: "2",
+        username: "username 2",
+        firstname: "firstname 2",
+        lastname: "lastname 2",
+        email: "email 2",
+        address: "address 2",
+        city: "city 2",
+        country: "country 2",
+        postalcode: "postalcode 2",
+        about: "about 2",
         password: "1",
     };
 
