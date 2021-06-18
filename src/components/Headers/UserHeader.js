@@ -29,6 +29,9 @@ const UserHeader = (props) => {
 
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
 
+<<<<<<< HEAD
+  
+=======
   const updateProfile = () => {
     UsuarioDataService.update(props.user.id, props.user)
     .then(response => {
@@ -43,6 +46,7 @@ const UserHeader = (props) => {
 }
   
 
+>>>>>>> 69a4d002bb739bcdb4d13b0619e8a823ae5ab06f
   return (
     <>
       <div
@@ -68,13 +72,7 @@ const UserHeader = (props) => {
                 This is your profile page. You can see the progress you've made
                 with your work and manage your projects or assigned tasks
               </p>
-              <Button
-                color="info"
-                href="#pablo"
-                onClick={(e) => { e.preventDefault();updateProfile()}}
-              >
-                Edit profile
-              </Button>
+              
             </Col>
           </Row>
         </Container>

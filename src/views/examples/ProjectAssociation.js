@@ -25,34 +25,48 @@ import {
   Row,
   Button,
   UncontrolledTooltip,
+  Input,
+  Col,
   CardBody,
-  CardFooter,
-  Col, Input
+  CardFooter
 } from "reactstrap";
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
 import UsuarioDataService from "services/UsuarioDataService";
 import ProjetoDataService from "services/ProjetoDataService";
+import AssociacaoDataService from "services/AssociacaoDataService";
+import { registerPlugin } from "axe-core";
 
 const ProjectAssociation = () => {
 
-  const [userValue, setUserValue] = useState('');
-  const [projectValue, setProjectValue] = useState('');
+  const initialProjectAssociationState = {
+    projectid: '',
+    userid: '',
+    projectname: 'Select a project',
+    username: 'Select a user'
+  };
+
+  const [userValue, setUserValue] = useState('Select a user');
+  const [projectValue, setProjectValue] = useState('Select a project');
   const [erros, setErros] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [listUsers, setListUsers] = useState([]);
   const [listProjects, setListProjects] = useState([]);
+  const [projectAssociation, setProjectAssociation] = useState(initialProjectAssociationState);
+  
+
+
 
   const validarCampos = () => {
-    if (userValue != '' && projectValue != '') {
+    if (projectAssociation.username != 'Select a user' && projectAssociation.projectname != 'Select a project') {
       setErros(false);
       return true;
     } else {
       setErros(true);
-      if (userValue == '' && projectValue != '') {
+      if (projectAssociation.username == 'Select a user' && projectAssociation.projectname != 'Select a project') {
         setErrorMessage("Select a user");
       } else {
-        if (projectValue == '' && userValue != '') {
+        if (projectAssociation.projectname == 'Select a project' && projectAssociation.username != 'Select a user') {
           setErrorMessage("Select a project");
         } else {
           setErrorMessage("Select a user and project");
@@ -61,6 +75,37 @@ const ProjectAssociation = () => {
       return false;
     };
   };
+
+  const handleInputChange = (e) => {
+    const {  value } = e.target;
+    let id = value.split(":")[0];
+    let projectname = value.split(":")[1];
+    if(projectname == undefined){
+      projectname = "Select a project";
+    }
+    setProjectAssociation({
+      ...projectAssociation, ...{
+        "projectid": id,
+        "projectname": projectname
+      }
+    });
+  }
+
+  const handleInputUsername = (e) => {
+    const { value } = e.target;
+    let id = value.split(":")[0];
+    let username = value.split(":")[1];
+    if(username == undefined){
+      username = "Select a user";
+    }
+    setProjectAssociation({
+      ...projectAssociation, ...{
+        "userid": id,
+        "username": username
+      }
+    });
+
+  }
 
   const preencherSelectUsers = () => {
     UsuarioDataService.getAll()
@@ -78,9 +123,23 @@ const ProjectAssociation = () => {
       .catch((e) => console.log(e));
   };
 
+  const createProjectAssociation = () => {
+    let data = {
+      projectid: projectAssociation.projectid,
+      userid: projectAssociation.userid,
+      projectname: projectAssociation.projectname,
+      username: projectAssociation.username
+    }
+    AssociacaoDataService.create(data)
+      .then(response => {
+        alert("Associação de projeto criada com sucesso!")
+      })
+      .catch(e => console.log(e));
+  }
+
   const efetuarLogin = () => {
     if (validarCampos() == true) {
-      console.log("passou");
+      createProjectAssociation();
     }
   };
 
@@ -100,6 +159,7 @@ const ProjectAssociation = () => {
               <CardHeader className="border-0">
                 <h3 className="mb-0">User Project Association</h3>
               </CardHeader>
+
               <CardBody>
                 <Row>
                   <Col>
@@ -109,45 +169,55 @@ const ProjectAssociation = () => {
                       htmlFor="currentPassword"
                     >
                       Select a project
-                </label>
+                    </label>
                     <Input
+                      name = "projectname"
                       type="select"
                       placeholder="Search by project name or status"
                       className="form-control-alternative"
-                      onChange={(e) => setProjectValue(e.target.value)}
+                      onChange={handleInputChange}
                     //value={searchProject}
                     >
-                      <option>Select a project</option>
+                      <option value = {"Select a project"}>Select a project</option>
                       {listProjects.map((data) => (
-                        <option value={data.id}>{data.projectname}</option>
+                        <option id = {data.projectid} value={data.id + ":"+ data.projectname}>{data.projectname}</option>
                       ))}
                     </Input>
 
                   </Col>
                   <Col>
-                    {/* Select de usuários */}
-                    {/* Select de projetos */}
+
                     <label
                       className="form-control-label"
                       htmlFor="currentPassword"
                     >
                       Select a user
-                </label>
-                    <select onChange={(e) => setUserValue(e.target.value)} className="form-control mx-auto" tabindex="2" style={{ maxWidth: 300 }}>
+                    </label>
+                    <Input
+                      name = "username"
+                      type="select"
+                      placeholder="Search by username"
+                      onChange={handleInputUsername}
+                      className="form-control-alternative"
+                    >
                       <option>Select a user</option>
                       {listUsers.map((data) => (
-                        <option value={data.id}>{data.username}</option>
+                        <option id = {data.userid} value={data.id + ":"+ data.username}>{data.username}</option>
                       ))}
-                    </select>
+                    </Input>
                   </Col>
                 </Row>
                 <Row>
                   <Col>
                     {/* Botão de associar projeto */}
-                    <Button className="my-4" color="primary" type="button" onClick={efetuarLogin}>
+                    <Button
+                      className="my-4"
+                      color="primary"
+                      type="button"
+                      onClick={efetuarLogin}
+                    >
                       Associate project
-                </Button>
-
+                    </Button>
                     {/* Div para mostragem de erros */}
                     {erros &&
                       <div className="col">
@@ -157,12 +227,10 @@ const ProjectAssociation = () => {
                   </Col>
                 </Row>
               </CardBody>
-              <CardFooter>
-
-              </CardFooter>
             </Card>
           </div>
         </Row>
+
 
       </Container>
     </>
