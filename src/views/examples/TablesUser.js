@@ -44,7 +44,7 @@ import {
 
 
 const TablesUser = () => {
-  const [users, setUsers] = useContext(UsuarioLogadoContext)
+  const [users, setUsers] = useState([])
 
   const getUsers = () => {
     UsuarioDataService.getAll()

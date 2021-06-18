@@ -42,15 +42,17 @@ import {
     InputGroup,
     InputGroupText,
     InputGroupAddon,
-    CardBody, Col, Button
+    CardBody,
+    Col,
+    Button,
 } from "reactstrap";
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
 
 const ProjectAssociationSearch = () => {
     const [associations, setAssociations] = useState([]);
-    const [searchProjectAssociation, setSearchProjectAssociation] =
-        useState("");
+    const [searchUsername, setSearchUsername] = useState("");
+    const [searchProjectname, setSearchProjectname] = useState("");
     const [users, setUsers] = useState([]);
 
     const retrieveAssociation = () => {
@@ -73,11 +75,35 @@ const ProjectAssociationSearch = () => {
         try {
             let usuarioCapturado = users.find((value) => value.id == id);
             return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
-        } catch { }
+        } catch {}
     }
 
     const deleteAssociationUser = (id) => {
         AssociacaoDataService.remove(id).then(retrieveAssociation);
+    };
+
+    const searchProjectAssociationUser = (username) => {
+        AssociacaoDataService.findByUsername(username)
+            .then((response) => {
+                setAssociations(response.data);
+            })
+            .catch((e) => console.log(e));
+    };
+
+    const searchProjectAssociationProjectName = (project) => {
+        AssociacaoDataService.findByProject(project)
+            .then((response) => {
+                setAssociations(response.data);
+            })
+            .catch((e) => console.log(e));
+    };
+
+    const searchOnClick = (e) => {
+        if (searchProjectname == "") {
+            searchProjectAssociationUser(searchUsername);
+        } else if (searchUsername == "") {
+            searchProjectAssociationProjectName(searchProjectname);
+        }
     };
 
     /* async function zapName(id) {
@@ -103,7 +129,6 @@ const ProjectAssociationSearch = () => {
                 {/* Table */}
                 <Row>
                     <div className="col">
-
                         <Card className="shadow">
                             <CardHeader className="border-0">
                                 <h3 className="mb-0">Project Association</h3>
@@ -115,13 +140,17 @@ const ProjectAssociationSearch = () => {
                                             className="form-control-label"
                                             htmlFor="currentPassword"
                                         >
-                                            Project Name
+                                            User
                                         </label>
                                         <Input
-                                            placeholder="Search by project name or status"
+                                            placeholder="Search by user"
                                             className="form-control-alternative"
-                                        //onChange={searchOnChange}
-                                        //value={searchProject}
+                                            onChange={(e) =>
+                                                setSearchUsername(
+                                                    e.target.value
+                                                )
+                                            }
+                                            //value={}
                                         />
                                     </Col>
                                     <Col>
@@ -132,10 +161,14 @@ const ProjectAssociationSearch = () => {
                                             Project Name
                                         </label>
                                         <Input
-                                            placeholder="Search by project name or status"
+                                            placeholder="Search by project name"
                                             className="form-control-alternative"
-                                        //onChange={searchOnChange}
-                                        //value={searchProject}
+                                            onChange={(e) =>
+                                                setSearchProjectname(
+                                                    e.target.value
+                                                )
+                                            }
+                                            //value={searchProject}
                                         />
                                     </Col>
                                 </Row>
@@ -145,9 +178,10 @@ const ProjectAssociationSearch = () => {
                                             className="my-4"
                                             color="primary"
                                             type="submit"
+                                            onClick={searchOnClick}
                                         >
-                                            Pesquisar
-                            </Button>
+                                            Search
+                                        </Button>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -169,7 +203,9 @@ const ProjectAssociationSearch = () => {
                                                     <tr>
                                                         <th scope="row">
                                                             <script>
-                                                                {console.log(value)}
+                                                                {/* console.log(
+                                                                    value
+                                                                ) */}
                                                             </script>
                                                             {value.id}
                                                         </th>
@@ -179,7 +215,9 @@ const ProjectAssociationSearch = () => {
                                                                     className="avatar avatar-sm"
                                                                     href="#pablo"
                                                                     id="tooltip742438047"
-                                                                    onClick={(e) =>
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
                                                                         e.preventDefault()
                                                                     }
                                                                 >
@@ -194,13 +232,17 @@ const ProjectAssociationSearch = () => {
                                                                     target="tooltip742438047"
                                                                 >
                                                                     Ryan Tompson
-                                                    </UncontrolledTooltip>
+                                                                </UncontrolledTooltip>
                                                             </div>
-                                                            {searchUser(value.userid)}
+                                                            {searchUser(
+                                                                value.username
+                                                            )}
                                                         </td>
                                                         <td>
                                                             <div className="d-flex align-items-center">
-                                                                {value.projectname}
+                                                                {
+                                                                    value.projectname
+                                                                }
                                                             </div>
                                                         </td>
                                                         <td className="text-right">
@@ -211,7 +253,9 @@ const ProjectAssociationSearch = () => {
                                                                     role="button"
                                                                     size="sm"
                                                                     color=""
-                                                                    onClick={(e) =>
+                                                                    onClick={(
+                                                                        e
+                                                                    ) =>
                                                                         e.preventDefault()
                                                                     }
                                                                 >
@@ -223,15 +267,19 @@ const ProjectAssociationSearch = () => {
                                                                 >
                                                                     <DropdownItem
                                                                         href="#pablo"
-                                                                        onClick={(e) =>
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
                                                                             e.preventDefault()
                                                                         }
                                                                     >
                                                                         Action
-                                                        </DropdownItem>
+                                                                    </DropdownItem>
                                                                     <DropdownItem
                                                                         href="#pablo"
-                                                                        onClick={(e) => {
+                                                                        onClick={(
+                                                                            e
+                                                                        ) => {
                                                                             e.preventDefault();
                                                                             deleteAssociationUser(
                                                                                 value.id
@@ -240,7 +288,7 @@ const ProjectAssociationSearch = () => {
                                                                     >
                                                                         <i className="ni ni-basket text-danger" />
                                                                         Delete
-                                                        </DropdownItem>
+                                                                    </DropdownItem>
                                                                 </DropdownMenu>
                                                             </UncontrolledDropdown>
                                                         </td>
