@@ -34,6 +34,7 @@ const Settings = (props) => {
         console.log(user)
         const data = user
         data.password = newPassword
+        
         UsuarioDataService.update(user.id, data)
             .then(response => {
                 setUser(response.data)
