@@ -34,10 +34,14 @@ import {
 	Progress,
 	Row,
 	Table,
-    Input
+	Input,
+	Col,
+	CardBody,
+	Button,
+  FormGroup
 } from 'reactstrap';
 
-const Tables = () => {
+const Tables = (props) => {
 	const projectInitial = [
 		{
 			id: '1',
@@ -49,8 +53,19 @@ const Tables = () => {
 		},
 	];
 
+  const initialProject = {
+    id: "",
+    image: "",
+    projectname: "",
+    status: "",
+    budget: "",
+    completed: ""
+}
+
 	const [projects, setProjects] = useState(projectInitial);
-    const [searchProject, setSearchProject] = useState('');
+  const [currentProject, setCurrentProject] = useState(initialProject);
+	const [searchProjectName, setSearchProjectName] = useState('');
+	const [searchProjectStatus, setSearchProjectStatus] = useState('');
 
 	const retrieveProject = () => {
 		ProjetoDataService.getAll()
@@ -72,28 +87,28 @@ const Tables = () => {
 			.catch((e) => console.log(e));
 	};
 
-    const searchOnChange = (e) => {
-        const searchProject = e.target.value;
-        setSearchProject(searchProject);
-        findByProjectName();
-        findyByStatus();
-    }
+	const findByProjectName = () => {
+		ProjetoDataService.findByProjectName(searchProjectName)
+			.then((response) => {
+				let data = response.data.filter((data) =>
+					searchProjectStatus !== ''
+						? data.status === searchProjectStatus
+						: true,
+				);
+				setProjects(data);
+			})
+			.catch((e) => console.log(e));
+	};
 
-    const findByProjectName = () => {
-        ProjetoDataService.findByProjectName(searchProject)
-            .then((response) => {
-                setProjects(response.data)
-            })
-            .catch((e) => console.log(e));
-    }
+	const searchOnName = (e) => {
+		const searchProjectName = e.target.value;
+		setSearchProjectName(searchProjectName);
+	};
 
-    const findyByStatus = () => {
-        ProjetoDataService.findyByStatus(searchProject)
-        .then((response) => {
-            setProjects(response.data)
-        })
-        .catch((e) => console.log(e));
-    }
+	const searchOnStatus = (e) => {
+		const searchProjectStatus = e.target.value;
+		setSearchProjectStatus(searchProjectStatus);
+	};
 
 	return (
 		<>
@@ -104,107 +119,232 @@ const Tables = () => {
 				<Row>
 					<div className='col'>
 						<Card className='shadow'>
-                         <Input 
-                            placeholder="Search by project name or status"
-                            className="text-left pl-5"
-                            onChange={searchOnChange}
-                            value={searchProject}
-                         />
 							<CardHeader className='border-0'>
 								<h3 className='mb-0'>Projects table</h3>
 							</CardHeader>
-							<Table
-								className='align-items-center table-flush'
-								responsive
-							>
-								<thead className='thead-light'>
-									<tr>
-										<th scope='col'>Project</th>
-										<th scope='col'>Budget</th>
-										<th scope='col'>Status</th>
-										<th scope='col'>Completion</th>
-										<th scope='col' />
-										<th scope='col' />
-									</tr>
-								</thead>
-								<tbody>
-									{projects.map((value, index) => (
-										<tr>
-											<th scope='row'>
-												<Media className='align-items-center'>
-													<a
-														className='avatar rounded-circle mr-3'
-														href='#pablo'
-														onClick={(e) =>
-															e.preventDefault()
-														}
+							<CardBody>
+								<Row>
+									<Col>
+										<label
+											className='form-control-label'
+											htmlFor='currentPassword'
+										>
+											Project Name
+										</label>
+										<Input
+											placeholder='Search by project name'
+											className='form-control-alternative'
+											onChange={searchOnName}
+											value={searchProjectName}
+										/>
+									</Col>
+									<Col lg='6'>
+										<FormGroup>
+											<label
+												htmlFor='status'
+												className='form-control-label'
+											>
+												Project Status{' '}
+											</label>
+											<select
+												id='status'
+												name='status'
+												className='form-control'
+												tabindex='2'
+												style={{ maxWidth: 300 }}
+												onChange={searchOnStatus}
+											>
+												{currentProject.status.includes(
+													'pending',
+												) ? (
+													<option
+														value='pending'
+														selected
 													>
-														<img
-															alt='...'
-															src={
-																require('../../assets/img/theme/bootstrap.jpg')
-																	.default
-															}
-														/>
-													</a>
-													<Media>
-														<span className='mb-0 text-sm'>
-															{value.projectname}
-														</span>
-													</Media>
-												</Media>
-											</th>
-											<td>{value.budget}</td>
-											<td>
-												<Badge
-													color=''
-													className='badge-dot mr-4'
-												>
-													<i className='bg-warning' />
-													{value.status}
-												</Badge>
-											</td>
-											<td>
-												<div className='d-flex align-items-center'>
-													<span className='mr-2'>
-														{value.completed}
-													</span>
-													<div>
-														<Progress
-															max='100'
-															value='60'
-															barClassName='bg-danger'
-														/>
-													</div>
-												</div>
-											</td>
-											<td>
-												<Link
-													to={
-														'/admin/project/editproject/' +
-														value.id
-													}
-													className='btn btn-warning'
-												>
-													{' '}
-													Edit
-												</Link>
-											</td>
-											<td>
-												<Link
-													onClick={() =>
-														deleteProject(value.id)
-													}
-													className='btn btn-danger'
-												>
-													{' '}
-													Delete
-												</Link>
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</Table>
+														pending
+													</option>
+												) : (
+													<option value='pending'>
+														pending
+													</option>
+												)}
+												{currentProject.status.includes(
+													'completed',
+												) ? (
+													<option
+														value='completed'
+														selected
+													>
+														completed
+													</option>
+												) : (
+													<option value='completed'>
+														completed
+													</option>
+												)}
+												{currentProject.status.includes(
+													'delayed',
+												) ? (
+													<option
+														value='delayed'
+														selected
+													>
+														delayed
+													</option>
+												) : (
+													<option value='delayed'>
+														delayed
+													</option>
+												)}
+												{currentProject.status.includes(
+													'on schedule',
+												) ? (
+													<option
+														value='on schedule'
+														selected
+													>
+														on schedule
+													</option>
+												) : (
+													<option value='on schedule'>
+														on schedule
+													</option>
+												)}
+											</select>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row>
+									<Col>
+										<Button
+											className='my-4'
+											color='primary'
+											type='submit'
+											onClick={findByProjectName}
+										>
+											Pesquisar
+										</Button>
+									</Col>
+								</Row>
+								<Row>
+									<Col>
+										<Table
+											className='align-items-center table-flush'
+											responsive
+										>
+											<thead className='thead-light'>
+												<tr>
+													<th scope='col'>Project</th>
+													<th scope='col'>Budget</th>
+													<th scope='col'>Status</th>
+													<th scope='col'>
+														Completion
+													</th>
+													<th scope='col' />
+													<th scope='col' />
+												</tr>
+											</thead>
+											<tbody>
+												{projects.map(
+													(value, index) => (
+														<tr>
+															<th scope='row'>
+																<Media className='align-items-center'>
+																	<a
+																		className='avatar rounded-circle mr-3'
+																		href='#pablo'
+																		onClick={(
+																			e,
+																		) =>
+																			e.preventDefault()
+																		}
+																	>
+																		<img
+																			alt='...'
+																			src={
+																				require('../../assets/img/theme/bootstrap.jpg')
+																					.default
+																			}
+																		/>
+																	</a>
+																	<Media>
+																		<span className='mb-0 text-sm'>
+																			{
+																				value.projectname
+																			}
+																		</span>
+																	</Media>
+																</Media>
+															</th>
+															<td>
+																{value.budget}
+															</td>
+															<td>
+																<Badge
+																	color=''
+																	className='badge-dot mr-4'
+																>
+																	<i className='bg-warning' />
+																	{
+																		value.status
+																	}
+																</Badge>
+															</td>
+															<td>
+																<div className='d-flex align-items-center'>
+																	<span className='mr-2'>
+																		{
+																			value.completed
+																		}
+																	</span>
+																	<div>
+																		<Progress
+																			max='100'
+																			value='60'
+																			barClassName='bg-danger'
+																		/>
+																	</div>
+																</div>
+															</td>
+															<td>
+																<Button
+																	color='warning'
+																	href='#pablo'
+																	onClick={(
+																		event,
+																	) => {
+																		event.preventDefault();
+																		props.history.push(
+																			'/admin/project/editproject/' +
+																				value.id,
+																		);
+																	}}
+																	size='sm'
+																>
+																	Edit
+																</Button>
+															</td>
+															<td>
+																<Button
+																	color='danger'
+																	size='sm'
+																	onClick={() =>
+																		deleteProject(
+																			value.id,
+																		)
+																	}
+																>
+																	Delete
+																</Button>
+															</td>
+														</tr>
+													),
+												)}
+											</tbody>
+										</Table>
+									</Col>
+								</Row>
+							</CardBody>
 							<CardFooter className='py-4'>
 								<nav aria-label='...'>
 									<Pagination

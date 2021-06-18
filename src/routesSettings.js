@@ -17,13 +17,22 @@
 */
 import ProfileSettings from "views/examples/ProfileSettings"
 
+import ProfileDelete from "./views/examples/ProfileDelete"
+
 var routeSettings = [
   {
-    path: "/settings",
+    path: "/changePassword",
     name: "Settings",
     icon: "ni ni-settings text-green",
     component: ProfileSettings,
     layout: "/settings",
   },
+  {
+    path: "/delete",
+    name: "Delete",
+    icon:"",
+    component: ProfileDelete,
+    layout: "/settings",
+  }
 ];
 export default routeSettings;

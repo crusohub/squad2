@@ -29,7 +29,24 @@ const UserHeader = (props) => {
 
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
 
+<<<<<<< HEAD
   
+=======
+  const updateProfile = () => {
+    UsuarioDataService.update(props.user.id, props.user)
+    .then(response => {
+      setUsuarioLogado(props.user)
+      console.log(response);
+      alert("Atualizado com sucesso!")
+      
+    })
+    .catch(e => {
+      console.log(e);
+    });
+}
+  
+
+>>>>>>> 69a4d002bb739bcdb4d13b0619e8a823ae5ab06f
   return (
     <>
       <div

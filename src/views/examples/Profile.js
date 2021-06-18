@@ -15,8 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+// core components
+import HeaderGenerico from "../../components/Headers/HeaderGenerico";
+import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
 import React from "react";
 import {useEffect, useContext, useState} from "react"
+
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -32,10 +38,6 @@ import {
   Col,
 } from "reactstrap";
 
-import {
-  BrowserRouter as Router,
-  Link,
-} from "react-router-dom";
 
 // core components
 import UserHeader from "components/Headers/HeaderGenerico";
@@ -60,7 +62,7 @@ const Profile = (props) => {
   
   }
 
-  const [aleatorio, setAleatorio]= useState(1)
+  const [aleatorio, setAleatorio]= useState(1) // set 1 em aleatorio
 
   const [usuarioApi, setUsuarioApi] = useState(Api)
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
@@ -100,7 +102,7 @@ const updateProfile = () => {
 
   return (
     <>
-      <UserHeader imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg` ).default}
+      <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg` ).default}
                   titulo= {`Hello ${usuarioLogado.username}`}
                   description={"  This is your profile page. Below you can edit your account details and save the changes "}
       />
@@ -174,21 +176,28 @@ const updateProfile = () => {
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col xs="8">
+                  <Col xs="6">
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    {/* <Button
+                    <Link to={"/settings/delete"}>
+                      <Button
+                        color="danger"
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    </Link>
+                  </Col>
+                  <Col className="text-right" xs="2">
+                    <Button
                       color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.defaultPrevented()}
+                      onClick={() => callSettings()}
                       size="sm"
                     >
                       Settings
-                    </Button> */}
-                    <Link to={"/settings/settings"}>
-                      Settings
-                    </Link>
+                    </Button>
+                    
                   </Col>
                 </Row>
               </CardHeader>
@@ -398,6 +407,4 @@ const updateProfile = () => {
     </>
   )
 };
-
-
 export default Profile;
