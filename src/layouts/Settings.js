@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
@@ -29,8 +29,16 @@ import routesSettings from "routesSettings";
 const Settings = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const [title, setTitle] = useState("Title")
 
   React.useEffect(() => {
+    routesSettings.map((prop, key) => {
+      if (prop.layout === "/settings") {
+        if (prop.path === "/changePassword"){
+          setTitle("Change your password!")
+        }
+      }
+    })
     document.body.classList.add("bg-default");
     return () => {
       document.body.classList.remove("bg-default");
@@ -68,7 +76,7 @@ const Settings = (props) => {
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Change your password!</h1>
+                  <h1 className="text-white">{title}</h1>
                 </Col>
               </Row>
             </div>
