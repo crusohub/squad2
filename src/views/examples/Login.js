@@ -41,15 +41,17 @@ import {
 const Login = (props) => {
 
   const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
-  const [username, setUsername] = useState()
-  const [password, setPassword] = useState()
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  
   const login = () => {
     console.log(username)
     UsuarioDataService.login(username, password).then(
       response => response.data).then(
         data => {
               console.log(data[0])
-              if(data[0].password === password){
+              
+              if(data[0] != undefined && data[0].password === password){
                 autenticaUsuario(data[0])
               }else{
                 alert("Falha na autenticação!")
@@ -63,8 +65,8 @@ const Login = (props) => {
     setPassword(e.target.value)
   }
   function autenticaUsuario(usuario) {
-    console.log(usuario)
     if (usuario != null) {
+      console.log(usuario)
       setUsuarioLogado(usuario)
       if (!usuario.firstname) {
         props.history.push('/admin/user-profile')
