@@ -19,9 +19,8 @@
 import HeaderGenerico from "../../components/Headers/HeaderGenerico";
 import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
 import UsuarioDataService from "../../services/UsuarioDataService";
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useContext, useState } from "react"
-
 import { Link } from "react-router-dom";
 
 // reactstrap components
@@ -38,10 +37,6 @@ import {
   Col,
 } from "reactstrap";
 
-
-// core components
-
-
 const Profile = (props) => {
 
   const Api = {
@@ -53,20 +48,20 @@ const Profile = (props) => {
     city: "",
     country: "",
     postalcode: "",
+    photo: "",
     about: "",
   }
 
   const [aleatorio, setAleatorio] = useState(1) // set 1 em aleatorio
-
   const [usuarioApi, setUsuarioApi] = useState(Api)
   const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+
 
   const handleInputChange = event => {
     event.preventDefault()
     const { name, value } = event.target;
     setUsuarioApi({ ...usuarioApi, [name]: value });
     //console.log(usuarioLogado)
-
   };
   const updateProfile = () => {
     UsuarioDataService.update(usuarioLogado.id, usuarioApi)
@@ -110,10 +105,10 @@ const Profile = (props) => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src=
-                        {
-                          require("../../assets/img/theme/team-4-800x800.jpg").default
-                        }
+                        src={usuarioLogado.photo}
+                        // {
+                        //   require("../../assets/img/theme/team-4-800x800.jpg").default
+                        // }
                       />
                     </a>
                   </div>
@@ -207,7 +202,7 @@ const Profile = (props) => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={usuarioApi.username}
+                            defaultValue={usuarioLogado.username}
                             id="input-username"
                             name="username"
                             onBlur={handleInputChange}
@@ -229,7 +224,7 @@ const Profile = (props) => {
                             id="input-email"
                             name="email"
 
-                            defaultValue={usuarioApi.email}
+                            defaultValue={usuarioLogado.email}
                             onBlur={handleInputChange}
                             type="email"
                           />
@@ -247,7 +242,7 @@ const Profile = (props) => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={usuarioApi.firstname}
+                            defaultValue={usuarioLogado.firstname}
                             onBlur={handleInputChange}
                             id="input-first-name"
                             name="firstname"
@@ -266,7 +261,7 @@ const Profile = (props) => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={usuarioApi.lastname}
+                            defaultValue={usuarioLogado.lastname}
                             onBlur={handleInputChange}
                             id="input-last-name"
                             name="lastname"
@@ -294,7 +289,7 @@ const Profile = (props) => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={usuarioApi.address}
+                            defaultValue={usuarioLogado.address}
                             onBlur={handleInputChange}
                             id="input-address"
                             name="address"
@@ -315,7 +310,7 @@ const Profile = (props) => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={usuarioApi.city}
+                            defaultValue={usuarioLogado.city}
                             onBlur={handleInputChange}
                             id="input-city"
                             name="city"
@@ -337,7 +332,7 @@ const Profile = (props) => {
                             onBlur={handleInputChange}
                             id="input-country"
                             name="country"
-                            defaultValue={usuarioApi.country}
+                            defaultValue={usuarioLogado.country}
 
                             type="text"
                           />
@@ -355,7 +350,7 @@ const Profile = (props) => {
                             className="form-control-alternative"
                             id="input-postal-code"
                             name="postalcode"
-                            placeholder={usuarioApi.postalcode}
+                            placeholder={usuarioLogado.postalcode}
                             onBlur={handleInputChange}
                             type="number"
                           />
@@ -363,6 +358,28 @@ const Profile = (props) => {
                       </Col>
                     </Row>
                   </div>
+                  <hr className="my-4" />
+                  <Row>
+                    <Col md="12">
+                      <FormGroup>
+                        <label
+                          className="form-control-label"
+                          htmlFor="input-country"
+                        >
+                          Photo
+                        </label>
+                        <Input
+                          className="form-control-alternative"
+                          id="input-photo"
+                          name="photo"
+                          placeholder="Input the path of your photo"
+                          defaultValue={usuarioLogado.photo}
+                          onBlur={handleInputChange}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    </Row>
                   <hr className="my-4" />
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">About me</h6>

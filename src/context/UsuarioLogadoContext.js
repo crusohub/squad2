@@ -14,6 +14,7 @@ const UsuarioLogadoProvider = (props) => {
         country: "country 2",
         postalcode: "postalcode 2",
         about: "about 2",
+        photo: "team-4-800x800.jpg",
         password: "1",
     };
 
