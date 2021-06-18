@@ -19,7 +19,7 @@
 import UserHeader from "components/Headers/UserHeader.js";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
 import UsuarioDataService from "services/UsuarioDataService";
-import React from "react";
+import React, { useRef } from "react";
 import {useEffect, useContext, useState} from "react"
 
 import { Link } from "react-router-dom";
@@ -57,7 +57,9 @@ const Profile = (props) => {
   }
 
   const [usuarioApi, setUsuarioApi] = useState(Api)
-  const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [profilePicture, setProfilePicture] = useState("team-4-800x800")
+  const inputFile = useRef(null) 
 
   useEffect(()=>{
       setUsuarioApi(usuarioLogado)
@@ -87,6 +89,14 @@ const Profile = (props) => {
   const callSettings = () =>{
     props.history.push("/settings/changePassword")
   }
+
+  const handleProfilePicture = (e) => {
+    setProfilePicture(e.target.value) 
+  }
+
+  const changePicture = () => {
+    inputFile.current.click()
+  }
   
   return (
     <>
@@ -99,13 +109,14 @@ const Profile = (props) => {
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <input type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
+                    <a id="profilePciture" href="#pablo" onClick={() => changePicture()}>
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={
-                          require("../../assets/img/theme/team-4-800x800.jpg")
-                            .default
+                        src=
+                        {
+                          require("../../assets/img/theme/"+profilePicture+".jpg").default
                         }
                       />
                     </a>
