@@ -141,17 +141,11 @@ const Login = (props) => {
         <Row className="mt-3">
           
           <Col xs="6">
-            
-              
-            
-              
                 <Link to={
-                "/admin/forgotpassword/"
+                "/auth/forgotpassword/"
                 }>
                <small> Forgot password?</small>
                 </Link>
-                
-            
           </Col>
          
           <Col className="text-right" xs="6">

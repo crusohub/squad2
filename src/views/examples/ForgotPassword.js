@@ -25,7 +25,7 @@ const ForgotPassword = () => {
       <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">
-              <h1>Recupere sua senha</h1>
+            <h1>Recupere sua senha</h1>
             </div>
            <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">

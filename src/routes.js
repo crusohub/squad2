@@ -141,6 +141,7 @@ var routes = [
         icon: "ni ni-bullet-list-67 text-blue",
         component: ForgotPassword,
         layout: "/auth",
+        sidebar:true
     }
 
 ];
