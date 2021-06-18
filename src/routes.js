@@ -28,6 +28,7 @@ import ProjetoAdd from "views/examples/ProjetoAdd";
 import ProjectAssociationSearch from "views/examples/ProjectAssociationSearch";
 import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
+import ForgotPassword from "views/examples/ForgotPassword";
 
 var routes = [
     {
@@ -121,6 +122,13 @@ var routes = [
         component: Register,
         layout: "/auth",
     },
+    {
+        path: "/forgotpassword",
+        name: "ForgotPassword",
+        icon: "ni ni-bullet-list-67 text-blue",
+        component: ForgotPassword,
+        layout: "/auth",
+    }
 
 ];
 export default routes;

@@ -18,6 +18,7 @@
 import React, { useState, useContext } from "react";
 import UsuarioDataService from "services/UsuarioDataService";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import { Link } from 'react-router-dom'
 
 
 
@@ -132,7 +133,7 @@ const Login = (props) => {
               <div className="text-center">
                 <Button onClick={login} className="my-4" color="primary" type="button">
                   Sign in
-                                </Button>
+               </Button>
               </div>
             </Form>
           </CardBody>
@@ -140,13 +141,17 @@ const Login = (props) => {
         <Row className="mt-3">
           
           <Col xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Forgot password?</small>
-            </a>
+            
+              
+            
+              
+                <Link to={
+                "/admin/forgotpassword/"
+                }>
+               <small> Forgot password?</small>
+                </Link>
+                
+            
           </Col>
          
           <Col className="text-right" xs="6">
