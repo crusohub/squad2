@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useLocalStorage from "../hook/useLocalStorage"
 
 const UsuarioLogadoContext = React.createContext([{}, () => {}]);
 
@@ -18,7 +19,7 @@ const UsuarioLogadoProvider = (props) => {
         password: "1",
     };
 
-    const [usuarioLogado, setUsuarioLogado] = useState(initialState);
+    const [usuarioLogado, setUsuarioLogado] = useLocalStorage("user", initialState);
 
     return (
         <UsuarioLogadoContext.Provider
