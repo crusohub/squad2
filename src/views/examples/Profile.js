@@ -18,7 +18,7 @@
 // core components
 import HeaderGenerico from "../../components/Headers/HeaderGenerico";
 import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
-import UsuarioDataService from "services/UsuarioDataService";
+import UsuarioDataService from "../../services/UsuarioDataService";
 import React from "react";
 import {useEffect, useContext, useState} from "react"
 
@@ -40,9 +40,7 @@ import {
 
 
 // core components
-import UserHeader from "components/Headers/HeaderGenerico";
-import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
-import UsuarioDataService from "services/UsuarioDataService";
+
 
 const Profile = (props) => {
 
@@ -192,7 +190,7 @@ const updateProfile = () => {
                   <Col className="text-right" xs="2">
                     <Button
                       color="primary"
-                      onClick={() => callSettings()}
+                     // onClick={() => callSettings()}
                       size="sm"
                     >
                       Settings
