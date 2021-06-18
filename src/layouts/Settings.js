@@ -32,13 +32,7 @@ const Settings = (props) => {
   const [title, setTitle] = useState("Title")
 
   React.useEffect(() => {
-    routesSettings.map((prop, key) => {
-      if (prop.layout === "/settings") {
-        if (prop.path === "/changePassword"){
-          setTitle("Change your password!")
-        }
-      }
-    })
+    changeTitle();
     document.body.classList.add("bg-default");
     return () => {
       document.body.classList.remove("bg-default");
@@ -50,6 +44,14 @@ const Settings = (props) => {
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
+
+  const changeTitle = () => {
+    if(props.location.pathname === "/settings/changePassword"){
+      setTitle("Change your password!")
+    } else if(props.location.pathname === "/settings/delete"){
+      setTitle("Delete your account")
+    }
+  }
 
   const getRoutes = (routesSettings) => {
     return routesSettings.map((prop, key) => {
