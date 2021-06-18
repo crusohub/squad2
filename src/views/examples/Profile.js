@@ -232,6 +232,7 @@ const Profile = (props) => {
                             name="username"
                             onBlur={handleInputChange}
                             placeholder="Username"
+                            value={usuarioApi.username}
                             type="text"
                           />
                         </FormGroup>
@@ -248,7 +249,8 @@ const Profile = (props) => {
                             className="form-control-alternative"
                             id="input-email"
                             name="email"
-                            placeholder={usuarioApi.email}
+                            placeholder="email@email.com"
+                            value={usuarioApi.email}
                             onChange={handleInputChange}
                             type="email"
                           />
@@ -271,6 +273,7 @@ const Profile = (props) => {
                             id="input-first-name"
                             name="firstname"
                             placeholder="First name"
+                            value={usuarioApi.firstname}
                             type="text"
                           />
                         </FormGroup>
@@ -290,6 +293,7 @@ const Profile = (props) => {
                             id="input-last-name"
                             name="lastname"
                             placeholder="Last name"
+                            value={usuarioApi.lastname}
                             type="text"
                           />
                         </FormGroup>
@@ -318,6 +322,7 @@ const Profile = (props) => {
                             id="input-address"
                             name="address"
                             placeholder="Home Address"
+                            value={usuarioApi.address}
                             type="text"
                           />
                         </FormGroup>
@@ -339,6 +344,7 @@ const Profile = (props) => {
                             id="input-city"
                             name="city"
                             placeholder="City"
+                            value={usuarioApi.city}
                             type="text"
                           />
                         </FormGroup>
@@ -358,6 +364,7 @@ const Profile = (props) => {
                             id="input-country"
                             name="country"
                             placeholder="Country"
+                            value={usuarioApi.country}
                             type="text"
                           />
                         </FormGroup>
@@ -375,6 +382,7 @@ const Profile = (props) => {
                             id="input-postal-code"
                             name="postalcode"
                             placeholder={usuarioApi.postalcode}
+                            value={usuarioApi.postalcode}
                             onChange={handleInputChange}
                             type="number"
                           />
