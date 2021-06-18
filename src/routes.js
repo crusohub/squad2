@@ -133,7 +133,7 @@ var routes = [
         icon: "ni ni-circle-08 text-pink",
         component: Register,
         layout: "/auth",
-        sidebar:true
+        sidebar:true,
     },
     {
         path: "/forgotpassword",

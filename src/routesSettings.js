@@ -26,6 +26,7 @@ var routeSettings = [
     icon: "ni ni-settings text-green",
     component: ProfileSettings,
     layout: "/settings",
+    msg: "OLAAAAAAA"
   },
   {
     path: "/delete",

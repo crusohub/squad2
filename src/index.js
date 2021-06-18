@@ -28,9 +28,11 @@ import AuthLayout from "layouts/Auth.js";
 import SettingsLayout from "layouts/Settings";
 
 import { UsuarioLogadoProvider } from "./context/UsuarioLogadoContext";
+import { CurrentProjectProvider } from "./context/CurrentProjectContext";
 
 ReactDOM.render(
     <BrowserRouter>
+        <CurrentProjectProvider>
         <UsuarioLogadoProvider>
             <Switch>
                 <Route
@@ -48,6 +50,7 @@ ReactDOM.render(
                 <Redirect from="/" to="/admin/index" />
             </Switch>
         </UsuarioLogadoProvider>
+        </CurrentProjectProvider>
     </BrowserRouter>,
     document.getElementById("root")
 );
