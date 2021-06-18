@@ -28,7 +28,7 @@ const ProfileDelete = (props) => {
         password: ""
     }
 
-    const { usuarioLogado, setUsuarioLogado } = useContext(UsuarioLogadoContext)
+    const [ usuarioLogado, setUsuarioLogado ] = useContext(UsuarioLogadoContext)
 
     const [dadosLogado, setDadosLogado] = useState(initialState)
 
@@ -44,9 +44,9 @@ const ProfileDelete = (props) => {
                         alert("Usuario deletado com sucesso");
                         props.history.push("/auth/login")
                     })
-                    .catch(e => {
-                        console.log(e)
-                        alert("Dados não confirmam")})
+                    .catch(e => {console.log(e)})
+            } else {
+                alert("Dados não confirmam")
             }
     }
     return(
@@ -92,33 +92,14 @@ const ProfileDelete = (props) => {
                                     Cancel
                                 </Button>
                             </Link>
-                            <Button className="my-4" color="primary" type="button" onClick={() => {console.log(usuarioLogado)}}>
+                            <Button className="my-4" color="primary" type="button" onClick={deleteAccount}>
                                 Delete user
                             </Button>
                         </div>
                     </Form>
                 </CardBody>
             </Card>
-            <Row className="mt-3">
-                <Col xs="6">
-                    <a
-                        className="text-light"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                    >
-                    <small>Forgot password?</small>
-                    </a>
-                </Col>
-                <Col className="text-right" xs="6">
-                    <a
-                        className="text-light"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                    >
-                        <small>Create new account</small>
-                    </a>
-                </Col>
-            </Row>
+            
         </Col>
     );
 };
