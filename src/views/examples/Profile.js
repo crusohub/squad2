@@ -58,8 +58,7 @@ const Profile = (props) => {
 
   const [usuarioApi, setUsuarioApi] = useState(Api)
   const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
-  const [profilePicture, setProfilePicture] = useState("team-4-800x800")
-  const inputFile = useRef(null) 
+  const [profilePicture, setProfilePicture] = useState("")
 
   useEffect(()=>{
       setUsuarioApi(usuarioLogado)
@@ -89,14 +88,6 @@ const Profile = (props) => {
   const callSettings = () =>{
     props.history.push("/settings/changePassword")
   }
-
-  const handleProfilePicture = (e) => {
-    setProfilePicture(e.target.value) 
-  }
-
-  const changePicture = () => {
-    inputFile.current.click()
-  }
   
   return (
     <>
@@ -109,14 +100,13 @@ const Profile = (props) => {
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
-                    <input type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
-                    <a id="profilePciture" href="#pablo" onClick={() => changePicture()}>
+                    <a id="profilePciture" href="#pablo" onClick={(e) => e.preventDefault()}>
                       <img
                         alt="..."
                         className="rounded-circle"
                         src=
                         {
-                          require("../../assets/img/theme/"+profilePicture+".jpg").default
+                          require("../../assets/img/theme/team-4-800x800.jpg").default
                         }
                       />
                     </a>
