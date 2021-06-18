@@ -34,7 +34,10 @@ import {
     Progress,
     Row,
     Table,
-    Input, Col, CardBody, Button
+    Input,
+    Col,
+    CardBody,
+    Button,
 } from "reactstrap";
 
 const Tables = () => {
@@ -107,146 +110,161 @@ const Tables = () => {
                             <CardHeader className="border-0">
                                 <h3 className="mb-0">Projects table</h3>
                             </CardHeader>
-                        <CardBody>
-                            <Row>
-                                <Col>
-                                <label
+                            <CardBody>
+                                <Row>
+                                    <Col>
+                                        <label
                                             className="form-control-label"
                                             htmlFor="currentPassword"
-                                            >
+                                        >
                                             Project Name
                                         </label>
-                                    <Input
-                                        placeholder="Search by project name or status"
-                                        className="form-control-alternative"
-                                        onChange={searchOnChange}
-                                        value={searchProject}
-                                    />
+                                        <Input
+                                            placeholder="Search by project name or status"
+                                            className="form-control-alternative"
+                                            onChange={searchOnChange}
+                                            value={searchProject}
+                                        />
                                     </Col>
                                     <Col>
-                                <label
+                                        <label
                                             className="form-control-label"
                                             htmlFor="currentPassword"
-                                            >
+                                        >
                                             Project Name
                                         </label>
-                                    <Input
-                                        placeholder="Search by project name or status"
-                                        className="form-control-alternative"
-                                        onChange={searchOnChange}
-                                        value={searchProject}
-                                    />
+                                        <Input
+                                            placeholder="Search by project name or status"
+                                            className="form-control-alternative"
+                                            onChange={searchOnChange}
+                                            value={searchProject}
+                                        />
                                     </Col>
-                            </Row>
-                        <Row>
-                            <Col>
-                            <Button 
-                                className="my-4" 
-                                color="primary" 
-                                type="submit"
-                                >
-                                Pesquisar
-                            </Button>
-                            </Col>
-                        </Row>
-                        <Row>
-<Col>
-
-                            <Table
-                                className="align-items-center table-flush"
-                                responsive
-                            >
-                                <thead className="thead-light">
-                                    <tr>
-                                        <th scope="col">Project</th>
-                                        <th scope="col">Budget</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Completion</th>
-                                        <th scope="col" />
-                                        <th scope="col" />
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {projects.map((value, index) => (
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={(e) =>
-                                                            e.preventDefault()
-                                                        }
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={
-                                                                require("../../assets/img/theme/bootstrap.jpg")
-                                                                    .default
-                                                            }
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            {value.projectname}
-                                                        </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>{value.budget}</td>
-                                            <td>
-                                                <Badge
-                                                    color=""
-                                                    className="badge-dot mr-4"
-                                                >
-                                                    <i className="bg-warning" />
-                                                    {value.status}
-                                                </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">
-                                                        {value.completed}
-                                                    </span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="60"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <Link
-                                                    to={
-                                                        "/admin/project/editproject/" +
-                                                        value.id
-                                                    }
-                                                    className="btn btn-warning"
-                                                >
-                                                    {" "}
-                                                    Edit
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <Link
-                                                    onClick={() =>
-                                                        deleteProject(value.id)
-                                                    }
-                                                    className="btn btn-danger"
-                                                >
-                                                    {" "}
-                                                    Delete
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                            </Col>
-                        </Row>
-</CardBody>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Button
+                                            className="my-4"
+                                            color="primary"
+                                            type="submit"
+                                        >
+                                            Pesquisar
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Table
+                                            className="align-items-center table-flush"
+                                            responsive
+                                        >
+                                            <thead className="thead-light">
+                                                <tr>
+                                                    <th scope="col">Project</th>
+                                                    <th scope="col">Budget</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">
+                                                        Completion
+                                                    </th>
+                                                    <th scope="col" />
+                                                    <th scope="col" />
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {projects.map(
+                                                    (value, index) => (
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <Media className="align-items-center">
+                                                                    <a
+                                                                        className="avatar rounded-circle mr-3"
+                                                                        href="#pablo"
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            e.preventDefault()
+                                                                        }
+                                                                    >
+                                                                        <img
+                                                                            alt="..."
+                                                                            src={
+                                                                                require("../../assets/img/theme/bootstrap.jpg")
+                                                                                    .default
+                                                                            }
+                                                                        />
+                                                                    </a>
+                                                                    <Media>
+                                                                        <span className="mb-0 text-sm">
+                                                                            {
+                                                                                value.projectname
+                                                                            }
+                                                                        </span>
+                                                                    </Media>
+                                                                </Media>
+                                                            </th>
+                                                            <td>
+                                                                {value.budget}
+                                                            </td>
+                                                            <td>
+                                                                <Badge
+                                                                    color=""
+                                                                    className="badge-dot mr-4"
+                                                                >
+                                                                    <i className="bg-warning" />
+                                                                    {
+                                                                        value.status
+                                                                    }
+                                                                </Badge>
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+                                                                    <span className="mr-2">
+                                                                        {
+                                                                            value.completed
+                                                                        }
+                                                                    </span>
+                                                                    <div>
+                                                                        <Progress
+                                                                            max="100"
+                                                                            value="60"
+                                                                            barClassName="bg-danger"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <Link
+                                                                    to={
+                                                                        "/admin/project/editproject/" +
+                                                                        value.id
+                                                                    }
+                                                                    className="btn btn-warning"
+                                                                >
+                                                                    {" "}
+                                                                    Edit
+                                                                </Link>
+                                                            </td>
+                                                            <td>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        deleteProject(
+                                                                            value.id
+                                                                        )
+                                                                    }
+                                                                    className="btn btn-danger"
+                                                                >
+                                                                    {" "}
+                                                                    Delete
+                                                                </Link>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                )}
+                                            </tbody>
+                                        </Table>
+                                    </Col>
+                                </Row>
+                            </CardBody>
                             <CardFooter className="py-4">
                                 <nav aria-label="...">
                                     <Pagination
