@@ -41,6 +41,13 @@ import {
 
 const AdminNavbar = (props) => {
   const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
+
+  const logout = () => {
+    if(window.confirm("Deseja realmente sair?")){
+      setUsuarioLogado("")
+      props.history.push("/auth/login")
+    }
+  }
   
   return (
     <>
@@ -105,7 +112,7 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="#pablo" onClick={logout}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

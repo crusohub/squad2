@@ -43,6 +43,7 @@ const ProfileDelete = (props) => {
                     .then(response => {
                         alert("Usuario deletado com sucesso");
                         props.history.push("/auth/login")
+                        setUsuarioLogado("")
                     })
                     .catch(e => {console.log(e)})
             } else {
