@@ -56,6 +56,7 @@ var ps;
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
+  const [collapseProjects, setCollapseProjects] = useState(false)
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -64,27 +65,38 @@ const Sidebar = (props) => {
   const toggleCollapse = () => {
     setCollapseOpen((data) => !data);
   };
+  const toggleCollapseProject = () => {
+    setCollapseProjects(!collapseOpen)
+  }
   // closes the collapse
   const closeCollapse = () => {
     setCollapseOpen(false);
   };
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
-    return routes.filter(rota => rota.sidebar).map((prop, key) => {
-      return (
-        <NavItem key={key}>
-          <NavLink
-            to={prop.layout + prop.path}
-            tag={NavLinkRRD}
-            onClick={closeCollapse}
-            activeClassName="active"
-          >
-            <i className={prop.icon} />
-            {prop.name}
-          </NavLink>
-        </NavItem>
-      );
-    });
+    let Routes = []
+    Object.keys(routes).forEach(routeMenu => routes[routeMenu].filter(rota => rota.sidebar).map((prop, key) => {
+      if(routeMenu === 'Main'){
+        Routes.push(
+          <NavItem >
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={closeCollapse}
+              activeClassName="active"
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        );
+        return;
+      }
+      Routes.push(<UncontrolledDropdown>
+        <DropdownToggle>Projects</DropdownToggle>
+      </UncontrolledDropdown>)
+    }));
+    return Routes
   };
 
   const { bgColor, routes, logo } = props;
@@ -232,7 +244,9 @@ const Sidebar = (props) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>
+            {createLinks(routes)}
+          </Nav>
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}

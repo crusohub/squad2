@@ -30,8 +30,8 @@ import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
 import ForgotPassword from "views/examples/ForgotPassword";
 
-var routes = [
-    {
+var routes = {
+    Main: [{
         path: "/index",
         name: "Dashboard",
         icon: "ni ni-tv-2 text-primary",
@@ -79,15 +79,40 @@ var routes = [
         layout: "/admin",
         sidebar:true
     },
+    
+    
     {
-      path: "/projetoadd",
-      name: "NovoProjeto",
-      icon: "ni ni-bullet-list-67 text-blue",
-      component: ProjetoAdd,
-      layout: "/admin",
-      sidebar: true
+        path: "/login",
+        name: "Login",
+        icon: "ni ni-key-25 text-info",
+        component: Login,
+        layout: "/auth",
+        sidebar:true
     },
     {
+        path: "/register",
+        name: "Register",
+        icon: "ni ni-circle-08 text-pink",
+        component: Register,
+        layout: "/auth",
+        sidebar:true,
+    },
+    {
+        path: "/forgotpassword",
+        name: "ForgotPassword",
+        icon: "ni ni-bullet-list-67 text-blue",
+        component: ForgotPassword,
+        layout: "/auth",
+        sidebar:true
+    }],
+    Projects:[{
+        path: "/projetoadd",
+        name: "NovoProjeto",
+        icon: "ni ni-bullet-list-67 text-blue",
+        component: ProjetoAdd,
+        layout: "/admin",
+        sidebar: true
+      },{
         path: "/projeto",
         name: "Projects Search",
         icon: "fas fa-search text-blue",
@@ -118,31 +143,7 @@ var routes = [
         component: EditProject,
         layout: "/admin",
         sidebar:true
-    },
-    {
-        path: "/login",
-        name: "Login",
-        icon: "ni ni-key-25 text-info",
-        component: Login,
-        layout: "/auth",
-        sidebar:true
-    },
-    {
-        path: "/register",
-        name: "Register",
-        icon: "ni ni-circle-08 text-pink",
-        component: Register,
-        layout: "/auth",
-        sidebar:true,
-    },
-    {
-        path: "/forgotpassword",
-        name: "ForgotPassword",
-        icon: "ni ni-bullet-list-67 text-blue",
-        component: ForgotPassword,
-        layout: "/auth",
-        sidebar:true
-    }
+    }]
 
-];
+};
 export default routes;

@@ -25,6 +25,8 @@ import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
+import ForgotPassword from "views/examples/ForgotPassword";
+import Login from "components/Footers/AuthFooter";
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);
@@ -43,19 +45,20 @@ const Auth = (props) => {
   }, [location]);
 
   const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
+    let Routes = []
+    Object.values(routes).forEach(routesMenu => routesMenu.map((prop) => {
       if (prop.layout === "/auth") {
-        return (
+        Routes.push (
           <Route
             path={prop.layout + prop.path}
             component={prop.component}
-            key={key}
           />
         );
       } else {
         return null;
       }
-    });
+    }));
+    return Routes
   };
 
   return (
@@ -95,7 +98,13 @@ const Auth = (props) => {
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Switch>
-              {getRoutes(routes)}
+              {[<Route
+            path={'auth' + 'forgotpassword'}
+            component={ForgotPassword}
+          />, <Route
+          path={'auth' + 'login'}
+          component={Login}
+        />]}{getRoutes(routes)}
               <Redirect from="*" to="/auth/login" />
             </Switch>
           </Row>
