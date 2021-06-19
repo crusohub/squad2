@@ -29,7 +29,10 @@ import ProjectAssociationSearch from "views/examples/ProjectAssociationSearch";
 import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
 import ForgotPassword from "views/examples/ForgotPassword";
-
+/*  Arquivo das rotas modificado para realizar melhoria da sidebar, caso queira adicionar
+    nova seção adicione mais um atributo na rota com o nome que deseja que ele apareça 
+    na sidebar, coloque as rotas do submenu, e realize alterações indicadas no arquivo
+    ./components/Sidebar/Sidebar */
 var routes = {
     Main: [
         {

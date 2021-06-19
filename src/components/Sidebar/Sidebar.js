@@ -56,6 +56,8 @@ import {
 const Sidebar = (props) => {
     const [collapseOpen, setCollapseOpen] = useState();
     const [collapseProjects, setCollapseProjects] = useState(false);
+    /*É necessário criar um novo estado e função toggle para controlar
+      cada seção nova */
     const [isOpenProjects, setIsOpenProjects] = useState(false);
     const [isOpenAuth, setIsOpenAuth] = useState(false);
 
@@ -80,6 +82,7 @@ const Sidebar = (props) => {
     const toggleCollapse = () => {
         setCollapseOpen((data) => !data);
     };
+    //funções toggle para controlar abertura e fechamento das seções
     const toggleOpenProject = () => {
         setIsOpenProjects(!isOpenProjects);
     };
@@ -266,6 +269,9 @@ const Sidebar = (props) => {
                     </Form>
                     {/* Navigation */}
                     <Nav navbar>
+                        {/*Após a rota é nessário passar o parametro da nova seção na ordem
+                            1- estado de controle de abertura e fechamento
+                            2- função toggle para controlar abertura e fechamento*/}
                         {createLinks(
                             routes,
                             isOpenProjects,
