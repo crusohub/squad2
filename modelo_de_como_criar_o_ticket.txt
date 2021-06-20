@@ -1,0 +1,7 @@
+Task de teste
+1- Verificar se tem erros
+2- Padronizar a interface das telas
+3- Padronizar o comportamento das telas
+
+Quando achar algum desses itens abra uma nova task de correção
+[Correção - Tela] DESCRIÇÃO
