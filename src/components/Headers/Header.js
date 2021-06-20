@@ -20,6 +20,9 @@ import React, { useState, useEffect }from "react";
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import UsuarioDataService from "services/UsuarioDataService";
+import ProjetoDataService from "services/ProjetoDataService";
+import ConexaoDataService from "services/ConexaoDataService ";
+
 
 const Header = () => {
 
@@ -37,6 +40,38 @@ const Header = () => {
 
   useEffect(() => {
     getUsers()
+  })
+
+  const [projects, setProjects] = useState([])
+
+  const getProjects = () => {
+    ProjetoDataService.getAll()
+    .then(response => {
+      setProjects(response.data)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+  }
+
+  useEffect(() => {
+    getProjects()
+  })
+
+  const [connections, setConnections] = useState([])
+
+  const getConnections = () => {
+    ConexaoDataService.getAll()
+    .then(response => {
+      setConnections(response.data)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+  }
+
+  useEffect(() => {
+    getConnections()
   })
 
   return (
@@ -87,7 +122,7 @@ const Header = () => {
                         >
                           Total projects
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span>
+                        <span className="h2 font-weight-bold mb-0">{projects.length}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -115,7 +150,7 @@ const Header = () => {
                         >
                           Total connections
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span>
+                        <span className="h2 font-weight-bold mb-0">{connections.length}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
