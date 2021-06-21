@@ -85,6 +85,14 @@ var routes = {
             layout: "/admin",
             sidebar: true,
         },
+        {
+            path: "/connectionsassociation",
+            name: "Connections",
+            icon: "ni ni-bullet-list-67 text-blue",
+            component: ConnectionsAssociation,
+            layout: "/admin",
+            sidebar: true,
+        }
     ],
     Projects: [
         {
@@ -126,14 +134,6 @@ var routes = {
             component: EditProject,
             layout: "/admin",
             sidebar: true,
-        },
-        {
-            path: "/connectionsassociation",
-            name: "Connections Association",
-            icon: "ni ni-bullet-list-67 text-blue",
-            component: ConnectionsAssociation,
-            layout: "/admin",
-            sidebar: true,
         }
     ],
     Auth: [
@@ -160,7 +160,7 @@ var routes = {
             component: ForgotPassword,
             layout: "/auth",
             sidebar: true,
-        },
+        }
     ],
 };
 export default routes;

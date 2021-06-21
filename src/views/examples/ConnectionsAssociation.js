@@ -184,13 +184,7 @@ const ConnectionsAssociation = () => {
                                             <tbody>
                                                 {associations.map((value) => (
                                                     <tr>
-                                                        <th scope="row">
-                                                            <script>
-                                                                {/* console.log(
-                                                                    value
-                                                                ) */}
-                                                            </script>
-                                                            
+                                                        <th scope="row">                                                    
                                                         </th>
                                                         <td className="d-flex align-items-center">
                                                             <div className="avatar-group">
