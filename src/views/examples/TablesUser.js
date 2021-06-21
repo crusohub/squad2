@@ -45,17 +45,14 @@ import {
 
 const TablesUser = () => {
   const [users, setUsers] = useState([])
-  const [preview, setPreview] = useState(-1)
-  const [next, setNext] = useState(-1)
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  const [pageCount, setPageCount] = useState(0)
+  const [pageCount, setPageCount] = useState(6)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
     .then(response => {
-      setUsers(response.data)
-      // setPageCount(pageCount + 1)
+      setUsers(response.data)    
     })
     .catch((e) => {
       console.log(e)
@@ -66,8 +63,9 @@ const TablesUser = () => {
     getUsers()
   })
 
-  const handlePage = () => {
-
+  const handlePage = (e, pageNum) => {
+    e.preventDefault()
+    setCurrentPage(pageNum)
   }
 
   return (
@@ -95,13 +93,15 @@ const TablesUser = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((value, index) => (
+                {users
+                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                  .map((value, index) => (
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
                           <a
                             className="avatar rounded-circle mr-3"
-                            href="#pablo"
+                            href="#"
                             onClick={(e) => e.preventDefault()}
                           >
                             <img
@@ -128,7 +128,7 @@ const TablesUser = () => {
                         <UncontrolledDropdown>
                           <DropdownToggle
                             className="btn-icon-only text-light"
-                            href="#pablo"
+                            href="#"
                             role="button"
                             size="sm"
                             color=""
@@ -138,13 +138,13 @@ const TablesUser = () => {
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
-                              href="#pablo"
+                              href="#"
                               onClick={(e) => e.preventDefault()}
                             >
                               Edit
                             </DropdownItem>
                             <DropdownItem
-                              href="#pablo"
+                              href="#"
                               onClick={(e) => e.preventDefault()}
                             >
                               Remove
@@ -163,44 +163,46 @@ const TablesUser = () => {
                     className="pagination justify-content-end mb-0"
                     listClassName="justify-content-end mb-0"
                   >
-                    <PaginationItem disabled={currentPage <= 1}>
+                    <PaginationItem disabled={currentPage <= 0}>
                       <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => handlePage(e, (currentPage-1))}
+                        onClick={(e) => handlePage(e, currentPage-1)}
                         tabIndex="-1"
                       >
                         <i className="fas fa-angle-left" />
                         <span className="sr-only">Previous</span>
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
+                    {[...Array(pageCount)].map((page, i) => (
+                      <PaginationItem active={(i) === currentPage} key={(i)}>
+                        <PaginationLink onClick={e => handlePage(e, (i))} href="#">
+                          {i+1}
+                       </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    {/* <PaginationItem className="active">
+                      <PaginationLink 
                         onClick={(e) => handlePage(e, 1)}
-                      >
+                     >
                         1
                       </PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
                       <PaginationLink
-                        href="#pablo"
                         onClick={(e) => handlePage(e, 2)}
-                      >
-                        2 <span className="sr-only">(current)</span>
+                     >
+                        2 <span className="sr-only"></span>
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem>
+                    <PaginationItem >
                       <PaginationLink
-                        href="#pablo"
                         onClick={(e) => handlePage(e, 3)}
-                      >
+                     >
                         3
                       </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem disabled={currentPage > (pageCount-1)}>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => handlePage(e, (currentPage+1))}
+                    </PaginationItem> */}
+                    <PaginationItem disabled={currentPage > (pageCount-2)}>
+                      <PaginationLink 
+                        onClick={(e) => handlePage(e, currentPage+1)}
                       >
                         <i className="fas fa-angle-right" />
                         <span className="sr-only">Next</span>
