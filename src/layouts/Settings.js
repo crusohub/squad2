@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
@@ -25,11 +25,14 @@ import SettingsNavbar from "components/Navbars/SettingsNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routesSettings from "routesSettings";
+import { UsuarioLogadoContext, AlertaLoginContext } from "context/UsuarioLogadoContext";
 
 const Settings = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
   const [title, setTitle] = useState("Title")
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
 
   React.useEffect(() => {
     changeTitle();
@@ -43,6 +46,11 @@ const Settings = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
+    if(usuarioLogado.username === ""){
+      setAlertaLogin(true)
+      setTimeout(()=>setAlertaLogin(false), 4000)
+      props.history.push("/auth/login")
+    }
   }, [location]);
 
   const changeTitle = () => {

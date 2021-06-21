@@ -2,7 +2,7 @@
 
 =========================================================
 * Argon Dashboard React - v1.2.0
-==========================================================
+=========================================================
 
 * Product Page: https://www.creative-tim.com/product/argon-dashboard-react
 * Copyright 2021 Creative Tim (https://www.creative-tim.com)
@@ -49,7 +49,7 @@ import {
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
 
-const ProjectAssociationSearch = () => {
+const ConnectionsAssociation = () => {
     const [associations, setAssociations] = useState([]);
     const [searchUsername, setSearchUsername] = useState("");
     const [searchProjectname, setSearchProjectname] = useState("");
@@ -131,7 +131,7 @@ const ProjectAssociationSearch = () => {
                     <div className="col">
                         <Card className="shadow">
                             <CardHeader className="border-0">
-                                <h3 className="mb-0">Project Association</h3>
+                                <h3 className="mb-0">Connections Association</h3>
                             </CardHeader>
                             <CardBody>
                                 <Row>
@@ -140,7 +140,7 @@ const ProjectAssociationSearch = () => {
                                             className="form-control-label"
                                             htmlFor="currentPassword"
                                         >
-                                            User
+                                            User name
                                         </label>
                                         <Input
                                             placeholder="Search by user"
@@ -153,24 +153,7 @@ const ProjectAssociationSearch = () => {
                                             //value={}
                                         />
                                     </Col>
-                                    <Col>
-                                        <label
-                                            className="form-control-label"
-                                            htmlFor="currentPassword"
-                                        >
-                                            Project Name
-                                        </label>
-                                        <Input
-                                            placeholder="Search by project name"
-                                            className="form-control-alternative"
-                                            onChange={(e) =>
-                                                setSearchProjectname(
-                                                    e.target.value
-                                                )
-                                            }
-                                            //value={searchProject}
-                                        />
-                                    </Col>
+                                    
                                 </Row>
                                 <Row>
                                     <Col>
@@ -192,22 +175,16 @@ const ProjectAssociationSearch = () => {
                                         >
                                             <thead className="thead-light">
                                                 <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Project</th>
-                                                    <th scope="col"></th>
+
+                                                    <th scope="col">Name</th>
+                                                   
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {associations.map((value) => (
                                                     <tr>
-                                                        <th scope="row">
-                                                            <script>
-                                                                {/* console.log(
-                                                                    value
-                                                                ) */}
-                                                            </script>
-                                                            {value.id}
+                                                        <th scope="row">                                                    
                                                         </th>
                                                         <td className="d-flex align-items-center">
                                                             <div className="avatar-group">
@@ -221,11 +198,7 @@ const ProjectAssociationSearch = () => {
                                                                         e.preventDefault()
                                                                     }
                                                                 >
-                                                                    <img
-                                                                        alt="..."
-                                                                        className="rounded-circle"
-                                                                        src="https://picsum.photos/200"
-                                                                    />
+                                                                    
                                                                 </a>
                                                                 <UncontrolledTooltip
                                                                     delay={0}
@@ -240,9 +213,7 @@ const ProjectAssociationSearch = () => {
                                                         </td>
                                                         <td>
                                                             <div className="d-flex align-items-center">
-                                                                {
-                                                                    value.projectname
-                                                                }
+                                                               
                                                             </div>
                                                         </td>
                                                         <td className="text-right">
@@ -376,4 +347,4 @@ const ProjectAssociationSearch = () => {
     );
 };
 
-export default ProjectAssociationSearch;
+export default ConnectionsAssociation;
