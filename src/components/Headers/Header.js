@@ -22,7 +22,7 @@ import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 import UsuarioDataService from "services/UsuarioDataService";
 import ProjetoDataService from "services/ProjetoDataService";
-import ConexaoDataService from "services/ConexaoDataService ";
+import ConexaoDataService from "services/ConexaoDataService";
 import AssociacaoDataService from "services/AssociacaoDataService";
 
 const Header = () => {
