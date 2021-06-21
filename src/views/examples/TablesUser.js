@@ -45,11 +45,15 @@ import {
 
 const TablesUser = () => {
   const [users, setUsers] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [pageCount, setPageCount] = useState(0)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
     .then(response => {
       setUsers(response.data)
+      setPageCount(Math.ceil(response.data.length/pageSize))  
     })
     .catch((e) => {
       console.log(e)
@@ -59,6 +63,11 @@ const TablesUser = () => {
   useEffect(() => {
     getUsers()
   })
+
+  const handlePage = (e, pageNum) => {
+    e.preventDefault()
+    setCurrentPage(pageNum)
+  }
 
   return (
     <>
@@ -72,22 +81,8 @@ const TablesUser = () => {
               <CardHeader className="border-0">
                 <h3 className="mb-0">Card tables</h3>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
+              <Table className="align-items-center table-flush table table-striped" responsive>
                 <thead className="thead-light">
-                  {/* 
-                    "id": "2",
-                    "username": "username 2",
-                    "firstname": "firstname 2",
-                    "lastname": "lastname 2",
-                    "email": "email 2",
-                    "address": "address 2",
-                    "city": "city 2",
-                    "country": "country 2",
-                    "postalcode": "postalcode 2",
-                    "about": "about 2",
-                    "date": "2020-10-09T19:26:54.812Z",
-                    "password": "1"
-                  */}
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
@@ -99,13 +94,15 @@ const TablesUser = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((value, index) => (
+                {users
+                  .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+                  .map((value, index) => (
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
                           <a
                             className="avatar rounded-circle mr-3"
-                            href="#pablo"
+                            href="#"
                             onClick={(e) => e.preventDefault()}
                           >
                             <img
@@ -132,7 +129,7 @@ const TablesUser = () => {
                         <UncontrolledDropdown>
                           <DropdownToggle
                             className="btn-icon-only text-light"
-                            href="#pablo"
+                            href="#"
                             role="button"
                             size="sm"
                             color=""
@@ -142,13 +139,13 @@ const TablesUser = () => {
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
-                              href="#pablo"
+                              href="#"
                               onClick={(e) => e.preventDefault()}
                             >
                               Edit
                             </DropdownItem>
                             <DropdownItem
-                              href="#pablo"
+                              href="#"
                               onClick={(e) => e.preventDefault()}
                             >
                               Remove
@@ -167,44 +164,46 @@ const TablesUser = () => {
                     className="pagination justify-content-end mb-0"
                     listClassName="justify-content-end mb-0"
                   >
-                    <PaginationItem className="disabled">
+                    <PaginationItem disabled={currentPage <= 0}>
                       <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => handlePage(e, currentPage-1)}
                         tabIndex="-1"
                       >
                         <i className="fas fa-angle-left" />
                         <span className="sr-only">Previous</span>
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
+                    {[...Array(pageCount)].map((page, i) => (
+                      <PaginationItem active={(i) === currentPage} key={(i)}>
+                        <PaginationLink onClick={e => handlePage(e, (i))} href="#">
+                          {i+1}
+                       </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    {/* <PaginationItem className="active">
+                      <PaginationLink 
+                        onClick={(e) => handlePage(e, 1)}
+                     >
                         1
                       </PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
                       <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
+                        onClick={(e) => handlePage(e, 2)}
+                     >
+                        2 <span className="sr-only"></span>
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem>
+                    <PaginationItem >
                       <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
+                        onClick={(e) => handlePage(e, 3)}
+                     >
                         3
                       </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                    </PaginationItem> */}
+                    <PaginationItem disabled={currentPage > (pageCount-2)}>
+                      <PaginationLink 
+                        onClick={(e) => handlePage(e, currentPage+1)}
                       >
                         <i className="fas fa-angle-right" />
                         <span className="sr-only">Next</span>
