@@ -45,11 +45,17 @@ import {
 
 const TablesUser = () => {
   const [users, setUsers] = useState([])
+  const [preview, setPreview] = useState(-1)
+  const [next, setNext] = useState(-1)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [pageCount, setPageCount] = useState(0)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
     .then(response => {
       setUsers(response.data)
+      // setPageCount(pageCount + 1)
     })
     .catch((e) => {
       console.log(e)
@@ -59,6 +65,10 @@ const TablesUser = () => {
   useEffect(() => {
     getUsers()
   })
+
+  const handlePage = () => {
+
+  }
 
   return (
     <>
@@ -72,22 +82,8 @@ const TablesUser = () => {
               <CardHeader className="border-0">
                 <h3 className="mb-0">Card tables</h3>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
+              <Table className="align-items-center table-flush table table-striped" responsive>
                 <thead className="thead-light">
-                  {/* 
-                    "id": "2",
-                    "username": "username 2",
-                    "firstname": "firstname 2",
-                    "lastname": "lastname 2",
-                    "email": "email 2",
-                    "address": "address 2",
-                    "city": "city 2",
-                    "country": "country 2",
-                    "postalcode": "postalcode 2",
-                    "about": "about 2",
-                    "date": "2020-10-09T19:26:54.812Z",
-                    "password": "1"
-                  */}
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
@@ -167,10 +163,10 @@ const TablesUser = () => {
                     className="pagination justify-content-end mb-0"
                     listClassName="justify-content-end mb-0"
                   >
-                    <PaginationItem className="disabled">
+                    <PaginationItem disabled={currentPage <= 1}>
                       <PaginationLink
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => handlePage(e, (currentPage-1))}
                         tabIndex="-1"
                       >
                         <i className="fas fa-angle-left" />
@@ -180,7 +176,7 @@ const TablesUser = () => {
                     <PaginationItem className="active">
                       <PaginationLink
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => handlePage(e, 1)}
                       >
                         1
                       </PaginationLink>
@@ -188,7 +184,7 @@ const TablesUser = () => {
                     <PaginationItem>
                       <PaginationLink
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => handlePage(e, 2)}
                       >
                         2 <span className="sr-only">(current)</span>
                       </PaginationLink>
@@ -196,15 +192,15 @@ const TablesUser = () => {
                     <PaginationItem>
                       <PaginationLink
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => handlePage(e, 3)}
                       >
                         3
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem>
+                    <PaginationItem disabled={currentPage > (pageCount-1)}>
                       <PaginationLink
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => handlePage(e, (currentPage+1))}
                       >
                         <i className="fas fa-angle-right" />
                         <span className="sr-only">Next</span>
