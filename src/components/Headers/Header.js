@@ -21,7 +21,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import UsuarioDataService from "services/UsuarioDataService";
 import ProjetoDataService from "services/ProjetoDataService";
-import ConexaoDataService from "services/ConexaoDataService ";
+import ConexaoDataService from "services/ConexaoDataService";
 
 
 const Header = () => {

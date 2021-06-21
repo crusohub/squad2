@@ -18,7 +18,7 @@
 import React, { useState, useEffect } from "react";
 import AssociacaoDataService from "services/AssociacaoDataService";
 import UsuarioDataService from "services/UsuarioDataService";
-
+import ConexaoDataService from "services/ConexaoDataService";
 // reactstrap components
 import {
     Badge,

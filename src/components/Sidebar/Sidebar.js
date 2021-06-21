@@ -85,14 +85,12 @@ const Sidebar = (props) => {
     };
     // creates the links that appear in the left menu / Sidebar
     const createLinks = (routes, ...isOpen) => {
-        let Routes = [];
-        Object.keys(routes).forEach((routeMenu, index) => {
+        return Object.keys(routes).map((routeMenu, index) => {
             if (routeMenu === "Main") {
-                routes[routeMenu]
+                return routes[routeMenu]
                     .filter((rota) => rota.sidebar)
                     .map((prop) => {
-                        Routes.push(
-                            <NavItem>
+                        return <NavItem>
                                 <NavLink
                                     to={prop.layout + prop.path}
                                     tag={NavLinkRRD}
@@ -103,12 +101,9 @@ const Sidebar = (props) => {
                                     {prop.name}
                                 </NavLink>
                             </NavItem>
-                        );
                     });
-                return;
             }
-            Routes.push(
-                <>
+            return <>
                     <NavItem>
                         <NavLink
                             to={"#"}
@@ -141,9 +136,7 @@ const Sidebar = (props) => {
                               })
                         : null}
                 </>
-            );
         });
-        return Routes;
     };
 
     return (
@@ -238,7 +231,7 @@ const Sidebar = (props) => {
                     </UncontrolledDropdown>
                 </Nav>
                 {/* Collapse */}
-                <Collapse navbar isOpen={collapseOpen}>
+                <Collapse navbar isOpen={collapseOpen} style={{scrollbarWidth:'none'}}>
                     {/* Form */}
                     <Form className="mt-4 mb-3 d-md-none">
                         <InputGroup className="input-group-rounded input-group-merge">

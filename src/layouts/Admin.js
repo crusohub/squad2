@@ -44,20 +44,15 @@ const Admin = (props) => {
   }, [location]);
 
   const getRoutes = (routes) => {
-    let Routes = []
-    Object.values(routes).forEach(routesMenu => routesMenu.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        Routes.push (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-          />
-        );
-      } else {
+    return Object.values(routes).map(routesMenu => routesMenu.map((prop, key) => {
+      if (prop.layout === "/admin") 
+        return <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+              />
+      else 
         return null;
-      }
     }))
-    return Routes
   };
 
   const getBrandText = (path) => {
