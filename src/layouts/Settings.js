@@ -46,7 +46,7 @@ const Settings = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-    if(usuarioLogado.firstname === ""){
+    if(usuarioLogado.username === ""){
       setAlertaLogin(true)
       setTimeout(()=>setAlertaLogin(false), 4000)
       props.history.push("/auth/login")

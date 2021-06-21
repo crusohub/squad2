@@ -45,7 +45,7 @@ const Auth = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-    if(usuarioLogado.firstname !== ""){
+    if(usuarioLogado.username !== ""){
       props.history.push("/admin/index")
     }
   }, [location]);
