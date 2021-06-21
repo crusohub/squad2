@@ -18,6 +18,7 @@
 import React, { useState, useEffect } from "react";
 import AssociacaoDataService from "services/AssociacaoDataService";
 import UsuarioDataService from "services/UsuarioDataService";
+import ProjetoDataService from "services/ProjetoDataService"
 
 // reactstrap components
 import {
@@ -54,6 +55,7 @@ const ProjectAssociationSearch = () => {
     const [searchUsername, setSearchUsername] = useState("");
     const [searchProjectname, setSearchProjectname] = useState("");
     const [users, setUsers] = useState([]);
+    const [projetc, setProjetc] = useState([]);
 
     const retrieveAssociation = () => {
         AssociacaoDataService.getAll()
@@ -70,14 +72,43 @@ const ProjectAssociationSearch = () => {
             })
             .catch((e) => console.log(e));
     };
+    const retrieveProject = () => {
+        ProjetoDataService.getAll()
+            .then((response) => {
+                setProjetc(response.data);
+            })
+            .catch((e) => console.log(e));
+    };
+    function searchImgUser(id) {
+        let usuarioCapturado = users.find((user)=>user.username===id);
+        if (usuarioCapturado!==undefined && usuarioCapturado.photo!==undefined) {
+            console.log(usuarioCapturado);
+            return `${usuarioCapturado.photo}`;
+        }
+        else{
+            return `https://picsum.photos/200`
+        }
+}
 
-    function searchUser(id) {
-        try {
-            let usuarioCapturado = users.find((value) => value.id == id);
-            return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
-        } catch {}
+    function searchNameUser(id) {
+            let usuarioCapturado = users.find((user)=>user.username===id);
+            if (usuarioCapturado!==undefined) {
+                return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
+            }
+            else{
+                return `usuario ${id} nao encontrado`
+            }
     }
-
+    function searchStatsProject(id) {
+        let projetoCapturado = projetc.find((user)=>user.projectname===id);
+        
+        if (projetoCapturado!==undefined) {
+            return `${projetoCapturado.status}`;
+        }
+        else{
+            return `projeto ${id} nao encontrado`
+        }
+}
     const deleteAssociationUser = (id) => {
         AssociacaoDataService.remove(id).then(retrieveAssociation);
     };
@@ -119,6 +150,7 @@ const ProjectAssociationSearch = () => {
     useEffect(() => {
         retrieveAssociation();
         retrieveUser();
+        retrieveProject();
     }, []);
 
     return (
@@ -195,6 +227,7 @@ const ProjectAssociationSearch = () => {
                                                     <th scope="col">ID</th>
                                                     <th scope="col">User</th>
                                                     <th scope="col">Project</th>
+                                                    <th scope="col">Stats</th>
                                                     <th scope="col"></th>
                                                 </tr>
                                             </thead>
@@ -221,27 +254,38 @@ const ProjectAssociationSearch = () => {
                                                                         e.preventDefault()
                                                                     }
                                                                 >
+                                                                    
                                                                     <img
                                                                         alt="..."
                                                                         className="rounded-circle"
-                                                                        src="https://picsum.photos/200"
+                                                                        src={searchImgUser(value.username)}
                                                                     />
                                                                 </a>
                                                                 <UncontrolledTooltip
                                                                     delay={0}
                                                                     target="tooltip742438047"
                                                                 >
-                                                                    Ryan Tompson
+                                                                    {value.username} 
+                                                                    {/* ???? */}
                                                                 </UncontrolledTooltip>
                                                             </div>
-                                                            {searchUser(
-                                                                value.username
-                                                            )}
+                                                            <div className="d-flex align-items-center">
+                                                                {
+                                                                    searchNameUser(value.username)
+                                                                }
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div className="d-flex align-items-center">
                                                                 {
                                                                     value.projectname
+                                                                }
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="d-flex align-items-center">
+                                                                {
+                                                                    searchStatsProject(value.projectname)
                                                                 }
                                                             </div>
                                                         </td>
