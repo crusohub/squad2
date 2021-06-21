@@ -17,8 +17,8 @@
 */
 import React from "react";
 import {useContext, useEffect} from "react"
-import { Link } from "react-router-dom";
-import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import { Link, NavLink as NavLinkRRD } from "react-router-dom";
+import { UsuarioLogadoContext, initialState } from "context/UsuarioLogadoContext";
 import UsuarioDataService from "services/UsuarioDataService";
 
 // reactstrap components
@@ -112,7 +112,10 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={logout}>
+                <DropdownItem 
+                to={"/auth/login"}
+                tag={NavLinkRRD}
+                onClick={() => setUsuarioLogado(initialState)}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
