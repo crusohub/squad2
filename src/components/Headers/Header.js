@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useState, useEffect }from "react";
+import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
@@ -30,12 +30,12 @@ const Header = () => {
 
   const getUsers = () => {
     UsuarioDataService.getAll()
-    .then(response => {
-      setUsers(response.data)
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+      .then(response => {
+        setUsers(response.data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   useEffect(() => {
@@ -46,12 +46,12 @@ const Header = () => {
 
   const getProjects = () => {
     ProjetoDataService.getAll()
-    .then(response => {
-      setProjects(response.data)
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+      .then(response => {
+        setProjects(response.data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   useEffect(() => {
@@ -62,12 +62,12 @@ const Header = () => {
 
   const getConnections = () => {
     ConexaoDataService.getAll()
-    .then(response => {
-      setConnections(response.data)
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+      .then(response => {
+        setConnections(response.data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   useEffect(() => {
