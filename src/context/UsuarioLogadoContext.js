@@ -2,32 +2,37 @@ import React, { useState } from "react";
 import useLocalStorage from "../hook/useLocalStorage"
 
 const UsuarioLogadoContext = React.createContext([{}, () => {}]);
+const AlertaLoginContext = React.createContext([false, ()=> {}])
 
+const initialState = {
+    id: "",
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    address: "",
+    city: "",
+    country: "",
+    postalcode: "",
+    about: "",
+    photo: "",
+    password: "",
+};
 const UsuarioLogadoProvider = (props) => {
-    const initialState = {
-        id: "2",
-        username: "username 2",
-        firstname: "firstname 2",
-        lastname: "lastname 2",
-        email: "email 2",
-        address: "address 2",
-        city: "city 2",
-        country: "country 2",
-        postalcode: "postalcode 2",
-        about: "about 2",
-        photo: "team-4-800x800.jpg",
-        password: "1",
-    };
+    
 
     const [usuarioLogado, setUsuarioLogado] = useLocalStorage("user", initialState);
+    const [alertaLogin, setAlertaLogin] = useState(false)
 
     return (
         <UsuarioLogadoContext.Provider
             value={[usuarioLogado, setUsuarioLogado]}
         >
-            {props.children}
+            <AlertaLoginContext.Provider value={[alertaLogin, setAlertaLogin]}>
+                {props.children}
+            </AlertaLoginContext.Provider>
         </UsuarioLogadoContext.Provider>
     );
 };
 
-export { UsuarioLogadoContext, UsuarioLogadoProvider };
+export { initialState, AlertaLoginContext, UsuarioLogadoContext, UsuarioLogadoProvider };
