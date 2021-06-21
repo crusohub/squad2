@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Maps from "views/examples/Maps.js";
@@ -29,6 +30,7 @@ import ProjectAssociationSearch from "views/examples/ProjectAssociationSearch";
 import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
 import ForgotPassword from "views/examples/ForgotPassword";
+import ConnectionsAssociation from "views/examples/ConnectionsAssociation";
 /*  Arquivo das rotas modificado para realizar melhoria da sidebar, caso queira adicionar
     nova seção adicione mais um atributo na rota com o nome que deseja que ele apareça 
     na sidebar, coloque as rotas do submenu, e realize alterações indicadas no arquivo
@@ -125,6 +127,14 @@ var routes = {
             layout: "/admin",
             sidebar: true,
         },
+        {
+            path: "/connectionsassociation",
+            name: "Connections Association",
+            icon: "ni ni-bullet-list-67 text-blue",
+            component: ConnectionsAssociation,
+            layout: "/admin",
+            sidebar: true,
+        }
     ],
     Auth: [
         {
