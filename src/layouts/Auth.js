@@ -51,20 +51,15 @@ const Auth = (props) => {
   }, [location]);
 
   const getRoutes = (routes) => {
-    let Routes = []
-    Object.values(routes).forEach(routesMenu => routesMenu.map((prop) => {
-      if (prop.layout === "/auth") {
-        Routes.push (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-          />
-        );
-      } else {
+    return Object.values(routes).map(routesMenu => routesMenu.map((prop) => {
+      if (prop.layout === "/auth")
+        return <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+              />
+      else 
         return null;
-      }
     }));
-    return Routes
   };
 
   return (

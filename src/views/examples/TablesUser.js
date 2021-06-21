@@ -47,12 +47,13 @@ const TablesUser = () => {
   const [users, setUsers] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  const [pageCount, setPageCount] = useState(6)
+  const [pageCount, setPageCount] = useState(0)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
     .then(response => {
-      setUsers(response.data)    
+      setUsers(response.data)
+      setPageCount(Math.ceil(response.data.length/pageSize))  
     })
     .catch((e) => {
       console.log(e)
