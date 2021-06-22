@@ -37,8 +37,8 @@ const ProfileDelete = (props) => {
                 UsuarioDataService.remove(usuarioLogado.id)
                     .then(response => {
                         alert("Usuario deletado com sucesso");
-                        props.history.push("/auth/login")
                         setUsuarioLogado(initialState)
+                        props.history.push("/admin/index")
                     })
                     .catch(e => {console.log(e)})
             } else {
