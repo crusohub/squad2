@@ -19,14 +19,20 @@ import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+
 import UsuarioDataService from "services/UsuarioDataService";
 import ProjetoDataService from "services/ProjetoDataService";
-import ConexaoDataService from "services/ConexaoDataService ";
-
+import ConexaoDataService from "services/ConexaoDataService";
+import AssociacaoDataService from "services/AssociacaoDataService";
 
 const Header = () => {
 
   const [users, setUsers] = useState([])
+  const [projects, setProjects] = useState([])
+  const [connections, setConnections] = useState([])
+  const [associacao, setAssociacao] = useState([])
+  const [qtdProject, setQtdprojetc] = useState(0)
+  const [qtdUsersProject, setQtdusersProject] = useState(0)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
@@ -42,12 +48,12 @@ const Header = () => {
     getUsers()
   })
 
-  const [projects, setProjects] = useState([])
 
   const getProjects = () => {
     ProjetoDataService.getAll()
       .then(response => {
         setProjects(response.data)
+        setQtdprojetc(response.data.length)
       })
       .catch((e) => {
         console.log(e)
@@ -58,8 +64,6 @@ const Header = () => {
     getProjects()
   })
 
-  const [connections, setConnections] = useState([])
-
   const getConnections = () => {
     ConexaoDataService.getAll()
       .then(response => {
@@ -69,9 +73,23 @@ const Header = () => {
         console.log(e)
       })
   }
-
   useEffect(() => {
     getConnections()
+  })
+
+  const getAssociacao = () => {
+    AssociacaoDataService.getAll()
+      .then(response => {
+        setAssociacao(response.data)
+        setQtdusersProject(response.data.length)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  useEffect(() => {
+    getAssociacao()
   })
 
   return (
@@ -178,7 +196,7 @@ const Header = () => {
                         >
                           Average people per project
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">49,65%</span>
+                        <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">

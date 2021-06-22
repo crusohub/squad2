@@ -20,6 +20,7 @@ import HeaderProject from "components/Headers/HeaderProject";
 import React, { useContext, useEffect, useState } from "react";
 import { UsuarioLogadoContext } from "context/UsuarioLogadoContext"
 import UsuarioDataService from "services/UsuarioDataService"
+import ProfileDelete from "./ProfileDelete"
 
 // reactstrap components
 import {
@@ -43,16 +44,17 @@ import {
 } from "reactstrap";
 
 
-const TablesUser = () => {
+const TablesUser = (props) => {
   const [users, setUsers] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  const [pageCount, setPageCount] = useState(6)
+  const [pageCount, setPageCount] = useState(0)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
     .then(response => {
-      setUsers(response.data)    
+      setUsers(response.data)
+      setPageCount(Math.ceil(response.data.length/pageSize))  
     })
     .catch((e) => {
       console.log(e)
@@ -66,6 +68,23 @@ const TablesUser = () => {
   const handlePage = (e, pageNum) => {
     e.preventDefault()
     setCurrentPage(pageNum)
+  }
+
+  const callEdit = () => {
+    props.history.push("/admin/user-profile")
+  }
+
+  const deleteUser = (id) => {
+    if(id){
+      UsuarioDataService.remove(id)
+          .then(response => {
+              alert("Usuario deletado com sucesso");
+              props.history.push("/admin/index")
+          })
+          .catch(e => {console.log(e)})
+    }else {
+      alert("Usuário não encontrado!")
+    }
   }
 
   return (
@@ -83,6 +102,7 @@ const TablesUser = () => {
               <Table className="align-items-center table-flush table table-striped" responsive>
                 <thead className="thead-light">
                   <tr>
+                    {/* <th scope="col">ID</th> */}
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Address</th>
@@ -97,6 +117,7 @@ const TablesUser = () => {
                   .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
                   .map((value, index) => (
                     <tr>
+                      {/* <td>{value.id}</td> */}
                       <th scope="row">
                         <Media className="align-items-center">
                           <a
@@ -139,13 +160,13 @@ const TablesUser = () => {
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
                               href="#"
-                              onClick={(e) => e.preventDefault()}
+                              onClick={() => callEdit()}
                             >
                               Edit
                             </DropdownItem>
                             <DropdownItem
                               href="#"
-                              onClick={(e) => e.preventDefault()}
+                              onClick={() => deleteUser(value.id)}
                             >
                               Remove
                             </DropdownItem>
@@ -179,27 +200,6 @@ const TablesUser = () => {
                        </PaginationLink>
                       </PaginationItem>
                     ))}
-                    {/* <PaginationItem className="active">
-                      <PaginationLink 
-                        onClick={(e) => handlePage(e, 1)}
-                     >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        onClick={(e) => handlePage(e, 2)}
-                     >
-                        2 <span className="sr-only"></span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem >
-                      <PaginationLink
-                        onClick={(e) => handlePage(e, 3)}
-                     >
-                        3
-                      </PaginationLink>
-                    </PaginationItem> */}
                     <PaginationItem disabled={currentPage > (pageCount-2)}>
                       <PaginationLink 
                         onClick={(e) => handlePage(e, currentPage+1)}

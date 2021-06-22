@@ -1,4 +1,24 @@
-import React from "react";
+/*!
+
+=========================================================
+* Argon Dashboard React - v1.2.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+import React, { useEffect, useState } from "react";
+
+
 
 
 
@@ -18,7 +38,30 @@ import {
 } from "reactstrap";
 
 
+const api = 'https://60bfbc0397295a0017c43b7a.mockapi.io/usuario?username';
+
+
 const ForgotPassword = () => {
+  
+  const [info, setInfo] = useState({});
+  const [Filtro] = useState('');
+
+    useEffect(() => {
+      if (Input) {
+        fetch(`${api}usuario?filter[Filtro]=${Filtro}`)
+          .then((response) => response.json() )
+          .then((response) => {
+            console.log(response);
+            setInfo(response);
+          });
+      }
+    }, [Input]);
+
+   
+
+
+
+
   return (
    <>
       <Col lg="5" md="7">
@@ -29,7 +72,7 @@ const ForgotPassword = () => {
             </div>
            <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <h3>Informe o seu email abaixo</h3>
+              <h3>Informe o seu usuário abaixo</h3>
             </div>
 
             <Form role="form">
@@ -37,20 +80,25 @@ const ForgotPassword = () => {
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-email-83" />
+                      <i className="ni ni-ussername-83" />
                     </InputGroupText>
                   </InputGroupAddon>
+
                   <Input
-                    placeholder="Email"
-                    type="email"
-                    autoComplete="new-email"
+                    placeholder="Username"
+                    type="username"
+                    autoComplete="new-username"
                   />
+                  
                 </InputGroup>
               </FormGroup>
+              
               <div className="text-center">
+              
                 <Button className="my-4" color="primary" type="button">
                   Enviar
                 </Button>
+                
               </div>
 
             </Form>
