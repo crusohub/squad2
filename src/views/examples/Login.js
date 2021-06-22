@@ -145,7 +145,7 @@ const Login = (props) => {
           <Col xs="6">
                 <Link to={
                 "/auth/forgotpassword/"
-                }>
+                }>   
                <small> Forgot password?</small>
                 </Link>
           </Col>
