@@ -82,7 +82,6 @@ const ProjectAssociationSearch = () => {
     function searchImgUser(id) {
         let usuarioCapturado = users.find((user)=>user.username===id);
         if (usuarioCapturado!==undefined && usuarioCapturado.photo!==undefined) {
-            console.log(usuarioCapturado);
             return `${usuarioCapturado.photo}`;
         }
         else{
@@ -128,12 +127,23 @@ const ProjectAssociationSearch = () => {
             })
             .catch((e) => console.log(e));
     };
+    const searchProjectAssociationByFilter = (name,project) => {
+        AssociacaoDataService.findByProject(project)
+        .then((response) => {
+            let dados = response.data.filter((data)=>data.username.toUpperCase()===name.toUpperCase())
+            setAssociations(dados)
+        })
+        .catch((e) => console.log(e));
+    };
 
     const searchOnClick = (e) => {
         if (searchProjectname == "") {
             searchProjectAssociationUser(searchUsername);
         } else if (searchUsername == "") {
             searchProjectAssociationProjectName(searchProjectname);
+        }
+        else{
+            searchProjectAssociationByFilter(searchUsername,searchProjectname)
         }
     };
 
@@ -152,7 +162,11 @@ const ProjectAssociationSearch = () => {
         retrieveUser();
         retrieveProject();
     }, []);
-
+    useEffect(()=>{
+        if (searchUsername === "" && searchProjectname==="") {
+            retrieveAssociation();
+        }
+    },[searchProjectname,searchUsername]);
     return (
         <>
             <HeaderProject />
