@@ -47,7 +47,7 @@ ReactDOM.render(
                     path="/settings"
                     render={(props) => <SettingsLayout {...props} />}
                 />
-                <Redirect from="/" to="/admin/index" />
+                <Redirect from="/" to="/auth/login" />
             </Switch>
         </UsuarioLogadoProvider>
         </CurrentProjectProvider>

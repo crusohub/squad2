@@ -69,7 +69,7 @@ const ProjetoAdd = () => {
     inputPercentual.value=""
   }
   const aleatorio=()=>{
-    let aleatorio = Math.floor((Math.random() * 100) + 0);
+    let aleatorio = Math.floor((Math.random() * 1000) + 0);
     setNovoProjeto({ ...novoProjeto, ["image"]:`https://picsum.photos/id/${aleatorio}/200` });
     inputImg.value=`https://picsum.photos/id/${aleatorio}/200`
   }

@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
@@ -27,10 +27,13 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 import routes from "routes.js";
 import ForgotPassword from "views/examples/ForgotPassword";
 import Login from "components/Footers/AuthFooter";
+import { UsuarioLogadoContext, AlertaLoginContext } from "context/UsuarioLogadoContext";
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
 
   React.useEffect(() => {
     document.body.classList.add("bg-default");
@@ -42,23 +45,21 @@ const Auth = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
+    if(usuarioLogado.username !== ""){
+      props.history.push("/admin/index")
+    }
   }, [location]);
 
   const getRoutes = (routes) => {
-    let Routes = []
-    Object.values(routes).forEach(routesMenu => routesMenu.map((prop) => {
-      if (prop.layout === "/auth") {
-        Routes.push (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-          />
-        );
-      } else {
+    return Object.values(routes).map(routesMenu => routesMenu.map((prop) => {
+      if (prop.layout === "/auth")
+        return <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+              />
+      else 
         return null;
-      }
     }));
-    return Routes
   };
 
   return (
@@ -98,13 +99,7 @@ const Auth = (props) => {
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Switch>
-              {[<Route
-            path={'auth' + 'forgotpassword'}
-            component={ForgotPassword}
-          />, <Route
-          path={'auth' + 'login'}
-          component={Login}
-        />]}{getRoutes(routes)}
+              {getRoutes(routes)}
               <Redirect from="*" to="/auth/login" />
             </Switch>
           </Row>

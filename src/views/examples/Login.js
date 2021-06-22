@@ -17,13 +17,14 @@
 */
 import React, { useState, useContext } from "react";
 import UsuarioDataService from "services/UsuarioDataService";
-import { UsuarioLogadoContext } from "context/UsuarioLogadoContext";
+import { UsuarioLogadoContext,AlertaLoginContext } from "context/UsuarioLogadoContext";
 import { Link } from 'react-router-dom'
 
 
 
 // reactstrap components
 import {
+  Alert,
   Button,
   Card,
   CardHeader,
@@ -41,6 +42,7 @@ import {
 const Login = (props) => {
 
   const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   
@@ -81,9 +83,7 @@ const Login = (props) => {
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-
-          </CardHeader>
+          <Alert className="font-weight-bold m-2" color="danger" isOpen={alertaLogin}>Faça o login!</Alert>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
               <small>Sign in with credentials</small>
@@ -153,8 +153,8 @@ const Login = (props) => {
           <Col className="text-right" xs="6">
             <a
               className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+              href="register"
+              onClick={(e) => props.history.push("auth/register")}
             >
               <small>Create new account</small>
             </a>

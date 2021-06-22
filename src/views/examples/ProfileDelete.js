@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import UsuarioDataService from "services/UsuarioDataService";
 
-import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
+import { UsuarioLogadoContext, initialState } from "../../context/UsuarioLogadoContext";
 
 // reactstrap components
 import {
@@ -23,11 +23,6 @@ import { Link } from "react-router-dom";
 
 const ProfileDelete = (props) => {
 
-    const initialState = {
-        username: "",
-        password: ""
-    }
-
     const [ usuarioLogado, setUsuarioLogado ] = useContext(UsuarioLogadoContext)
 
     const [dadosLogado, setDadosLogado] = useState(initialState)
@@ -42,8 +37,8 @@ const ProfileDelete = (props) => {
                 UsuarioDataService.remove(usuarioLogado.id)
                     .then(response => {
                         alert("Usuario deletado com sucesso");
-                        props.history.push("/auth/login")
-                        setUsuarioLogado("")
+                        setUsuarioLogado(initialState)
+                        props.history.push("/admin/index")
                     })
                     .catch(e => {console.log(e)})
             } else {

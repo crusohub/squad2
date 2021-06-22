@@ -16,25 +16,18 @@
 
 */
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
 // reactstrap components
 import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
     Collapse,
     DropdownMenu,
     DropdownItem,
-    Dropdown,
     UncontrolledDropdown,
     DropdownToggle,
-    FormGroup,
     Form,
     Input,
     InputGroupAddon,
@@ -46,16 +39,13 @@ import {
     NavItem,
     NavLink,
     Nav,
-    Progress,
-    Table,
     Container,
-    Row,
-    Col,
 } from "reactstrap";
+import { UsuarioLogadoContext, initialState } from "context/UsuarioLogadoContext";
 
 const Sidebar = (props) => {
     const [collapseOpen, setCollapseOpen] = useState();
-    const [collapseProjects, setCollapseProjects] = useState(false);
+    const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
     /*É necessário criar um novo estado e função toggle para controlar
       cada seção nova */
     const [isOpenProjects, setIsOpenProjects] = useState(false);
@@ -95,14 +85,12 @@ const Sidebar = (props) => {
     };
     // creates the links that appear in the left menu / Sidebar
     const createLinks = (routes, ...isOpen) => {
-        let Routes = [];
-        Object.keys(routes).forEach((routeMenu, index) => {
+        return Object.keys(routes).map((routeMenu, index) => {
             if (routeMenu === "Main") {
-                routes[routeMenu]
+                return routes[routeMenu]
                     .filter((rota) => rota.sidebar)
                     .map((prop) => {
-                        Routes.push(
-                            <NavItem>
+                        return <NavItem>
                                 <NavLink
                                     to={prop.layout + prop.path}
                                     tag={NavLinkRRD}
@@ -113,12 +101,9 @@ const Sidebar = (props) => {
                                     {prop.name}
                                 </NavLink>
                             </NavItem>
-                        );
                     });
-                return;
             }
-            Routes.push(
-                <>
+            return <>
                     <NavItem>
                         <NavLink
                             to={"#"}
@@ -148,14 +133,10 @@ const Sidebar = (props) => {
                                           </NavLink>
                                       </NavItem>
                                   );
-
-                                  return;
                               })
                         : null}
                 </>
-            );
         });
-        return Routes;
     };
 
     return (
@@ -250,7 +231,7 @@ const Sidebar = (props) => {
                     </UncontrolledDropdown>
                 </Nav>
                 {/* Collapse */}
-                <Collapse navbar isOpen={collapseOpen}>
+                <Collapse navbar isOpen={collapseOpen} style={{scrollbarWidth:'none'}}>
                     {/* Form */}
                     <Form className="mt-4 mb-3 d-md-none">
                         <InputGroup className="input-group-rounded input-group-merge">
@@ -269,7 +250,7 @@ const Sidebar = (props) => {
                     </Form>
                     {/* Navigation */}
                     <Nav navbar>
-                        {/*Após a rota é nessário passar o parametro da nova seção na ordem
+                        {/*Após a rota é necessário passar o parametro da nova seção na ordem
                             1- estado de controle de abertura e fechamento
                             2- função toggle para controlar abertura e fechamento*/}
                         {createLinks(
@@ -279,6 +260,17 @@ const Sidebar = (props) => {
                             isOpenAuth,
                             toggleOpenAuth
                         )}
+                        <NavItem>
+                                <NavLink
+                                    to={"/auth/login"}
+                                    tag={NavLinkRRD}
+                                    onClick={() => setUsuarioLogado(initialState)}
+                                    activeClassName="active"
+                                >
+                                    <i className="ni ni-user-run text-danger" />
+                                    Logout
+                                </NavLink>
+                            </NavItem>
                     </Nav>
                     {/* Divider */}
                     <hr className="my-3" />
@@ -302,14 +294,6 @@ const Sidebar = (props) => {
                             <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
                                 <i className="ni ni-ui-04" />
                                 Components
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-                    <Nav className="mb-md-3" navbar>
-                        <NavItem className="active-pro active">
-                            <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
-                                <i className="ni ni-spaceship" />
-                                Upgrade to PRO
                             </NavLink>
                         </NavItem>
                     </Nav>

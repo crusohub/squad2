@@ -15,12 +15,83 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
+import UsuarioDataService from "services/UsuarioDataService";
+import ProjetoDataService from "services/ProjetoDataService";
+import ConexaoDataService from "services/ConexaoDataService";
+import AssociacaoDataService from "services/AssociacaoDataService";
+
 const Header = () => {
+
+  const [users, setUsers] = useState([])
+  const [projects, setProjects] = useState([])
+  const [connections, setConnections] = useState([])
+  const [associacao, setAssociacao] = useState([])
+  const [qtdProject, setQtdprojetc] = useState(0)
+  const [qtdUsersProject, setQtdusersProject] = useState(0)
+
+  const getUsers = () => {
+    UsuarioDataService.getAll()
+      .then(response => {
+        setUsers(response.data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  useEffect(() => {
+    getUsers()
+  })
+
+
+  const getProjects = () => {
+    ProjetoDataService.getAll()
+      .then(response => {
+        setProjects(response.data)
+        setQtdprojetc(response.data.length)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  useEffect(() => {
+    getProjects()
+  })
+
+  const getConnections = () => {
+    ConexaoDataService.getAll()
+      .then(response => {
+        setConnections(response.data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  useEffect(() => {
+    getConnections()
+  })
+
+  const getAssociacao = () => {
+    AssociacaoDataService.getAll()
+      .then(response => {
+        setAssociacao(response.data)
+        setQtdusersProject(response.data.length)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  useEffect(() => {
+    getAssociacao()
+  })
+
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
@@ -37,10 +108,10 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Traffic
+                          Total Users
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          350,897
+                          {users.length}
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -49,12 +120,12 @@ const Header = () => {
                         </div>
                       </Col>
                     </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
+                    {/*<p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
                         <i className="fa fa-arrow-up" /> 3.48%
                       </span>{" "}
                       <span className="text-nowrap">Since last month</span>
-                    </p>
+                      </p>*/}
                   </CardBody>
                 </Card>
               </Col>
@@ -67,9 +138,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          New users
+                          Total projects
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span>
+                        <span className="h2 font-weight-bold mb-0">{projects.length}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -77,12 +148,12 @@ const Header = () => {
                         </div>
                       </Col>
                     </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
+                    {/*<p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-danger mr-2">
                         <i className="fas fa-arrow-down" /> 3.48%
                       </span>{" "}
                       <span className="text-nowrap">Since last week</span>
-                    </p>
+                    </p>*/}
                   </CardBody>
                 </Card>
               </Col>
@@ -95,9 +166,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Sales
+                          Total connections
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span>
+                        <span className="h2 font-weight-bold mb-0">{connections.length}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -105,12 +176,12 @@ const Header = () => {
                         </div>
                       </Col>
                     </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
+                    {/*<p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-warning mr-2">
                         <i className="fas fa-arrow-down" /> 1.10%
                       </span>{" "}
                       <span className="text-nowrap">Since yesterday</span>
-                    </p>
+                    </p>*/}
                   </CardBody>
                 </Card>
               </Col>
@@ -123,9 +194,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Performance
+                          Average people per project
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">49,65%</span>
+                        <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -133,12 +204,12 @@ const Header = () => {
                         </div>
                       </Col>
                     </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
+                    {/*<p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
                         <i className="fas fa-arrow-up" /> 12%
                       </span>{" "}
                       <span className="text-nowrap">Since last month</span>
-                    </p>
+                    </p>*/}
                   </CardBody>
                 </Card>
               </Col>
@@ -149,5 +220,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;

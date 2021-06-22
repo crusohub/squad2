@@ -1,26 +1,10 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.0
-==========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AssociacaoDataService from "services/AssociacaoDataService";
 import UsuarioDataService from "services/UsuarioDataService";
-import ProjetoDataService from "services/ProjetoDataService"
-
+import ConexaoDataService from "services/ConexaoDataService";
+import { UsuarioLogadoContext } from "../../context/UsuarioLogadoContext";
 // reactstrap components
+
 import {
     Badge,
     Card,
@@ -50,12 +34,29 @@ import {
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
 
-const ProjectAssociationSearch = () => {
+const ConnectionsAssociation = () => {
     const [associations, setAssociations] = useState([]);
     const [searchUsername, setSearchUsername] = useState("");
     const [searchProjectname, setSearchProjectname] = useState("");
     const [users, setUsers] = useState([]);
-    const [projetc, setProjetc] = useState([]);
+    const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+    const [conexao, setConexao] = useState();
+
+    
+    const handleInputUsername = (e) => {
+    const { value } = e.target;
+    let id = value.split(":")[0];
+    let username = value.split(":")[1];
+    if(username == undefined){
+      username = "Select a user";
+    }
+    setConexao({
+      ...conexao,
+        "userid": id,
+        "username": username 
+    });
+
+  }
 
     const retrieveAssociation = () => {
         AssociacaoDataService.getAll()
@@ -72,42 +73,14 @@ const ProjectAssociationSearch = () => {
             })
             .catch((e) => console.log(e));
     };
-    const retrieveProject = () => {
-        ProjetoDataService.getAll()
-            .then((response) => {
-                setProjetc(response.data);
-            })
-            .catch((e) => console.log(e));
-    };
-    function searchImgUser(id) {
-        let usuarioCapturado = users.find((user)=>user.username===id);
-        if (usuarioCapturado!==undefined && usuarioCapturado.photo!==undefined) {
-            return `${usuarioCapturado.photo}`;
-        }
-        else{
-            return `https://picsum.photos/200`
-        }
-}
 
-    function searchNameUser(id) {
-            let usuarioCapturado = users.find((user)=>user.username===id);
-            if (usuarioCapturado!==undefined) {
-                return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
-            }
-            else{
-                return `usuario ${id} nao encontrado`
-            }
+    function searchUser(id) {
+        try {
+            let usuarioCapturado = users.find((value) => value.id == id);
+            return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
+        } catch {}
     }
-    function searchStatsProject(id) {
-        let projetoCapturado = projetc.find((user)=>user.projectname===id);
-        
-        if (projetoCapturado!==undefined) {
-            return `${projetoCapturado.status}`;
-        }
-        else{
-            return `projeto ${id} nao encontrado`
-        }
-}
+
     const deleteAssociationUser = (id) => {
         AssociacaoDataService.remove(id).then(retrieveAssociation);
     };
@@ -127,14 +100,6 @@ const ProjectAssociationSearch = () => {
             })
             .catch((e) => console.log(e));
     };
-    const searchProjectAssociationByFilter = (name,project) => {
-        AssociacaoDataService.findByProject(project)
-        .then((response) => {
-            let dados = response.data.filter((data)=>data.username.toUpperCase()===name.toUpperCase())
-            setAssociations(dados)
-        })
-        .catch((e) => console.log(e));
-    };
 
     const searchOnClick = (e) => {
         if (searchProjectname == "") {
@@ -142,31 +107,28 @@ const ProjectAssociationSearch = () => {
         } else if (searchUsername == "") {
             searchProjectAssociationProjectName(searchProjectname);
         }
-        else{
-            searchProjectAssociationByFilter(searchUsername,searchProjectname)
-        }
     };
 
-    /* async function zapName(id) {
-        var name = "";
-        await UsuarioDataService.findById(id).then((response) => {
-            const userZap = response.data[0];
-            name = `${userZap.firstname} ${userZap.lastname}`;
-        });
-        console.log(name);
-        return name;
-    } */
+    const connectOnClick = (e) => {
+        const data = {
+        "userid": usuarioLogado.id,
+        "username": usuarioLogado.username,
+        "useridconnected": conexao.userid,
+        "usernameconnected": conexao.username
+        }
+        console.log(conexao)
+     ConexaoDataService.create(data).then(
+        response=>console.log(response.data)
+    )
+    };
+
+    
 
     useEffect(() => {
         retrieveAssociation();
         retrieveUser();
-        retrieveProject();
     }, []);
-    useEffect(()=>{
-        if (searchUsername === "" && searchProjectname==="") {
-            retrieveAssociation();
-        }
-    },[searchProjectname,searchUsername]);
+
     return (
         <>
             <HeaderProject />
@@ -177,46 +139,32 @@ const ProjectAssociationSearch = () => {
                     <div className="col">
                         <Card className="shadow">
                             <CardHeader className="border-0">
-                                <h3 className="mb-0">Project Association</h3>
+                                <h3 className="mb-0">Connections Association</h3>
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                    <Col>
-                                        <label
-                                            className="form-control-label"
-                                            htmlFor="currentPassword"
-                                        >
-                                            User
-                                        </label>
-                                        <Input
-                                            placeholder="Search by user"
-                                            className="form-control-alternative"
-                                            onChange={(e) =>
-                                                setSearchUsername(
-                                                    e.target.value
-                                                )
-                                            }
-                                            //value={}
-                                        />
-                                    </Col>
-                                    <Col>
-                                        <label
-                                            className="form-control-label"
-                                            htmlFor="currentPassword"
-                                        >
-                                            Project Name
-                                        </label>
-                                        <Input
-                                            placeholder="Search by project name"
-                                            className="form-control-alternative"
-                                            onChange={(e) =>
-                                                setSearchProjectname(
-                                                    e.target.value
-                                                )
-                                            }
-                                            //value={searchProject}
-                                        />
-                                    </Col>
+                                     <Col>
+
+                    <label
+                      className="form-control-label"
+                      htmlFor="currentPassword"
+                    >
+                      Select a user
+                    </label>
+                    <Input
+                      name = "username"
+                      type="select"
+                      placeholder="Search by username"
+                      onChange={handleInputUsername}
+                      className="form-control-alternative"
+                    >
+                      <option>Select a user</option>
+                      {users.map((data) => (
+                        <option id = {data.userid} value={data.id + ":"+ data.username}>{data.username}</option>
+                      ))}
+                    </Input>
+                  </Col>
+                                    
                                 </Row>
                                 <Row>
                                     <Col>
@@ -224,9 +172,10 @@ const ProjectAssociationSearch = () => {
                                             className="my-4"
                                             color="primary"
                                             type="submit"
-                                            onClick={searchOnClick}
+                                            onClick={connectOnClick}
+                                            
                                         >
-                                            Search
+                                            Connect
                                         </Button>
                                     </Col>
                                 </Row>
@@ -238,23 +187,16 @@ const ProjectAssociationSearch = () => {
                                         >
                                             <thead className="thead-light">
                                                 <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Project</th>
-                                                    <th scope="col">Stats</th>
-                                                    <th scope="col"></th>
+
+                                                    <th scope="col">Name</th>
+                                                   
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {associations.map((value) => (
                                                     <tr>
-                                                        <th scope="row">
-                                                            <script>
-                                                                {/* console.log(
-                                                                    value
-                                                                ) */}
-                                                            </script>
-                                                            {value.id}
+                                                        <th scope="row">                                                    
                                                         </th>
                                                         <td className="d-flex align-items-center">
                                                             <div className="avatar-group">
@@ -269,38 +211,21 @@ const ProjectAssociationSearch = () => {
                                                                     }
                                                                 >
                                                                     
-                                                                    <img
-                                                                        alt="..."
-                                                                        className="rounded-circle"
-                                                                        src={searchImgUser(value.username)}
-                                                                    />
                                                                 </a>
-                                                                {/* <UncontrolledTooltip
+                                                                <UncontrolledTooltip
                                                                     delay={0}
                                                                     target="tooltip742438047"
                                                                 >
-                                                                    {value.username} 
-                                                                    
-                                                                </UncontrolledTooltip> */}
+                                                                    Ryan Tompson
+                                                                </UncontrolledTooltip>
                                                             </div>
-                                                            <div className="d-flex align-items-center">
-                                                                {
-                                                                    searchNameUser(value.username)
-                                                                }
-                                                            </div>
+                                                            {searchUser(
+                                                                value.username
+                                                            )}
                                                         </td>
                                                         <td>
                                                             <div className="d-flex align-items-center">
-                                                                {
-                                                                    value.projectname
-                                                                }
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="d-flex align-items-center">
-                                                                {
-                                                                    searchStatsProject(value.projectname)
-                                                                }
+                                                               
                                                             </div>
                                                         </td>
                                                         <td className="text-right">
@@ -434,4 +359,4 @@ const ProjectAssociationSearch = () => {
     );
 };
 
-export default ProjectAssociationSearch;
+export default ConnectionsAssociation;
