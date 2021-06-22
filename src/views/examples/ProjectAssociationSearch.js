@@ -275,13 +275,13 @@ const ProjectAssociationSearch = () => {
                                                                         src={searchImgUser(value.username)}
                                                                     />
                                                                 </a>
-                                                                <UncontrolledTooltip
+                                                                {/* <UncontrolledTooltip
                                                                     delay={0}
                                                                     target="tooltip742438047"
                                                                 >
                                                                     {value.username} 
-                                                                    {/* ???? */}
-                                                                </UncontrolledTooltip>
+                                                                    
+                                                                </UncontrolledTooltip> */}
                                                             </div>
                                                             <div className="d-flex align-items-center">
                                                                 {
