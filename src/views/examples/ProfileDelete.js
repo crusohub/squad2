@@ -56,7 +56,7 @@ const ProfileDelete = (props) => {
                             <InputGroup className="input-group-alternative mb-3">
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText>
-                                    <i className="ni ni-email-83" />
+                                    <i className="ni ni-hat-3" />
                                     </InputGroupText>
                                 </InputGroupAddon>
                                 <Input
