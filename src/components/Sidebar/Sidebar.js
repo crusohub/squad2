@@ -118,23 +118,24 @@ const Sidebar = (props) => {
                     </NavItem>
                     {isOpen[2 * index - 2]
                         ? routes[routeMenu]
-                              .filter((rota) => rota.sidebar)
-                              .map((prop) => {
-                                  return (
-                                      <NavItem className="ml-3">
-                                          <NavLink
-                                              to={prop.layout + prop.path}
-                                              tag={NavLinkRRD}
-                                              onClick={closeCollapse}
-                                              activeClassName="active"
-                                          >
-                                              <i className={prop.icon} />
-                                              {prop.name}
-                                          </NavLink>
-                                      </NavItem>
+                            .filter((rota) => rota.sidebar)
+                            .map((prop) => {
+                                return (
+                                    <NavItem className="ml-3">
+                                        <NavLink
+                                            to={prop.layout + prop.path}
+                                            tag={NavLinkRRD}
+                                            onClick={closeCollapse}
+                                            activeClassName="active"
+                                        >
+                                            <i className={prop.icon} />
+                                            {prop.name}
+                                        </NavLink>
+                                    </NavItem>
                                   );
                               })
-                        : null}
+                        : null
+                    }
                 </>
         });
     };
@@ -260,17 +261,17 @@ const Sidebar = (props) => {
                             isOpenAuth,
                             toggleOpenAuth
                         )}
-                        <NavItem>
-                                <NavLink
-                                    to={"/auth/login"}
-                                    tag={NavLinkRRD}
-                                    onClick={() => setUsuarioLogado(initialState)}
-                                    activeClassName="active"
-                                >
-                                    <i className="ni ni-user-run text-danger" />
-                                    Logout
-                                </NavLink>
-                            </NavItem>
+                        {/* <NavItem>
+                            <NavLink
+                                to={"/auth/login"}
+                                tag={NavLinkRRD}
+                                onClick={() => setUsuarioLogado(initialState)}
+                                activeClassName="active"
+                            >
+                                <i className="ni ni-user-run text-danger" />
+                                Logout
+                            </NavLink>
+                        </NavItem> */}
                     </Nav>
                     
                    
