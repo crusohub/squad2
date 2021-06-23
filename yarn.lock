@@ -4807,6 +4807,11 @@
     "minimalistic-assert" "^1.0.1"
     "minimalistic-crypto-utils" "^1.0.1"
 
+"emailjs-com@^3.1.0":
+  "integrity" "sha512-e6rs1F2wTl4vrsTXNNCUPK5cFfuPXYcKJlZgPtsThOidIp5dbgNS5SUrpnP3qxt9p5Om0lkFCVkmBi1a6hQFnw=="
+  "resolved" "https://registry.npmjs.org/emailjs-com/-/emailjs-com-3.1.0.tgz"
+  "version" "3.1.0"
+
 "emailjs@^3.4.0":
   "integrity" "sha512-GYzxHth2mOtfjGvQQYoS7747lrGj/7qohZiY1zQe4CtzVhDuRJ/WNKlhII1tZ0YAUC6190eA7paMuB7AJj4d3w=="
   "resolved" "https://registry.npmjs.org/emailjs/-/emailjs-3.4.0.tgz"
