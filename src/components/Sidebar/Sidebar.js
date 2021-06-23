@@ -231,7 +231,7 @@ const Sidebar = (props) => {
                     </UncontrolledDropdown>
                 </Nav>
                 {/* Collapse */}
-                <Collapse navbar isOpen={collapseOpen} style={{scrollbarWidth:'none'}}>
+                <Collapse navbar isOpen={collapseOpen}>
                     {/* Form */}
                     <Form className="mt-4 mb-3 d-md-none">
                         <InputGroup className="input-group-rounded input-group-merge">
