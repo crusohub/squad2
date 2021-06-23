@@ -80,6 +80,7 @@ const Tables = (props) => {
 		ProjetoDataService.remove(id)
 			.then(() => {
 				retrieveProject();
+				props.history.push("/admin/projeto");
 			})
 			.catch((e) => console.log(e));
 	};
