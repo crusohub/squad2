@@ -46,7 +46,7 @@ const Header = () => {
 
   useEffect(() => {
     getUsers()
-  })
+  },[])
 
 
   const getProjects = () => {
@@ -62,7 +62,7 @@ const Header = () => {
 
   useEffect(() => {
     getProjects()
-  })
+  },[])
 
   const getConnections = () => {
     ConexaoDataService.getAll()
@@ -75,7 +75,7 @@ const Header = () => {
   }
   useEffect(() => {
     getConnections()
-  })
+  },[])
 
   const getAssociacao = () => {
     AssociacaoDataService.getAll()
@@ -90,7 +90,7 @@ const Header = () => {
 
   useEffect(() => {
     getAssociacao()
-  })
+  },[])
 
   return (
     <>
@@ -196,7 +196,7 @@ const Header = () => {
                         >
                           Average people per project
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}</span>
+                        <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}{"%"}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">

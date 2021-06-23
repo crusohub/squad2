@@ -18,7 +18,7 @@
 import React, { useState, useEffect } from "react";
 import AssociacaoDataService from "services/AssociacaoDataService";
 import UsuarioDataService from "services/UsuarioDataService";
-import ProjetoDataService from "services/ProjetoDataService"
+import ProjetoDataService from "services/ProjetoDataService";
 
 // reactstrap components
 import {
@@ -56,11 +56,31 @@ const ProjectAssociationSearch = () => {
     const [searchProjectname, setSearchProjectname] = useState("");
     const [users, setUsers] = useState([]);
     const [projetc, setProjetc] = useState([]);
+    const [maxPage, setMaxPage] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const handlePageClick = (e, index) => {
+        e.preventDefault();
+        setCurrentPage(index);
+    };
+
+    const handlePreviousClick = (e) => {
+        e.preventDefault();
+        setCurrentPage(currentPage - 1);
+    };
+
+    const handleNextClick = (e) => {
+        e.preventDefault();
+        setCurrentPage(currentPage + 1);
+    };
 
     const retrieveAssociation = () => {
         AssociacaoDataService.getAll()
             .then((response) => {
                 setAssociations(response.data);
+                setPageCount(Math.ceil(response.data.length / pageSize));
             })
             .catch((e) => console.log(e));
     };
@@ -80,34 +100,34 @@ const ProjectAssociationSearch = () => {
             .catch((e) => console.log(e));
     };
     function searchImgUser(id) {
-        let usuarioCapturado = users.find((user)=>user.username===id);
-        if (usuarioCapturado!==undefined && usuarioCapturado.photo!==undefined) {
+        let usuarioCapturado = users.find((user) => user.username === id);
+        if (
+            usuarioCapturado !== undefined &&
+            usuarioCapturado.photo !== undefined
+        ) {
             return `${usuarioCapturado.photo}`;
+        } else {
+            return `https://picsum.photos/200`;
         }
-        else{
-            return `https://picsum.photos/200`
-        }
-}
+    }
 
     function searchNameUser(id) {
-            let usuarioCapturado = users.find((user)=>user.username===id);
-            if (usuarioCapturado!==undefined) {
-                return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
-            }
-            else{
-                return `usuario ${id} nao encontrado`
-            }
+        let usuarioCapturado = users.find((user) => user.username === id);
+        if (usuarioCapturado !== undefined) {
+            return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
+        } else {
+            return `usuario ${id} nao encontrado`;
+        }
     }
     function searchStatsProject(id) {
-        let projetoCapturado = projetc.find((user)=>user.projectname===id);
-        
-        if (projetoCapturado!==undefined) {
+        let projetoCapturado = projetc.find((user) => user.projectname === id);
+
+        if (projetoCapturado !== undefined) {
             return `${projetoCapturado.status}`;
+        } else {
+            return `projeto ${id} nao encontrado`;
         }
-        else{
-            return `projeto ${id} nao encontrado`
-        }
-}
+    }
     const deleteAssociationUser = (id) => {
         AssociacaoDataService.remove(id).then(retrieveAssociation);
     };
@@ -127,25 +147,47 @@ const ProjectAssociationSearch = () => {
             })
             .catch((e) => console.log(e));
     };
-    const searchProjectAssociationByFilter = (name,project) => {
+    /* const searchProjectAssociationByFilter = (name, project) => {
         AssociacaoDataService.findByProject(project)
-        .then((response) => {
-            let dados = response.data.filter((data)=>data.username.toUpperCase()===name.toUpperCase())
-            setAssociations(dados)
-        })
-        .catch((e) => console.log(e));
-    };
+            .then((response) => {
+                let dados = response.data.filter(
+                    (data) => data.username.toUpperCase() === name.toUpperCase()
+                );
+                setAssociations(dados);
+            })
+            .catch((e) => console.log(e));
+    }; */
 
-    const searchOnClick = (e) => {
+    /*     const searchOnClick = (e) => {
         if (searchProjectname == "") {
             searchProjectAssociationUser(searchUsername);
         } else if (searchUsername == "") {
             searchProjectAssociationProjectName(searchProjectname);
+        } else {
+            searchProjectAssociationByFilter(searchUsername, searchProjectname);
         }
-        else{
-            searchProjectAssociationByFilter(searchUsername,searchProjectname)
+    }; */
+
+    const searchOnClick = (e) => {
+        if (searchUsername !== "") {
+            if (searchProjectname !== "") {
+                filtroDoFiltro();
+                return;
+            }
+            searchProjectAssociationUser(searchUsername);
+            return;
         }
+        searchProjectAssociationProjectName(searchProjectname);
     };
+
+    function filtroDoFiltro() {
+        AssociacaoDataService.filterByUsername(searchUsername).then((res) => {
+            let listaFiltrada = res.data.filter((associacao) =>
+                associacao.projectName.includes(searchProjectname)
+            );
+            setAssociations(listaFiltrada);
+        });
+    }
 
     /* async function zapName(id) {
         var name = "";
@@ -162,11 +204,11 @@ const ProjectAssociationSearch = () => {
         retrieveUser();
         retrieveProject();
     }, []);
-    useEffect(()=>{
-        if (searchUsername === "" && searchProjectname==="") {
+    useEffect(() => {
+        if (searchUsername === "" && searchProjectname === "") {
             retrieveAssociation();
         }
-    },[searchProjectname,searchUsername]);
+    }, [searchProjectname, searchUsername]);
     return (
         <>
             <HeaderProject />
@@ -238,120 +280,135 @@ const ProjectAssociationSearch = () => {
                                         >
                                             <thead className="thead-light">
                                                 <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Project</th>
-                                                    <th scope="col">Stats</th>
+                                                    <th scope="col" width="5%">
+                                                        ID
+                                                    </th>
+                                                    <th scope="col" width="30%">
+                                                        User
+                                                    </th>
+                                                    <th scope="col" width="20%">
+                                                        Project
+                                                    </th>
+                                                    <th scope="col" width="30%">
+                                                        Stats
+                                                    </th>
                                                     <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {associations.map((value) => (
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <script>
-                                                                {/* console.log(
+                                                {associations
+                                                    .slice(
+                                                        currentPage * pageSize,
+                                                        (currentPage + 1) *
+                                                            pageSize
+                                                    )
+                                                    .map((value) => (
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <script>
+                                                                    {/* console.log(
                                                                     value
                                                                 ) */}
-                                                            </script>
-                                                            {value.id}
-                                                        </th>
-                                                        <td className="d-flex align-items-center">
-                                                            <div className="avatar-group">
-                                                                <a
-                                                                    className="avatar avatar-sm"
-                                                                    href="#pablo"
-                                                                    id="tooltip742438047"
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        e.preventDefault()
-                                                                    }
-                                                                >
-                                                                    
-                                                                    <img
-                                                                        alt="..."
-                                                                        className="rounded-circle"
-                                                                        src={searchImgUser(value.username)}
-                                                                    />
-                                                                </a>
-                                                                {/* <UncontrolledTooltip
-                                                                    delay={0}
-                                                                    target="tooltip742438047"
-                                                                >
-                                                                    {value.username} 
-                                                                    
-                                                                </UncontrolledTooltip> */}
-                                                            </div>
-                                                            <div className="d-flex align-items-center">
-                                                                {
-                                                                    searchNameUser(value.username)
-                                                                }
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="d-flex align-items-center">
-                                                                {
-                                                                    value.projectname
-                                                                }
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="d-flex align-items-center">
-                                                                {
-                                                                    searchStatsProject(value.projectname)
-                                                                }
-                                                            </div>
-                                                        </td>
-                                                        <td className="text-right">
-                                                            <UncontrolledDropdown>
-                                                                <DropdownToggle
-                                                                    className="btn-icon-only text-light"
-                                                                    href="#pablo"
-                                                                    role="button"
-                                                                    size="sm"
-                                                                    color=""
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        e.preventDefault()
-                                                                    }
-                                                                >
-                                                                    <i className="fas fa-ellipsis-v" />
-                                                                </DropdownToggle>
-                                                                <DropdownMenu
-                                                                    className="dropdown-menu-arrow"
-                                                                    right
-                                                                >
-                                                                    <DropdownItem
+                                                                </script>
+                                                                {value.id}
+                                                            </th>
+                                                            <td className="d-flex align-items-center">
+                                                                <div className="avatar-group">
+                                                                    <a
+                                                                        className="avatar avatar-sm"
                                                                         href="#pablo"
+                                                                        id="tooltip742438047"
                                                                         onClick={(
                                                                             e
                                                                         ) =>
                                                                             e.preventDefault()
                                                                         }
                                                                     >
-                                                                        Action
-                                                                    </DropdownItem>
-                                                                    <DropdownItem
+                                                                        <img
+                                                                            alt="..."
+                                                                            className="rounded-circle"
+                                                                            src={searchImgUser(
+                                                                                value.username
+                                                                            )}
+                                                                        />
+                                                                    </a>
+                                                                    {/* <UncontrolledTooltip
+                                                                    delay={0}
+                                                                    target="tooltip742438047"
+                                                                >
+                                                                    {value.username} 
+                                                                    
+                                                                </UncontrolledTooltip> */}
+                                                                </div>
+                                                                <div className="d-flex align-items-center">
+                                                                    {searchNameUser(
+                                                                        value.username
+                                                                    )}
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+                                                                    {
+                                                                        value.projectname
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+                                                                    {searchStatsProject(
+                                                                        value.projectname
+                                                                    )}
+                                                                </div>
+                                                            </td>
+                                                            <td className="text-right">
+                                                                <UncontrolledDropdown>
+                                                                    <DropdownToggle
+                                                                        className="btn-icon-only text-light"
                                                                         href="#pablo"
+                                                                        role="button"
+                                                                        size="sm"
+                                                                        color=""
                                                                         onClick={(
                                                                             e
-                                                                        ) => {
-                                                                            e.preventDefault();
-                                                                            deleteAssociationUser(
-                                                                                value.id
-                                                                            );
-                                                                        }}
+                                                                        ) =>
+                                                                            e.preventDefault()
+                                                                        }
                                                                     >
-                                                                        <i className="ni ni-basket text-danger" />
-                                                                        Delete
-                                                                    </DropdownItem>
-                                                                </DropdownMenu>
-                                                            </UncontrolledDropdown>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                                        <i className="fas fa-ellipsis-v" />
+                                                                    </DropdownToggle>
+                                                                    <DropdownMenu
+                                                                        className="dropdown-menu-arrow"
+                                                                        right
+                                                                    >
+                                                                        <DropdownItem
+                                                                            href="#pablo"
+                                                                            onClick={(
+                                                                                e
+                                                                            ) =>
+                                                                                e.preventDefault()
+                                                                            }
+                                                                        >
+                                                                            Action
+                                                                        </DropdownItem>
+                                                                        <DropdownItem
+                                                                            href="#pablo"
+                                                                            onClick={(
+                                                                                e
+                                                                            ) => {
+                                                                                e.preventDefault();
+                                                                                deleteAssociationUser(
+                                                                                    value.id
+                                                                                );
+                                                                            }}
+                                                                        >
+                                                                            <i className="ni ni-basket text-danger" />
+                                                                            Delete
+                                                                        </DropdownItem>
+                                                                    </DropdownMenu>
+                                                                </UncontrolledDropdown>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
                                             </tbody>
                                         </Table>
                                     </Col>
@@ -363,65 +420,47 @@ const ProjectAssociationSearch = () => {
                                         className="pagination justify-content-end mb-0"
                                         listClassName="justify-content-end mb-0"
                                     >
-                                        <PaginationItem className="disabled">
+                                        <PaginationItem
+                                            disabled={currentPage <= 0}
+                                        >
                                             <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) =>
-                                                    e.preventDefault()
-                                                }
-                                                tabIndex="-1"
-                                            >
-                                                <i className="fas fa-angle-left" />
-                                                <span className="sr-only">
-                                                    Previous
-                                                </span>
-                                            </PaginationLink>
+                                                onClick={handlePreviousClick}
+                                                previous
+                                                href="#"
+                                            />
                                         </PaginationItem>
-                                        <PaginationItem className="active">
+
+                                        {[...Array(pageCount)].map(
+                                            (page, i) => (
+                                                <PaginationItem
+                                                    active={i === currentPage}
+                                                    key={i}
+                                                >
+                                                    <PaginationLink
+                                                        onClick={(e) =>
+                                                            handlePageClick(
+                                                                e,
+                                                                i
+                                                            )
+                                                        }
+                                                        href="#"
+                                                    >
+                                                        {i + 1}
+                                                    </PaginationLink>
+                                                </PaginationItem>
+                                            )
+                                        )}
+
+                                        <PaginationItem
+                                            disabled={
+                                                currentPage == pageCount - 1
+                                            }
+                                        >
                                             <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) =>
-                                                    e.preventDefault()
-                                                }
-                                            >
-                                                1
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) =>
-                                                    e.preventDefault()
-                                                }
-                                            >
-                                                2{" "}
-                                                <span className="sr-only">
-                                                    (current)
-                                                </span>
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) =>
-                                                    e.preventDefault()
-                                                }
-                                            >
-                                                3
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) =>
-                                                    e.preventDefault()
-                                                }
-                                            >
-                                                <i className="fas fa-angle-right" />
-                                                <span className="sr-only">
-                                                    Next
-                                                </span>
-                                            </PaginationLink>
+                                                onClick={handleNextClick}
+                                                next
+                                                href="#"
+                                            />
                                         </PaginationItem>
                                     </Pagination>
                                 </nav>
