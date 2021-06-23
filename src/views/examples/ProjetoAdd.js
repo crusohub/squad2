@@ -189,13 +189,13 @@ const ProjetoAdd = () => {
                             className="form-control-alternative"
                             name="image"
                             id="input-imagem"
-                            placeholder="IRL"
+                            placeholder="URL"
                             type="text"
                             onBlur={handleInputChange}
                           />
                         </FormGroup>
                         </Col>
-                        <Col lg="1">
+                        <Col lg="2">
                         <Button
                         color="primary"
                         href="#pablo"
@@ -206,7 +206,7 @@ const ProjetoAdd = () => {
                         </Button>
                       </Col>                 
 
-                      <Col lg="4">
+                      <Col lg="3">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -225,7 +225,7 @@ const ProjetoAdd = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="4">                        
+                      <Col lg="3">                        
                           <FormGroup>
                             <label
                               className="form-control-label"
