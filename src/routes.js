@@ -133,7 +133,7 @@ var routes = {
             icon: "ni ni-bullet-list-67 text-blue",
             component: EditProject,
             layout: "/admin",
-            sidebar: true,
+            sidebar: false,
         }
     ],
     Auth: [

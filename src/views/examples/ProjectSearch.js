@@ -145,7 +145,6 @@ const Tables = (props) => {
 												name='status'
 												className='form-control'
 												tabindex='2'
-												style={{ maxWidth: 300 }}
 												onChange={searchOnStatus}
 											>
 												{currentProject.status.includes('pending') ? (
