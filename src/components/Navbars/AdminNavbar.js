@@ -79,7 +79,7 @@ const AdminNavbar = (props) => {
                     <img
                       className="avatar avatar-sm rounded-circle"
                       alt="..."
-                      src={usuarioLogado.photo}
+                      src={usuarioLogado.photo ? usuarioLogado.photo : "https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">

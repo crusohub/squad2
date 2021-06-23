@@ -105,7 +105,7 @@ const Profile = (props) => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={usuarioLogado.photo}
+                        src={usuarioLogado.photo ? usuarioLogado.photo : "https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"}
                         // {
                         //   require("../../assets/img/theme/team-4-800x800.jpg").default
                         // }
