@@ -83,7 +83,7 @@ const ForgotPassword = () => {
               window.alert("Error, try later.");
             });
           e.target.reset();
-        } else{alert("Email não cadastrado!")}
+        } else{alert("Email not registered!")}
       });
 
   }
@@ -95,13 +95,13 @@ const ForgotPassword = () => {
       { !submit ? (
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
-            <CardHeader className="bg-transparent pb-5">
-              <div className="text-muted text-center mt-2 mb-3">
-                <h1>Recupere sua senha</h1>
+            <CardHeader className="bg-transparent pb-3">
+              <div className="text-muted text-center mt-3 mb-1">
+                <h2>Recover your password!</h2>
               </div>
               <CardBody className="px-lg-5 py-lg-5">
                 <div className="text-center text-muted mb-4">
-                  <h3>Informe o seu email abaixo</h3>
+                  <small>Enter your email below</small>
                 </div>
 
                 <Form role="form" onSubmit={(e) => sendEmail(e)} >
@@ -109,7 +109,7 @@ const ForgotPassword = () => {
                     <InputGroup className="input-group-alternative">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="ni ni-ussername-83" />
+                          <i className="ni ni-email-83" />
                         </InputGroupText>
                       </InputGroupAddon>
 

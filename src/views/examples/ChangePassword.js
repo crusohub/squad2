@@ -23,16 +23,16 @@ const ChangePassword = () => {
       http.get(`/usuario?email=${e.target.input_email.value}`)
       .then((response) => {
         if (response.data.length > 0) {
-          const nemPassword = response.data[0]
-          nemPassword.password = e.target.new_password.value
-          UsuarioDataService.update(nemPassword.id,nemPassword)
+          const newPassword = response.data[0]
+          newPassword.password = e.target.new_password.value
+          UsuarioDataService.update(newPassword.id,newPassword)
           .then (() => {
-            alert("Senha alterada com sucesso!")
+            alert("Password changed successfully!")
           }).catch((error) => console.error(error))
 
-        }else (alert("Email inválido!"))
+        }else (alert("Invalid email!"))
       }).catch((error) => console.error(error))
-   }else (alert("Senha inválida!"))
+   }else (alert("Invalid password!"))
   }
 
   return (
@@ -42,14 +42,14 @@ const ChangePassword = () => {
           
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <h3>Enter your new password</h3>
+              <small>Enter your email and your new password</small>
             </div>
             <Form role="form" onSubmit={(e) => {changePass(e)}}>
             <FormGroup className="mb-3">
                     <InputGroup className="input-group-alternative">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="ni ni-ussername-83" />
+                          <i className="ni ni-email-83" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
@@ -64,13 +64,13 @@ const ChangePassword = () => {
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-newpassword-83" />
+                      <i className="ni ni-lock-circle-open" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Nem Password"
+                    placeholder="New Password"
                     name="new_password"
-                    type="confirm password"
+                    type="password"
                     autoComplete="new-password"
                   />
                 </InputGroup>
@@ -85,7 +85,7 @@ const ChangePassword = () => {
                   <Input
                     placeholder="Confirm Password"
                     name="confirm_password"
-                    type="confirm password"
+                    type="password"
                     autoComplete="new-confirm password"
                   />
                 </InputGroup>
