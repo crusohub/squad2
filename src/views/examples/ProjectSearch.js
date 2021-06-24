@@ -80,6 +80,7 @@ const Tables = (props) => {
 		ProjetoDataService.remove(id)
 			.then(() => {
 				retrieveProject();
+				props.history.push("/admin/projeto");
 			})
 			.catch((e) => console.log(e));
 	};
@@ -145,7 +146,6 @@ const Tables = (props) => {
 												name='status'
 												className='form-control'
 												tabindex='2'
-												style={{ maxWidth: 300 }}
 												onChange={searchOnStatus}
 											>
 												{currentProject.status.includes('pending') ? (

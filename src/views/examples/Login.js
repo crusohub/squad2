@@ -60,6 +60,10 @@ const Login = (props) => {
               }
         })
   }
+  const handleEnter=(e) => {
+    if(e.keyCode===13)
+      login()
+  }
   const handleusername = (e) => {
     setUsername(e.target.value)
   }
@@ -101,6 +105,7 @@ const Login = (props) => {
                     type="email"
                     autoComplete="new-email"
                     onChange={handleusername}
+                    onKeyUp={handleEnter}
                   />
                 </InputGroup>
               </FormGroup>
@@ -116,6 +121,7 @@ const Login = (props) => {
                     type="password"
                     autoComplete="new-password"
                     onChange={handlepassword}
+                    onKeyUp={handleEnter}
                   />
                 </InputGroup>
               </FormGroup>

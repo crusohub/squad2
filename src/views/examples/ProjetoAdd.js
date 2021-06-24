@@ -71,7 +71,7 @@ const ProjetoAdd = () => {
   const aleatorio=()=>{
     let aleatorio = Math.floor((Math.random() * 1000) + 0);
     setNovoProjeto({ ...novoProjeto, ["image"]:`https://picsum.photos/id/${aleatorio}/200` });
-    inputImg.value=`https://picsum.photos/id/${aleatorio}/200`
+    document.getElementById("input-imagem").value=`https://picsum.photos/id/${aleatorio}/200`
   }
   return (
     <>
@@ -187,16 +187,15 @@ const ProjetoAdd = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={novoProjeto.image}
                             name="image"
                             id="input-imagem"
-                            placeholder="IRL"
+                            placeholder="URL"
                             type="text"
                             onBlur={handleInputChange}
                           />
                         </FormGroup>
                         </Col>
-                        <Col lg="1">
+                        <Col lg="2">
                         <Button
                         color="primary"
                         href="#pablo"
@@ -207,7 +206,7 @@ const ProjetoAdd = () => {
                         </Button>
                       </Col>                 
 
-                      <Col lg="4">
+                      <Col lg="3">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -226,7 +225,7 @@ const ProjetoAdd = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="4">                        
+                      <Col lg="3">                        
                           <FormGroup>
                             <label
                               className="form-control-label"

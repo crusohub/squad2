@@ -105,7 +105,7 @@ const Profile = (props) => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={usuarioLogado.photo}
+                        src={usuarioLogado.photo ? usuarioLogado.photo : "https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"}
                         // {
                         //   require("../../assets/img/theme/team-4-800x800.jpg").default
                         // }
@@ -117,25 +117,7 @@ const Profile = (props) => {
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
-                <Row>
-                  <div className="col">
-                    <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                      <div>
-                        <span className="heading">22</span>
-                        <span className="description">Friends</span>
-                      </div>
-                      <div>
-                        <span className="heading">10</span>
-                        <span className="description">Photos</span>
-                      </div>
-                      <div>
-                        <span className="heading">89</span>
-                        <span className="description">Comments</span>
-                      </div>
-                    </div>
-                  </div>
-                </Row>
-                <div className="text-center">
+                <div className="text-center mt-5">
                   <h3>
                     {usuarioLogado.username}
                     <span className="font-weight-light">, 27</span>

@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import UsuarioDataService from "services/UsuarioDataService";
 
-import { UsuarioLogadoContext, initialState } from "../../context/UsuarioLogadoContext";
+import { UsuarioLogadoContext, initialState, AlertaLoginContext } from "../../context/UsuarioLogadoContext";
 
 // reactstrap components
 import {
@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 const ProfileDelete = (props) => {
 
     const [ usuarioLogado, setUsuarioLogado ] = useContext(UsuarioLogadoContext)
+    const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
 
     const [dadosLogado, setDadosLogado] = useState(initialState)
 
@@ -36,9 +37,10 @@ const ProfileDelete = (props) => {
         if(usuarioLogado.username == dadosLogado.username && usuarioLogado.password == dadosLogado.password){
                 UsuarioDataService.remove(usuarioLogado.id)
                     .then(response => {
-                        alert("Usuario deletado com sucesso");
+                        setAlertaLogin(false)
                         setUsuarioLogado(initialState)
-                        props.history.push("/admin/index")
+                        alert("User deleted successfully");
+                        props.history.push("/auth/login")
                     })
                     .catch(e => {console.log(e)})
             } else {
@@ -54,7 +56,7 @@ const ProfileDelete = (props) => {
                             <InputGroup className="input-group-alternative mb-3">
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText>
-                                    <i className="ni ni-email-83" />
+                                    <i className="ni ni-hat-3" />
                                     </InputGroupText>
                                 </InputGroupAddon>
                                 <Input

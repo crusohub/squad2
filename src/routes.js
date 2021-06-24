@@ -31,6 +31,7 @@ import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
 import ForgotPassword from "views/examples/ForgotPassword";
 import ConnectionsAssociation from "views/examples/ConnectionsAssociation";
+import ChangePassword from "views/examples/ChangePassword";
 /*  Arquivo das rotas modificado para realizar melhoria da sidebar, caso queira adicionar
     nova seção adicione mais um atributo na rota com o nome que deseja que ele apareça 
     na sidebar, coloque as rotas do submenu, e realize alterações indicadas no arquivo
@@ -45,14 +46,14 @@ var routes = {
             layout: "/admin",
             sidebar: true,
         },
-        {
-            path: "/icons",
-            name: "Icons",
-            icon: "ni ni-planet text-blue",
-            component: Icons,
-            layout: "/admin",
-            sidebar: true,
-        },
+        // {
+        //     path: "/icons",
+        //     name: "Icons",
+        //     icon: "ni ni-planet text-blue",
+        //     component: Icons,
+        //     layout: "/admin",
+        //     sidebar: true,
+        // },
         {
             path: "/maps",
             name: "Maps",
@@ -69,14 +70,14 @@ var routes = {
             layout: "/admin",
             sidebar: true,
         },
-        {
-            path: "/tables",
-            name: "Tables",
-            icon: "ni ni-bullet-list-67 text-red",
-            component: Tables,
-            layout: "/admin",
-            sidebar: true,
-        },
+        // {
+        //     path: "/tables",
+        //     name: "Tables",
+        //     icon: "ni ni-bullet-list-67 text-red",
+        //     component: Tables,
+        //     layout: "/admin",
+        //     sidebar: true,
+        // },
         {
             path: "/tableuser",
             name: "Table User",
@@ -160,7 +161,15 @@ var routes = {
             component: ForgotPassword,
             layout: "/auth",
             sidebar: true,
-        }
+        },
+        {
+            path: "/changepassword",
+            name: "Change Password",
+            icon: "ni ni-bullet-list-67 text-blue",
+            component: ChangePassword,
+            layout: "/auth",
+            sidebar: true,
+        },
     ],
 };
 export default routes;
