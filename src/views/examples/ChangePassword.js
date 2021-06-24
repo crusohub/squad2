@@ -1,4 +1,5 @@
 import React from "react";
+import http from "../../http-common";
 
 // reactstrap components
 import {
@@ -13,8 +14,27 @@ import {
   InputGroup,
   Col,
 } from "reactstrap";
+import UsuarioDataService from "services/UsuarioDataService";
 
-const NewPassword = () => {
+const ChangePassword = () => {
+  const changePass = (e) => {
+    e.preventDefault()
+    if(e.target.new_password.value==e.target.confirm_password.value){
+      http.get(`/usuario?email=${e.target.input_email.value}`)
+      .then((response) => {
+        if (response.data.length > 0) {
+          const nemPassword = response.data[0]
+          nemPassword.password = e.target.new_password.value
+          UsuarioDataService.update(nemPassword.id,nemPassword)
+          .then (() => {
+            alert("Senha alterada com sucesso!")
+          }).catch((error) => console.error(error))
+
+        }else (alert("Email inválido!"))
+      }).catch((error) => console.error(error))
+   }else (alert("Senha inválida!"))
+  }
+
   return (
     <>
       <Col lg="5" md="7">
@@ -24,7 +44,22 @@ const NewPassword = () => {
             <div className="text-center text-muted mb-4">
               <h3>Enter your new password</h3>
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={(e) => {changePass(e)}}>
+            <FormGroup className="mb-3">
+                    <InputGroup className="input-group-alternative">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="ni ni-ussername-83" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        name="input_email"
+                        placeholder="Email"
+                        type="email"
+                        autoComplete="new-email"
+                      />
+                    </InputGroup>
+                  </FormGroup>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -34,7 +69,8 @@ const NewPassword = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Nem Password"
-                    type="new password"
+                    name="new_password"
+                    type="confirm password"
                     autoComplete="new-password"
                   />
                 </InputGroup>
@@ -48,13 +84,14 @@ const NewPassword = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Confirm Password"
+                    name="confirm_password"
                     type="confirm password"
                     autoComplete="new-confirm password"
                   />
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button className="my-4" color="primary" >
                   To Salve
                 </Button>
               </div>
@@ -66,4 +103,4 @@ const NewPassword = () => {
   );
 };
 
-export default NewPassword;
+export default ChangePassword;

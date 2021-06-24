@@ -118,23 +118,24 @@ const Sidebar = (props) => {
                     </NavItem>
                     {isOpen[2 * index - 2]
                         ? routes[routeMenu]
-                              .filter((rota) => rota.sidebar)
-                              .map((prop) => {
-                                  return (
-                                      <NavItem className="ml-3">
-                                          <NavLink
-                                              to={prop.layout + prop.path}
-                                              tag={NavLinkRRD}
-                                              onClick={closeCollapse}
-                                              activeClassName="active"
-                                          >
-                                              <i className={prop.icon} />
-                                              {prop.name}
-                                          </NavLink>
-                                      </NavItem>
+                            .filter((rota) => rota.sidebar)
+                            .map((prop) => {
+                                return (
+                                    <NavItem className="ml-3">
+                                        <NavLink
+                                            to={prop.layout + prop.path}
+                                            tag={NavLinkRRD}
+                                            onClick={closeCollapse}
+                                            activeClassName="active"
+                                        >
+                                            <i className={prop.icon} />
+                                            {prop.name}
+                                        </NavLink>
+                                    </NavItem>
                                   );
                               })
-                        : null}
+                        : null
+                    }
                 </>
         });
     };
@@ -231,7 +232,7 @@ const Sidebar = (props) => {
                     </UncontrolledDropdown>
                 </Nav>
                 {/* Collapse */}
-                <Collapse navbar isOpen={collapseOpen} style={{scrollbarWidth:'none'}}>
+                <Collapse navbar isOpen={collapseOpen}>
                     {/* Form */}
                     <Form className="mt-4 mb-3 d-md-none">
                         <InputGroup className="input-group-rounded input-group-merge">
@@ -261,23 +262,23 @@ const Sidebar = (props) => {
                             toggleOpenAuth
                         )}
                         <NavItem>
-                                <NavLink
-                                    to={"/auth/login"}
-                                    tag={NavLinkRRD}
-                                    onClick={() => setUsuarioLogado(initialState)}
-                                    activeClassName="active"
-                                >
-                                    <i className="ni ni-user-run text-danger" />
-                                    Logout
-                                </NavLink>
-                            </NavItem>
+                            <NavLink
+                                to={"/auth/login"}
+                                tag={NavLinkRRD}
+                                onClick={() => setUsuarioLogado(initialState)}
+                                activeClassName="active"
+                            >
+                                <i className="ni ni-user-run text-danger" />
+                                Logout
+                            </NavLink>
+                        </NavItem>
                     </Nav>
                     {/* Divider */}
                     <hr className="my-3" />
                     {/* Heading */}
-                    <h6 className="navbar-heading text-muted">Documentation</h6>
+                    {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
                     {/* Navigation */}
-                    <Nav className="mb-md-3" navbar>
+                    {/* <Nav className="mb-md-3" navbar>
                         <NavItem>
                             <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
                                 <i className="ni ni-spaceship" />
@@ -296,7 +297,7 @@ const Sidebar = (props) => {
                                 Components
                             </NavLink>
                         </NavItem>
-                    </Nav>
+                    </Nav> */}
                 </Collapse>
             </Container>
         </Navbar>

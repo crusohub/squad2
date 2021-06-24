@@ -18,7 +18,7 @@
 
 import React, { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
-
+import http from "../../http-common";
 
 // reactstrap components
 import {
@@ -64,20 +64,28 @@ const ForgotPassword = () => {
   function sendEmail(e) {
     e.preventDefault();
     setSubmit(true)
-    
 
-    emailjs.sendForm('service_y6s0eui', 'template_ap8q9xx', e.target, 'user_FccarwvvWOaoLtB6Pxl9E')
-      .then((result) => {console.log(result)
-        var message = window.confirm("Password sent successfully!");
-        if (message == true) {
-          setSubmit(false);
-        } else {
-          setSubmit(false);
-        }
-      }, (error) => {
-        window.alert("Error, try later.");
+
+    http.get(`/usuario?email=${e.target.input_email.value}`)
+      .then((response) => {
+        if (response.data.length > 0) {
+      
+          emailjs.sendForm('service_y6s0eui', 'template_ap8q9xx', e.target, 'user_FccarwvvWOaoLtB6Pxl9E')
+            .then((result) => {
+              console.log(result)
+              var message = window.confirm("Password sent successfully!");
+              if (message == true) {
+                setSubmit(false);
+              } else {
+                setSubmit(false);
+              }
+            }, (error) => {
+              window.alert("Error, try later.");
+            });
+          e.target.reset();
+        } else{alert("Email não cadastrado!")}
       });
-    e.target.reset();
+
   }
 
 
@@ -111,7 +119,7 @@ const ForgotPassword = () => {
                         type="email"
                         autoComplete="new-email"
                       />
-                     
+
 
                     </InputGroup>
                   </FormGroup>
@@ -129,7 +137,7 @@ const ForgotPassword = () => {
             </CardHeader>
           </Card>
         </Col>
-      ):(<div></div>)}
+      ) : (<div></div>)}
     </>
   );
 };
