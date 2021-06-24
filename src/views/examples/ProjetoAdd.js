@@ -198,9 +198,9 @@ const ProjetoAdd = () => {
                         <Col lg="1">
                         <Button
                         color="primary"
-                        href="#pablo"
                         onClick={(e) => aleatorio()}
-                        style={{marginTop: 32 }}
+                        style={{marginTop: 32}}
+                        size= "sm"
                         >
                           RANDOM 
                         </Button>
