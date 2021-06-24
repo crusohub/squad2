@@ -4,6 +4,7 @@ import ProjetoDataService from 'services/ProjetoDataService';
 import { CurrentProjectContext } from 'context/CurrentProjectContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import HeaderGenerico from "../../components/Headers/HeaderGenerico"
 // reactstrap components
 import {
 	Badge,
@@ -47,7 +48,7 @@ const Tables = (props) => {
 	const [pageCount, setPageCount] = useState(0);
 	const [pageSize, setPageSize] = useState(10);
 	const [currentPage, setCurrentPage] = useState(0);
-
+	const [aleatorio, setAleatorio] = useState(1)
 	const handlePageClick = (e, index) => {
 		e.preventDefault();
 		setCurrentPage(index);
@@ -110,7 +111,10 @@ const Tables = (props) => {
 
 	return (
 		<>
-			<HeaderProject />
+			<HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg`).default}
+            titulo={`Project List:`}
+            description={"  This is project List page. Below you can see a list of project  "}
+            />
 			{/* Page content */}
 			<Container className='mt--7' fluid>
 				{/* Table */}
