@@ -36,6 +36,7 @@ import UsuarioDataService from "services/UsuarioDataService";
 import ProjetoDataService from "services/ProjetoDataService";
 import AssociacaoDataService from "services/AssociacaoDataService";
 import { registerPlugin } from "axe-core";
+import HeaderGenerico from "../../components/Headers/HeaderGenerico";
 
 const ProjectAssociation = () => {
 
@@ -53,7 +54,7 @@ const ProjectAssociation = () => {
   const [listUsers, setListUsers] = useState([]);
   const [listProjects, setListProjects] = useState([]);
   const [projectAssociation, setProjectAssociation] = useState(initialProjectAssociationState);
-  
+  const [aleatorio, setAleatorio] = useState(1)
 
 
 
@@ -151,7 +152,10 @@ const ProjectAssociation = () => {
 
   return (
     <>
-      <HeaderProject />
+      <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg`).default}
+            titulo={`Project Association:`}
+            description={"  This is project Association page. Below you can associate a project"}
+      />
       <Container className="mt--7" fluid>
         <Row>
           <div className="col">

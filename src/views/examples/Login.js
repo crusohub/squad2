@@ -148,12 +148,14 @@ const Login = (props) => {
         </Card>
         <Row className="mt-3">
           
-          <Col xs="6">
-                <Link to={
-                "/auth/forgotpassword/"
-                }>   
-               <small> Forgot password?</small>
-                </Link>
+        <Col xs="6">
+            <a
+              className="text-light"
+              href="forgotpassword"
+              onClick={(e) => props.history.push("/auth/forgotpassword/")}
+            >
+              <small>Forgot Password?</small>
+            </a>
           </Col>
          
           <Col className="text-right" xs="6">

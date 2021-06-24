@@ -33,8 +33,9 @@ import {
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
 import ProjetoDataService from "services/ProjetoDataService";
-
+import HeaderGenerico from "../../components/Headers/HeaderGenerico"
 const ProjetoAdd = () => {
+  const [random, setRandom] = useState(1)
   const baseProjeto={
     id: null,
     image: "",
@@ -75,7 +76,10 @@ const ProjetoAdd = () => {
   }
   return (
     <>
-      <HeaderProject/>
+      <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${random}-800x800.jpg`).default}
+            titulo={`New Project:`}
+            description={"  This is  a new project page. Below you can create new projects "}
+      />
       {/* Page content */}
       <Container className="mt--12" fluid>
         <Row>
@@ -189,13 +193,13 @@ const ProjetoAdd = () => {
                             className="form-control-alternative"
                             name="image"
                             id="input-imagem"
-                            placeholder="IRL"
+                            placeholder="URL"
                             type="text"
                             onBlur={handleInputChange}
                           />
                         </FormGroup>
                         </Col>
-                        <Col lg="1">
+                        <Col lg="2">
                         <Button
                         color="primary"
                         onClick={(e) => aleatorio()}
@@ -206,7 +210,7 @@ const ProjetoAdd = () => {
                         </Button>
                       </Col>                 
 
-                      <Col lg="4">
+                      <Col lg="3">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -225,7 +229,7 @@ const ProjetoAdd = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="4">                        
+                      <Col lg="3">                        
                           <FormGroup>
                             <label
                               className="form-control-label"

@@ -49,7 +49,7 @@ import {
 } from "reactstrap";
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
-
+import HeaderGenerico from "../../components/Headers/HeaderGenerico"
 const ProjectAssociationSearch = () => {
     const [associations, setAssociations] = useState([]);
     const [searchUsername, setSearchUsername] = useState("");
@@ -60,7 +60,7 @@ const ProjectAssociationSearch = () => {
     const [pageCount, setPageCount] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [aleatorio, setAleatorio] = useState(1)
     const handlePageClick = (e, index) => {
         e.preventDefault();
         setCurrentPage(index);
@@ -211,7 +211,10 @@ const ProjectAssociationSearch = () => {
     }, [searchProjectname, searchUsername]);
     return (
         <>
-            <HeaderProject />
+            <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg`).default}
+            titulo={`Project Association:`}
+            description={"  This is project Association List page. Below you can see a list of project associated"}
+            />
             {/* Page content */}
             <Container className="mt--7" fluid>
                 {/* Table */}
