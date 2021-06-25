@@ -181,7 +181,7 @@ const ProjetoAdd = () => {
                       </Col>
                     </Row>
                     <Row>
-                        <Col lg="3">
+                        <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -202,10 +202,8 @@ const ProjetoAdd = () => {
                         <Col lg="2">
                         <Button
                         color="primary"
-                        href="#pablo"
                         onClick={(e) => aleatorio()}
-                        style={{marginTop: 32 }}
-                        >
+                        style={{marginTop: 32}}>
                           RANDOM 
                         </Button>
                       </Col>                 
