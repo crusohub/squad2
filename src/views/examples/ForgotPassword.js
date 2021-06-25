@@ -78,7 +78,7 @@ const ForgotPassword = () => {
                 setSubmit(false);
               } else {
                 setSubmit(false);
-              }
+              }  window.location.reload();
             }, (error) => {
               window.alert("Error, try later.");
             });
@@ -86,7 +86,7 @@ const ForgotPassword = () => {
         } else{
           alert("Email not registered!")
         }
-        window.location.reload();
+       
       });
 
   }

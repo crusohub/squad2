@@ -145,25 +145,25 @@ const Profile = (props) => {
                   <Col xs="6">
                     <h3 className="mb-0">My account</h3>
                   </Col>
-                  <Col className="text-right" xs="4">
-                    <Link to={"/settings/delete"}>
-                      <Button
-                        color="danger"
-                        size="sm"
-                      >
-                        Delete
-                      </Button>
-                    </Link>
-                  </Col>
-                  <Col className="text-right" xs="2">
+                  <Col className="text-right" md="3">
                     <Button
                       color="primary"
                       onClick={() => callSettings()}
                       size="sm"
                     >
-                      Settings
+                      Change Password
                     </Button>
 
+                  </Col>
+                  <Col className="text-right" md="2">
+                    <Link to={"/settings/delete"}>
+                      <Button
+                        color="danger"
+                        size="sm"
+                      >
+                        Delete User
+                      </Button>
+                    </Link>
                   </Col>
                 </Row>
               </CardHeader>
