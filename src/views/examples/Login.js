@@ -60,6 +60,10 @@ const Login = (props) => {
               }
         })
   }
+  const handleEnter=(e) => {
+    if(e.keyCode===13)
+      login()
+  }
   const handleusername = (e) => {
     setUsername(e.target.value)
   }
@@ -101,6 +105,7 @@ const Login = (props) => {
                     type="email"
                     autoComplete="new-email"
                     onChange={handleusername}
+                    onKeyUp={handleEnter}
                   />
                 </InputGroup>
               </FormGroup>
@@ -116,6 +121,7 @@ const Login = (props) => {
                     type="password"
                     autoComplete="new-password"
                     onChange={handlepassword}
+                    onKeyUp={handleEnter}
                   />
                 </InputGroup>
               </FormGroup>
@@ -142,12 +148,14 @@ const Login = (props) => {
         </Card>
         <Row className="mt-3">
           
-          <Col xs="6">
-                <Link to={
-                "/auth/forgotpassword/"
-                }>   
-               <small> Forgot password?</small>
-                </Link>
+        <Col xs="6">
+            <a
+              className="text-light"
+              href="forgotpassword"
+              onClick={(e) => props.history.push("/auth/forgotpassword/")}
+            >
+              <small>Forgot Password?</small>
+            </a>
           </Col>
          
           <Col className="text-right" xs="6">

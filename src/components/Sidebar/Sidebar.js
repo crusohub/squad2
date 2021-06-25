@@ -232,7 +232,7 @@ const Sidebar = (props) => {
                     </UncontrolledDropdown>
                 </Nav>
                 {/* Collapse */}
-                <Collapse navbar isOpen={collapseOpen} style={{scrollbarWidth:'none'}}>
+                <Collapse navbar isOpen={collapseOpen}>
                     {/* Form */}
                     <Form className="mt-4 mb-3 d-md-none">
                         <InputGroup className="input-group-rounded input-group-merge">
@@ -261,7 +261,7 @@ const Sidebar = (props) => {
                             isOpenAuth,
                             toggleOpenAuth
                         )}
-                        {/* <NavItem>
+                        <NavItem>
                             <NavLink
                                 to={"/auth/login"}
                                 tag={NavLinkRRD}
@@ -271,7 +271,7 @@ const Sidebar = (props) => {
                                 <i className="ni ni-user-run text-danger" />
                                 Logout
                             </NavLink>
-                        </NavItem> */}
+                        </NavItem>
                     </Nav>
                     
                    

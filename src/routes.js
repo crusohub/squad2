@@ -31,6 +31,7 @@ import EditProject from "views/examples/EditProject";
 import SearchProject from "views/examples/ProjectSearch";
 import ForgotPassword from "views/examples/ForgotPassword";
 import ConnectionsAssociation from "views/examples/ConnectionsAssociation";
+import ChangePassword from "views/examples/ChangePassword";
 /*  Arquivo das rotas modificado para realizar melhoria da sidebar, caso queira adicionar
     nova seção adicione mais um atributo na rota com o nome que deseja que ele apareça 
     na sidebar, coloque as rotas do submenu, e realize alterações indicadas no arquivo
@@ -133,7 +134,7 @@ var routes = {
             icon: "ni ni-bullet-list-67 text-blue",
             component: EditProject,
             layout: "/admin",
-            sidebar: true,
+            sidebar: false,
         }
     ],
     Auth: [
@@ -160,7 +161,15 @@ var routes = {
             component: ForgotPassword,
             layout: "/auth",
             sidebar: true,
-        }
+        },
+        {
+            path: "/changepassword",
+            name: "Change Password",
+            icon: "ni ni-bullet-list-67 text-blue",
+            component: ChangePassword,
+            layout: "/auth",
+            sidebar: true,
+        },
     ],
 };
 export default routes;
