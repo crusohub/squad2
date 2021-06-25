@@ -137,5 +137,39 @@ var routes = {
             sidebar: false,
         }
     ],
+    Auth: [
+        {
+            path: "/login",
+            name: "Login",
+            icon: "ni ni-key-25 text-info",
+            component: Login,
+            layout: "/auth",
+            sidebar: true,
+        },
+        {
+            path: "/register",
+            name: "Register",
+            icon: "ni ni-circle-08 text-pink",
+            component: Register,
+            layout: "/auth",
+            sidebar: true,
+        },
+        {
+            path: "/forgotpassword",
+            name: "Forgot Password",
+            icon: "ni ni-bullet-list-67 text-blue",
+            component: ForgotPassword,
+            layout: "/auth",
+            sidebar: true,
+        },
+        {
+            path: "/changepassword",
+            name: "Change Password",
+            icon: "ni ni-bullet-list-67 text-blue",
+            component: ChangePassword,
+            layout: "/auth",
+            sidebar: true,
+        },
+    ],
 };
 export default routes;
