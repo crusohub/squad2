@@ -50,7 +50,7 @@ const Register = (props) => {
     country: "",
     postalcode: "",
     about: "",
-    password: ""
+    password: " ",
   }
 
   const [register, setRegister] = useState(initialRegisterState);
@@ -102,6 +102,7 @@ const Register = (props) => {
                   type="text" 
                   name="username"
                   value={register.username}
+                  // defaultValue=""
                   onChange={handleInputChange}
                   />
                 </InputGroup>
