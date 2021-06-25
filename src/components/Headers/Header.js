@@ -194,7 +194,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Average people per project
+                          People by Project
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}{"%"}</span>
                       </div>
