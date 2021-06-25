@@ -28,8 +28,9 @@ const ChangePassword = () => {
           UsuarioDataService.update(newPassword.id,newPassword)
           .then (() => {
             alert("Password changed successfully!")
+            window.location.reload();
           }).catch((error) => console.error(error))
-          window.location.reload();
+         
           
 
         }else (alert("Invalid email!"))
