@@ -147,16 +147,16 @@ const ProjectAssociationSearch = () => {
             })
             .catch((e) => console.log(e));
     };
-    /* const searchProjectAssociationByFilter = (name, project) => {
+     const searchProjectAssociationByFilter = (name, project) => {
         AssociacaoDataService.findByProject(project)
             .then((response) => {
                 let dados = response.data.filter(
-                    (data) => data.username.toUpperCase() === name.toUpperCase()
+                    (data) => data.username.toUpperCase().includes(name.toUpperCase())
                 );
                 setAssociations(dados);
             })
             .catch((e) => console.log(e));
-    }; */
+    }; 
 
     /*     const searchOnClick = (e) => {
         if (searchProjectname == "") {
@@ -171,7 +171,7 @@ const ProjectAssociationSearch = () => {
     const searchOnClick = (e) => {
         if (searchUsername !== "") {
             if (searchProjectname !== "") {
-                filtroDoFiltro();
+                searchProjectAssociationByFilter(searchUsername,searchProjectname);
                 return;
             }
             searchProjectAssociationUser(searchUsername);

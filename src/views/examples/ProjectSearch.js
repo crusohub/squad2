@@ -72,11 +72,23 @@ const Tables = (props) => {
 			})
 			.catch((e) => console.log(e));
 	};
-
+    function searchImg(id) {
+        if (
+            id !== undefined && id !== "" && id.includes("https")===true
+			) {
+            return `${id}`;
+        } else {
+            return `https://picsum.photos/200`;
+        }
+    }
 	useEffect(() => {
 		retrieveProject();	
 	}, []);
-
+    useEffect(() => {
+        if (searchProjectName === "") {
+            retrieveProject();
+        }
+    }, [searchProjectName]);
 	const deleteProject = (id) => {
 		ProjetoDataService.remove(id)
 			.then(() => {
@@ -227,8 +239,7 @@ const Tables = (props) => {
 																	<img
 																		alt='...'
 																		src={
-																			require('../../assets/img/theme/bootstrap.jpg')
-																				.default
+																			searchImg(value.image)
 																		}
 																	/>
 																</a>
