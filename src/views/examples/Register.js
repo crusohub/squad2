@@ -16,6 +16,7 @@
 
 */
 import { registerPlugin } from "axe-core";
+import { AlertaLoginContext } from "context/UsuarioLogadoContext";
 import React, { useState } from "react";
 
 // reactstrap components
@@ -66,14 +67,21 @@ const Register = (props) => {
       password: register.password      
     }
     
-    userDataService.create(data)
+    userDataService.login(data.email)
       .then(response => {
-        alert("Usuário criado com sucesso");
-        props.history.push("/auth/login")
+        if (response.data[0] !== undefined){
+          alert("Email address already exists")
+        }else{
+            userDataService.create(data)
+              .then(response => {
+                alert("Usuário criado com sucesso");
+                props.history.push("/auth/login")
+              })
+              .catch(e => {console.log(e)})
+          }
       })
-      .catch(e => {console.log(e)})
-
-    console.log(data)
+      .catch(e => {console.log(e)       
+      })
   }
 
   return (
