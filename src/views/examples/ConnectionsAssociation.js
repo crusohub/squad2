@@ -41,22 +41,23 @@ const ConnectionsAssociation = () => {
     const [users, setUsers] = useState([]);
     const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
     const [conexao, setConexao] = useState();
+    const [findUserId, setFindUserId] = useState([])
 
-    
+
     const handleInputUsername = (e) => {
-    const { value } = e.target;
-    let id = value.split(":")[0];
-    let username = value.split(":")[1];
-    if(username == undefined){
-      username = "Select a user";
-    }
-    setConexao({
-      ...conexao,
-        "userid": id,
-        "username": username 
-    });
+        const { value } = e.target;
+        let id = value.split(":")[0];
+        let username = value.split(":")[1];
+        if (username == undefined) {
+            username = "Select a user";
+        }
+        setConexao({
+            ...conexao,
+            "userid": id,
+            "username": username
+        });
 
-  }
+    }
 
     const retrieveAssociation = () => {
         AssociacaoDataService.getAll()
@@ -73,12 +74,20 @@ const ConnectionsAssociation = () => {
             })
             .catch((e) => console.log(e));
     };
-
+//#####################################################
+    const retrieveConexaoUser = () => {
+        UsuarioDataService.findByUserIdTeste()
+            .then((response) => {
+                setFindUserId(response.data);
+            })
+            .catch((e) => console.log(e));
+    };
+//####################################################
     function searchUser(id) {
         try {
             let usuarioCapturado = users.find((value) => value.id == id);
             return `${usuarioCapturado.firstname} ${usuarioCapturado.lastname}`;
-        } catch {}
+        } catch { }
     }
 
     const deleteAssociationUser = (id) => {
@@ -100,33 +109,25 @@ const ConnectionsAssociation = () => {
             })
             .catch((e) => console.log(e));
     };
-
-    const searchOnClick = (e) => {
-        if (searchProjectname == "") {
-            searchProjectAssociationUser(searchUsername);
-        } else if (searchUsername == "") {
-            searchProjectAssociationProjectName(searchProjectname);
-        }
-    };
-
     const connectOnClick = (e) => {
         const data = {
-        "userid": usuarioLogado.id,
-        "username": usuarioLogado.username,
-        "useridconnected": conexao.userid,
-        "usernameconnected": conexao.username
+            "userid": usuarioLogado.id,
+            "username": usuarioLogado.username,
+            "useridconnected": conexao.userid,
+            "usernameconnected": conexao.username
         }
         console.log(conexao)
-     ConexaoDataService.create(data).then(
-        response=>console.log(response.data)
-    )
+        ConexaoDataService.create(data).then(
+            response => console.log(response.data)
+        )
     };
 
-    
+
 
     useEffect(() => {
         retrieveAssociation();
         retrieveUser();
+        retrieveConexaoUser();
     }, []);
 
     return (
@@ -143,28 +144,28 @@ const ConnectionsAssociation = () => {
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                     <Col>
+                                    <Col>
 
-                    <label
-                      className="form-control-label"
-                      htmlFor="currentPassword"
-                    >
-                      Select a user
-                    </label>
-                    <Input
-                      name = "username"
-                      type="select"
-                      placeholder="Search by username"
-                      onChange={handleInputUsername}
-                      className="form-control-alternative"
-                    >
-                      <option>Select a user</option>
-                      {users.map((data) => (
-                        <option id = {data.userid} value={data.id + ":"+ data.username}>{data.username}</option>
-                      ))}
-                    </Input>
-                  </Col>
-                                    
+                                        <label
+                                            className="form-control-label"
+                                            htmlFor="currentPassword"
+                                        >
+                                            Select a user
+                                        </label>
+                                        <Input
+                                            name="username"
+                                            type="select"
+                                            placeholder="Search by username"
+                                            onChange={handleInputUsername}
+                                            className="form-control-alternative"
+                                        >
+                                            <option>Select a user</option>
+                                            {users.map((data) => (
+                                                <option id={data.userid} value={data.id + ":" + data.username}>{data.username}</option>
+                                            ))}
+                                        </Input>
+                                    </Col>
+
                                 </Row>
                                 <Row>
                                     <Col>
@@ -172,9 +173,7 @@ const ConnectionsAssociation = () => {
                                             className="my-4"
                                             color="primary"
                                             type="submit"
-                                            onClick={connectOnClick}
-                                            
-                                        >
+                                            onClick={connectOnClick}>
                                             Connect
                                         </Button>
                                     </Col>
@@ -186,95 +185,17 @@ const ConnectionsAssociation = () => {
                                             responsive
                                         >
                                             <thead className="thead-light">
-                                                <tr>
-
-                                                    <th scope="col">Name</th>
-                                                   
-                                                    
-                                                </tr>
+                                                <thead className="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
                                             </thead>
                                             <tbody>
-                                                {associations.map((value) => (
+                                                {findUserId.map((cx, index) => (
                                                     <tr>
-                                                        <th scope="row">                                                    
-                                                        </th>
-                                                        <td className="d-flex align-items-center">
-                                                            <div className="avatar-group">
-                                                                <a
-                                                                    className="avatar avatar-sm"
-                                                                    href="#pablo"
-                                                                    id="tooltip742438047"
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        e.preventDefault()
-                                                                    }
-                                                                >
-                                                                    
-                                                                </a>
-                                                                <UncontrolledTooltip
-                                                                    delay={0}
-                                                                    target="tooltip742438047"
-                                                                >
-                                                                    Ryan Tompson
-                                                                </UncontrolledTooltip>
-                                                            </div>
-                                                            {searchUser(
-                                                                value.username
-                                                            )}
-                                                        </td>
-                                                        <td>
-                                                            <div className="d-flex align-items-center">
-                                                               
-                                                            </div>
-                                                        </td>
-                                                        <td className="text-right">
-                                                            <UncontrolledDropdown>
-                                                                <DropdownToggle
-                                                                    className="btn-icon-only text-light"
-                                                                    href="#pablo"
-                                                                    role="button"
-                                                                    size="sm"
-                                                                    color=""
-                                                                    onClick={(
-                                                                        e
-                                                                    ) =>
-                                                                        e.preventDefault()
-                                                                    }
-                                                                >
-                                                                    <i className="fas fa-ellipsis-v" />
-                                                                </DropdownToggle>
-                                                                <DropdownMenu
-                                                                    className="dropdown-menu-arrow"
-                                                                    right
-                                                                >
-                                                                    <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={(
-                                                                            e
-                                                                        ) =>
-                                                                            e.preventDefault()
-                                                                        }
-                                                                    >
-                                                                        Action
-                                                                    </DropdownItem>
-                                                                    <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={(
-                                                                            e
-                                                                        ) => {
-                                                                            e.preventDefault();
-                                                                            deleteAssociationUser(
-                                                                                value.id
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        <i className="ni ni-basket text-danger" />
-                                                                        Delete
-                                                                    </DropdownItem>
-                                                                </DropdownMenu>
-                                                            </UncontrolledDropdown>
-                                                        </td>
+                                                        <th scope="row">{cx.usernameconnected}</th>
                                                     </tr>
                                                 ))}
                                             </tbody>

@@ -36,6 +36,10 @@ const login = (email, password) => {
   return http.get(`/usuario?email=${email}`);
 };
 
+const findByUserIdTeste = (id) => {
+    return http.get(`/conexao?userid=${id}`);
+};
+
 export default {
     getAll,
     get,
@@ -45,5 +49,6 @@ export default {
     removeAll,
     findByName,
     findById,
-    login
+    login,
+    findByUserIdTeste
 };

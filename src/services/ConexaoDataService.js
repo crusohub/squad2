@@ -1,4 +1,4 @@
-import http from "../http-common";
+import http from "../http-commonAlternativoConexao";
 
 const getAll = () => {
   return http.get("/conexao");
@@ -28,6 +28,10 @@ const findById = id => {
   return http.get(`/conexao?name=${id}`);
 };
 
+const findByUserId = id => {
+  return http.get(`/conexao?userid=${id}`);
+};
+
 export default {
   getAll,
   get,
@@ -35,5 +39,6 @@ export default {
   update,
   remove,
   removeAll,
-  findById
+  findById,
+  findByUserId
 };
