@@ -31,56 +31,44 @@ const Header = () => {
   const [projects, setProjects] = useState([])
   const [connections, setConnections] = useState([])
   const [associacao, setAssociacao] = useState([])
-  const [qtdProject, setQtdprojetc] = useState(0)
+  const [qtdProject, setQtdproject] = useState(0)
   const [qtdUsersProject, setQtdusersProject] = useState(0)
 
   const getUsers = () => {
     UsuarioDataService.getAll()
       .then(response => {
-        setUsers(response.data)
+        setUsers(response.data.length)
       })
       .catch((e) => {
         console.log(e)
       })
   }
-
-  useEffect(() => {
-    getUsers()
-  },[])
-
 
   const getProjects = () => {
     ProjetoDataService.getAll()
       .then(response => {
-        setProjects(response.data)
-        setQtdprojetc(response.data.length)
+        setProjects(response.data.length)
+        setQtdproject(response.data.length)
       })
       .catch((e) => {
         console.log(e)
       })
   }
-
-  useEffect(() => {
-    getProjects()
-  },[])
 
   const getConnections = () => {
     ConexaoDataService.getAll()
       .then(response => {
-        setConnections(response.data)
+        setConnections(response.data.length)
       })
       .catch((e) => {
         console.log(e)
       })
   }
-  useEffect(() => {
-    getConnections()
-  },[])
 
   const getAssociacao = () => {
     AssociacaoDataService.getAll()
       .then(response => {
-        setAssociacao(response.data)
+        setAssociacao(response.data.length)
         setQtdusersProject(response.data.length)
       })
       .catch((e) => {
@@ -89,14 +77,14 @@ const Header = () => {
   }
 
   useEffect(() => {
+    getUsers()
+    getProjects()
+    getConnections()
     getAssociacao()
   },[])
 
   return (
     <>
-   
- 
-
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
         <Container fluid>
           <div className="header-body">
@@ -114,12 +102,12 @@ const Header = () => {
                           Total Users
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          {users.length}
+                          {users}
                         </span>
                       </div>
                       <Col className="col-auto">
-                        <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
-                          <i className="fas fa-chart-bar" />
+                        <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                          <i className="fas fa-users" />
                         </div>
                       </Col>
                     </Row>
@@ -143,11 +131,11 @@ const Header = () => {
                         >
                           Total projects
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">{projects.length}</span>
+                        <span className="h2 font-weight-bold mb-0">{projects}</span>
                       </div>
                       <Col className="col-auto">
-                        <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                          <i className="fas fa-chart-pie" />
+                        <div className="icon icon-shape bg-blue text-white rounded-circle shadow">
+                          <i className="fas fa-project-diagram" />
                         </div>
                       </Col>
                     </Row>
@@ -171,12 +159,12 @@ const Header = () => {
                         >
                           Total connections
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">{connections.length}</span>
+                        <span className="h2 font-weight-bold mb-0">{connections}</span>
                       </div>
                       
                       <Col className="col-auto">
-                        <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                          <i className="fas fa-users" />
+                        <div className="icon icon-shape bg-orange text-white rounded-circle shadow">
+                          <i className="fas fa-people-arrows" />
                         </div>
                       </Col>
                     </Row>
@@ -200,11 +188,11 @@ const Header = () => {
                         >
                           People by Project
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}{"%"}</span>
+                        <span className="h2 font-weight-bold mb-0">{(qtdProject / qtdUsersProject).toFixed(2)}</span>
                       </div>
                       <Col className="col-auto">
-                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                          <i className="fas fa-percent" />
+                        <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                          <i className="fas fa-id-card-alt" />
                         </div>
                       </Col>
                     </Row>

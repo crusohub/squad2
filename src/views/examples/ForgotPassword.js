@@ -40,7 +40,7 @@ import {
 const api = 'https://60bfbc0397295a0017c43b7a.mockapi.io/usuario?username';
 
 
-const ForgotPassword = () => {
+const ForgotPassword = (props) => {
 
   //Introduzindo a API dos usuários cadastrados na tela Forgot Password
   const [info, setInfo] = useState({});
