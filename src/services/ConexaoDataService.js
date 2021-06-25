@@ -1,5 +1,8 @@
 import http from "../http-commonAlternativoConexao";
 
+const getConexaoAll = () => {
+  return http.get("/conexao");
+};
 const getAll = () => {
   return http.get("/conexao");
 };
@@ -28,17 +31,24 @@ const findById = id => {
   return http.get(`/conexao?name=${id}`);
 };
 
-const findByUserId = id => {
+const findByUserIdOutro = id => {
   return http.get(`/conexao?userid=${id}`);
 };
 
+const conexaoForIdUse = (id) => {
+    console.log(id+" id do usuario")
+    return http.get(`/conexao?userid=${id}`);
+};
+
 export default {
-  getAll,
   get,
   create,
   update,
   remove,
   removeAll,
   findById,
-  findByUserId
+  conexaoForIdUse,
+  findByUserIdOutro,
+  getConexaoAll,
+  getAll
 };
