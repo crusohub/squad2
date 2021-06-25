@@ -41,15 +41,12 @@ import {
     Nav,
     Container,
 } from "reactstrap";
-import { UsuarioLogadoContext, initialState } from "context/UsuarioLogadoContext";
 
 const Sidebar = (props) => {
     const [collapseOpen, setCollapseOpen] = useState();
-    const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
     /*É necessário criar um novo estado e função toggle para controlar
       cada seção nova */
     const [isOpenProjects, setIsOpenProjects] = useState(false);
-    const [isOpenAuth, setIsOpenAuth] = useState(false);
 
     const { bgColor, routes, logo } = props;
     let navbarBrandProps;
@@ -75,9 +72,6 @@ const Sidebar = (props) => {
     //funções toggle para controlar abertura e fechamento das seções
     const toggleOpenProject = () => {
         setIsOpenProjects(!isOpenProjects);
-    };
-    const toggleOpenAuth = () => {
-        setIsOpenAuth(!isOpenAuth);
     };
     // closes the collapse
     const closeCollapse = () => {
@@ -258,20 +252,7 @@ const Sidebar = (props) => {
                             routes,
                             isOpenProjects,
                             toggleOpenProject,
-                            isOpenAuth,
-                            toggleOpenAuth
                         )}
-                        <NavItem>
-                            <NavLink
-                                to={"/auth/login"}
-                                tag={NavLinkRRD}
-                                onClick={() => setUsuarioLogado(initialState)}
-                                activeClassName="active"
-                            >
-                                <i className="ni ni-user-run text-danger" />
-                                Logout
-                            </NavLink>
-                        </NavItem>
                     </Nav>
                     
                    
