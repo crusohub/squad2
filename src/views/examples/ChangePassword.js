@@ -28,8 +28,8 @@ const ChangePassword = (props) => {
           UsuarioDataService.update(newPassword.id,newPassword)
           .then (() => {
             alert("Password changed successfully!")
-            window.location.reload();
-            // props.history.push("/auth/login")
+            //window.location.reload();
+            props.history.push("/auth/login")
           }).catch((error) => console.error(error))
          
           
