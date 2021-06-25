@@ -29,6 +29,8 @@ const ChangePassword = () => {
           .then (() => {
             alert("Password changed successfully!")
           }).catch((error) => console.error(error))
+          window.location.reload();
+          
 
         }else (alert("Invalid email!"))
       }).catch((error) => console.error(error))
