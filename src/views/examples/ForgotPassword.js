@@ -81,6 +81,7 @@ const ForgotPassword = (props) => {
               }  window.location.reload();
             }, (error) => {
               window.alert("Error, try later.");
+              window.location.reload();
             });
           e.target.reset();
         } else{
