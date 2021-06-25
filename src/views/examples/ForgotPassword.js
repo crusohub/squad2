@@ -83,10 +83,14 @@ const ForgotPassword = () => {
               window.alert("Error, try later.");
             });
           e.target.reset();
-        } else{alert("Email not registered!")}
+        } else{
+          alert("Email not registered!")
+        }
+        window.location.reload();
       });
 
   }
+ 
 
 
 
@@ -141,21 +145,5 @@ const ForgotPassword = () => {
     </>
   );
 };
-
-{/*} <div class="msgEnviadoSucesso" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-   <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Senha enviada com sucesso!</h5>
-       <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-      <div class="modal-body">
-    ...
-    </div>
-     </div>
-    </div>
-     </div> */}
 
 export default ForgotPassword;

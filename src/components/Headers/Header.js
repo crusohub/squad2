@@ -94,6 +94,9 @@ const Header = () => {
 
   return (
     <>
+   
+ 
+
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
         <Container fluid>
           <div className="header-body">
@@ -170,6 +173,7 @@ const Header = () => {
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{connections.length}</span>
                       </div>
+                      
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
                           <i className="fas fa-users" />
