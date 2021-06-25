@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import UsuarioDataService from "services/UsuarioDataService";
 
-const ChangePassword = () => {
+const ChangePassword = (props) => {
   const changePass = (e) => {
     e.preventDefault()
     if(e.target.new_password.value==e.target.confirm_password.value){
@@ -28,7 +28,7 @@ const ChangePassword = () => {
           UsuarioDataService.update(newPassword.id,newPassword)
           .then (() => {
             alert("Password changed successfully!")
-            window.location.reload();
+            props.history.push("/auth/login")
           }).catch((error) => console.error(error))
          
           
