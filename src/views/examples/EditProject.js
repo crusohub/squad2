@@ -14,8 +14,9 @@ import {
     Button,
 } from "reactstrap";
 import ProjetoDataService from "services/ProjetoDataService";
+import HeaderGenerico from "../../components/Headers/HeaderGenerico"
 const EditProject = (props) => {
-
+    const [aleatorio, setAleatorio] = useState(1)
     const [key, setKey] = useState(props.match.params.id);
     const {currentProject, setCurrentProject} = useContext(CurrentProjectContext);
     const handleChange = (e) => {
@@ -40,7 +41,10 @@ const EditProject = (props) => {
     }, [])
     return (
         <>
-            <HeaderProject />
+            <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${aleatorio}-800x800.jpg`).default}
+            titulo={`Projeto: ${currentProject.projectname}`}
+            description={"  This is your project page. Below you can edit your project details and save the changes "}
+            />
             <Container className="mt--7" fluid>
                 <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">

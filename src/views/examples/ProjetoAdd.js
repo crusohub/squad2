@@ -33,8 +33,9 @@ import {
 // core components
 import HeaderProject from "components/Headers/HeaderProject";
 import ProjetoDataService from "services/ProjetoDataService";
-
+import HeaderGenerico from "../../components/Headers/HeaderGenerico"
 const ProjetoAdd = () => {
+  const [random, setRandom] = useState(1)
   const baseProjeto={
     id: null,
     image: "",
@@ -75,7 +76,10 @@ const ProjetoAdd = () => {
   }
   return (
     <>
-      <HeaderProject/>
+      <HeaderGenerico imagemFundo={require(`../../assets/img/theme/team-${random}-800x800.jpg`).default}
+            titulo={`New Project:`}
+            description={"  This is  a new project page. Below you can create new projects "}
+      />
       {/* Page content */}
       <Container className="mt--12" fluid>
         <Row>
@@ -177,7 +181,7 @@ const ProjetoAdd = () => {
                       </Col>
                     </Row>
                     <Row>
-                        <Col lg="3">
+                        <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -198,10 +202,8 @@ const ProjetoAdd = () => {
                         <Col lg="2">
                         <Button
                         color="primary"
-                        href="#pablo"
                         onClick={(e) => aleatorio()}
-                        style={{marginTop: 32 }}
-                        >
+                        style={{marginTop: 32}}>
                           RANDOM 
                         </Button>
                       </Col>                 
