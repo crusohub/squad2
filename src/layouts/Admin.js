@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -25,31 +25,34 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import { UsuarioLogadoContext, AlertaLoginContext } from "context/UsuarioLogadoContext";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
-
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
+    if(usuarioLogado.username === ""){
+      setAlertaLogin(true)
+      setTimeout(()=>setAlertaLogin(false), 4000)
+      props.history.push("/auth/login")
+    }
   }, [location]);
 
   const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
+    return Object.values(routes).map(routesMenu => routesMenu.map((prop, key) => {
+      if (prop.layout === "/admin") 
+        return <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+              />
+      else 
         return null;
-      }
-    });
+    }))
   };
 
   const getBrandText = (path) => {

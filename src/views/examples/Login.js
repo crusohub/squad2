@@ -15,10 +15,16 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useState, useContext } from "react";
+import UsuarioDataService from "services/UsuarioDataService";
+import { UsuarioLogadoContext,AlertaLoginContext } from "context/UsuarioLogadoContext";
+import { Link } from 'react-router-dom'
+
+
 
 // reactstrap components
 import {
+  Alert,
   Button,
   Card,
   CardHeader,
@@ -33,55 +39,58 @@ import {
   Col,
 } from "reactstrap";
 
-const Login = () => {
+const Login = (props) => {
+
+  const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
+  const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  
+  const login = () => {
+    console.log(username)
+    UsuarioDataService.login(username, password).then(
+      response => response.data).then(
+        data => {
+              console.log(data[0])
+              
+              if(data[0] != undefined && data[0].password === password){
+                autenticaUsuario(data[0])
+              }else{
+                alert("Falha na autenticação!")
+              }
+        })
+  }
+  const handleEnter=(e) => {
+    if(e.keyCode===13)
+      login()
+  }
+  const handleusername = (e) => {
+    setUsername(e.target.value)
+  }
+  const handlepassword = (e) => {
+    setPassword(e.target.value)
+  }
+  function autenticaUsuario(usuario) {
+    if (usuario != null) {
+      console.log(usuario)
+      setUsuarioLogado(usuario)
+      if (!usuario.firstname) {
+        props.history.push('/admin/user-profile')
+        return
+      }
+      props.history.push('/admin/index')
+    }else{
+      alert("Falha na autenticação!")
+    }
+  }
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/github.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/google.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
-          </CardHeader>
+          <Alert className="font-weight-bold m-2" color="danger" isOpen={alertaLogin}>Faça o login!</Alert>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
+              <small>Sign in with credentials</small>
             </div>
             <Form role="form">
               <FormGroup className="mb-3">
@@ -95,6 +104,8 @@ const Login = () => {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    onChange={handleusername}
+                    onKeyUp={handleEnter}
                   />
                 </InputGroup>
               </FormGroup>
@@ -109,6 +120,8 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    onChange={handlepassword}
+                    onKeyUp={handleEnter}
                   />
                 </InputGroup>
               </FormGroup>
@@ -126,28 +139,30 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button onClick={login} className="my-4" color="primary" type="button">
                   Sign in
-                </Button>
+               </Button>
               </div>
             </Form>
           </CardBody>
         </Card>
         <Row className="mt-3">
-          <Col xs="6">
+          
+        <Col xs="6">
             <a
               className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+              href="forgotpassword"
+              onClick={(e) => props.history.push("/auth/forgotpassword/")}
             >
-              <small>Forgot password?</small>
+              <small>Forgot Password?</small>
             </a>
           </Col>
+         
           <Col className="text-right" xs="6">
             <a
               className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+              href="register"
+              onClick={(e) => props.history.push("auth/register")}
             >
               <small>Create new account</small>
             </a>

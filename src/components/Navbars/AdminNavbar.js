@@ -16,7 +16,11 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+import {useContext, useEffect} from "react"
+import { Link, NavLink as NavLinkRRD } from "react-router-dom";
+import { UsuarioLogadoContext, initialState } from "context/UsuarioLogadoContext";
+import UsuarioDataService from "services/UsuarioDataService";
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -36,6 +40,15 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
+  const [usuarioLogado, setUsuarioLogado]= useContext(UsuarioLogadoContext)
+
+  const logout = () => {
+    if(window.confirm("Deseja realmente sair?")){
+      setUsuarioLogado("")
+      props.history.push("/auth/login")
+    }
+  }
+  
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -62,18 +75,16 @@ const AdminNavbar = (props) => {
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
+                  <span className="avatar avatar-sm">
                     <img
+                      className="avatar avatar-sm rounded-circle"
                       alt="..."
-                      src={
-                        require("../../assets/img/theme/team-4-800x800.jpg")
-                          .default
-                      }
+                      src={usuarioLogado.photo ? usuarioLogado.photo : "https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {usuarioLogado.firstname} {usuarioLogado.lastname}
                     </span>
                   </Media>
                 </Media>
@@ -86,20 +97,16 @@ const AdminNavbar = (props) => {
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
+                <DropdownItem to="/settings/changePassword" tag={Link}>
                   <i className="ni ni-settings-gear-65" />
                   <span>Settings</span>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
-                  <span>Support</span>
-                </DropdownItem>
+               
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem 
+                to={"/auth/login"}
+                tag={NavLinkRRD}
+                onClick={() => setUsuarioLogado(initialState)}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

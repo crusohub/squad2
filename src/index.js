@@ -22,17 +22,36 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
+import "./App.css"
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import SettingsLayout from "layouts/Settings";
+
+import { UsuarioLogadoProvider } from "./context/UsuarioLogadoContext";
+import { CurrentProjectProvider } from "./context/CurrentProjectContext";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/admin/index" />
-    </Switch>
-  </BrowserRouter>,
-  document.getElementById("root")
+    <BrowserRouter>
+        <CurrentProjectProvider>
+        <UsuarioLogadoProvider>
+            <Switch>
+                <Route
+                    path="/admin"
+                    render={(props) => <AdminLayout {...props} />}
+                />
+                <Route
+                    path="/auth"
+                    render={(props) => <AuthLayout {...props} />}
+                />
+                <Route
+                    path="/settings"
+                    render={(props) => <SettingsLayout {...props} />}
+                />
+                <Redirect from="/" to="/auth/login" />
+            </Switch>
+        </UsuarioLogadoProvider>
+        </CurrentProjectProvider>
+    </BrowserRouter>,
+    document.getElementById("root")
 );

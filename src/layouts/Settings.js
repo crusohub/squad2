@@ -15,66 +15,78 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useContext } from "react";
+import React, {useContext, useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
+import SettingsNavbar from "components/Navbars/SettingsNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import routes from "routes.js";
-import ForgotPassword from "views/examples/ForgotPassword";
-import Login from "components/Footers/AuthFooter";
+import routesSettings from "routesSettings";
 import { UsuarioLogadoContext, AlertaLoginContext } from "context/UsuarioLogadoContext";
 
-const Auth = (props) => {
+const Settings = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const [title, setTitle] = useState("Title")
   const [usuarioLogado, setUsuarioLogado] = useContext(UsuarioLogadoContext)
   const [alertaLogin, setAlertaLogin] = useContext(AlertaLoginContext)
 
   React.useEffect(() => {
+    changeTitle();
     document.body.classList.add("bg-default");
     return () => {
       document.body.classList.remove("bg-default");
     };
   }, []);
+
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-    if(usuarioLogado.username !== ""){
-      props.history.push("/admin/index")
+    if(usuarioLogado.username === ""){
+      setAlertaLogin(true)
+      setTimeout(()=>setAlertaLogin(false), 4000)
+      props.history.push("/auth/login")
     }
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return Object.values(routes).map(routesMenu => routesMenu.map((prop) => {
-      if (prop.layout === "/auth")
-        return <Route
-                path={prop.layout + prop.path}
-                component={prop.component}
-              />
-      else 
+  const changeTitle = () => {
+    if(props.location.pathname === "/settings/changePassword"){
+      setTitle("Change your password!")
+    } else if(props.location.pathname === "/settings/delete"){
+      setTitle("Delete your account")
+    }
+  }
+
+  const getRoutes = (routesSettings) => {
+    return routesSettings.map((prop, key) => {
+      if (prop.layout === "/settings") {
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+      } else {
         return null;
-    }));
+      }
+    });
   };
 
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
+        <SettingsNavbar />
         <div className="header bg-gradient-info py-7 py-lg-8">
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Bem-vindo!</h1>
-                  <p className="text-lead text-light">
-                  Estamos felizes por ter você conosco! Cadastre-se para saber mais.
-                  </p>
+                  <h1 className="text-white">{title}</h1>
                 </Col>
               </Row>
             </div>
@@ -99,8 +111,8 @@ const Auth = (props) => {
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Switch>
-              {getRoutes(routes)}
-              <Redirect from="*" to="/auth/login" />
+              {getRoutes(routesSettings)}
+              <Redirect from="*" to="/" />
             </Switch>
           </Row>
         </Container>
@@ -109,5 +121,4 @@ const Auth = (props) => {
     </>
   );
 };
-
-export default Auth;
+export default Settings;
